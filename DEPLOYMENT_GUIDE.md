@@ -111,13 +111,18 @@ then commit `src/root/og.png` and `src/root/apple-touch-icon.png`.
 
 These were written from what you told me and from the old site. Read them once:
 
+- **The hours disagree.** You told me Tuesday to Thursday, 9H30 to 12H30. Your
+  intake form says "les mardi, mercredi et jeudi, de 9h30 à 12h00". The site says
+  12H30 everywhere. One of the two is wrong and it needs settling.
 - Aide alimentaire, step 2: "Un membre de l'équipe vérifie votre demande et vous
   revient rapidement" describes the process as I understood it. If the intake
   works differently (for example an appointment or documents to bring), say so.
+- Aide alimentaire, the contribution (10 $ / 30 $ / 40 $) is taken word for word
+  from your intake form. If those amounts change, they are on that page.
 - Aide alimentaire, "Ce que contient un panier": a generic description. Adjust if
   the panier is different.
-- Bénévolat: the list of tasks (tri, paniers, accueil, cueillettes, événements)
-  and "jumelé à quelqu'un d'expérience" come from how food banks generally run.
+- Bénévolat: the task list matches your own volunteer form, so it is right.
+  "Jumelé à quelqu'un d'expérience" is still my assumption.
 - Dons, "En denrées": the list of most-needed items is generic apart from pasta.
   "Appelez-nous avant de passer" is a safe instruction until you decide otherwise.
 - Dons: `direction@centreespoir.ca` is given for questions about legacies and
