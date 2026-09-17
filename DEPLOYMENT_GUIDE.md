@@ -40,8 +40,12 @@ You should see `✓ site updated and healthy`. Then the auto-update, every two
 minutes:
 
 ```bash
-( crontab -l 2>/dev/null; echo '*/2 * * * * /opt/site/autoupdate.sh >> /var/log/site-autoupdate.log 2>&1' ) | sort -u | crontab -
+( crontab -l 2>/dev/null; echo '*/2 * * * * bash /opt/site/autoupdate.sh >> /var/log/site-autoupdate.log 2>&1' ) | sort -u | crontab -
 ```
+
+Note the `bash` in front: it makes the line work even if the checkout arrives
+without the executable bit, which is what happens when the code is pushed from
+Windows.
 
 At this point the site answers on the VPS but nobody can reach it yet: Traefik
 only routes `centreespoir.ca` once the domain points at the server.
