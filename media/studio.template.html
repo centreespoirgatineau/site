@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier d'images — Centre Espoir de Gatineau</title>
+<!--
+  Ce fichier est fabriqué par media/build-studio.mjs : les polices, les
+  illustrations et le logo y sont incrustés, ce qui permet de l'ouvrir d'un
+  double-clic, sans Internet et sans rien installer. Ne le modifiez pas
+  directement : modifiez studio.template.html, puis reconstruisez-le.
+-->
+<style>
+  __FONTFACE__
+  :root {
+    --bg: #FAF9F5; --surface: #fff; --ink: #141413; --ink-2: #55534E; --ink-3: #85837C;
+    --line: #E8E6DF; --line-2: #D9D6CD; --accent: #DA7757; --accent-ink: #B4573A; --accent-soft: #F8EDE6;
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--sans); }
+  header { padding: 20px 24px; border-bottom: 1px solid var(--line); display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  header h1 { font-family: var(--serif); font-weight: 500; font-size: 1.4rem; margin: 0; letter-spacing: -.01em; }
+  header p { margin: 0; color: var(--ink-2); font-size: .95rem; }
+  main { display: grid; gap: 28px; padding: 24px; align-items: start; }
+  @media (min-width: 1000px) { main { grid-template-columns: 360px minmax(0,1fr); gap: 36px; } }
+  .panneau { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .panneau + .panneau { margin-top: 16px; }
+  .panneau h2 { font-family: var(--serif); font-weight: 500; font-size: 1.05rem; margin: 0 0 14px; }
+  label { display: block; margin-bottom: 14px; font-size: .85rem; font-weight: 600; color: var(--ink-2); }
+  label span.aide { display: block; font-weight: 400; color: var(--ink-3); font-size: .8rem; margin-top: 2px; }
+  input[type=text], textarea, select {
+    width: 100%; margin-top: 5px; padding: 10px 12px; font: inherit; color: var(--ink);
+    border: 1px solid var(--line-2); border-radius: 10px; background: #fff;
+  }
+  textarea { resize: vertical; min-height: 64px; }
+  input:focus, textarea:focus, select:focus { outline: 3px solid #1F5FBF; outline-offset: 2px; border-color: var(--accent); }
+  .ligne { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .case { display: flex; gap: 9px; align-items: center; font-weight: 400; color: var(--ink); }
+  .case input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+  .apercu { position: sticky; top: 24px; }
+  .toile { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 6px; background: #fff; }
+  .barre { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer; border-radius: 999px; border: 1.5px solid transparent;
+    min-height: 46px; padding: 0 20px; background: var(--accent); color: #fff;
+  }
+  button:hover { background: var(--accent-ink); }
+  button.second { background: transparent; color: var(--ink); border-color: var(--line-2); }
+  button.second:hover { background: var(--bg); }
+  .dim { color: var(--ink-3); font-size: .85rem; margin-left: auto; font-variant-numeric: tabular-nums; }
+  footer { padding: 8px 24px 40px; color: var(--ink-3); font-size: .85rem; }
+  /* Mode « image seule » : l'adresse se termine par #image. Tout disparaît sauf
+     l'image, à sa taille réelle. Sert à la projeter, à la photographier, ou à la
+     fabriquer en série depuis un script. */
+  body.image { background: #fff; }
+  body.image header, body.image form, body.image footer, body.image .barre { display: none; }
+  body.image main { display: block; padding: 0; }
+  body.image .apercu { position: static; }
+  body.image .toile { padding: 0; border: 0; border-radius: 0; }
+  body.image canvas { width: auto; height: auto; border-radius: 0; }
+  footer a { color: var(--accent-ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Atelier d'images</h1>
+  <p>Centre Espoir de Gatineau — bannières, publications, affiches</p>
+</header>
+
+<main>
+  <form id="f" onsubmit="return false">
+    <div class="panneau">
+      <h2>Le format</h2>
+      <label>Où l'image sera publiée
+        <select id="format"></select>
+      </label>
+      <label>Les couleurs
+        <select id="theme">
+          <option value="creme">Crème, texte foncé</option>
+          <option value="encre">Encre, texte blanc</option>
+          <option value="terracotta">Terracotta, texte blanc</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="panneau">
+      <h2>Le texte</h2>
+      <label>Surtitre
+        <input type="text" id="surtitre" value="Banque alimentaire depuis 1984" maxlength="60">
+        <span class="aide">Court, en petites majuscules sur l'image.</span>
+      </label>
+      <label>Titre
+        <textarea id="titre" maxlength="140">Nourrir le corps, ce n’est que la moitié du travail.</textarea>
+      </label>
+      <label>Sous-titre
+        <textarea id="soustitre" maxlength="260">Chaque mois, plus de 250 familles du quartier Notre-Dame trouvent ici un supplément alimentaire.</textarea>
+      </label>
+      <label>Pastille (facultatif)
+        <input type="text" id="pastille" value="Du mardi au jeudi, 9H30 à 12H30" maxlength="70">
+        <span class="aide">L'information qu'on doit retenir : une date, des heures, un lieu.</span>
+      </label>
+    </div>
+
+    <div class="panneau">
+      <h2>L'image et le logo</h2>
+      <label>Illustration
+        <select id="illustration"></select>
+      </label>
+      <label>Logo
+        <select id="logo">
+          <option value="horizontal">Horizontal</option>
+          <option value="vertical">Vertical</option>
+          <option value="aucun">Aucun</option>
+        </select>
+      </label>
+      <label class="case"><input type="checkbox" id="zone"> Afficher la zone sûre</label>
+      <span class="aide" style="color:var(--ink-3);font-size:.8rem;">Le repère n'apparaît pas dans le fichier téléchargé. Facebook rogne les bords selon l'appareil : gardez l'essentiel à l'intérieur.</span>
+    </div>
+  </form>
+
+  <div class="apercu">
+    <div class="toile"><canvas id="c"></canvas></div>
+    <div class="barre">
+      <button id="tele">Télécharger l'image</button>
+      <button class="second" id="reset">Remettre l'exemple</button>
+      <span class="dim" id="dim"></span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Les illustrations viennent d'Open Doodles et d'Open Peeps, sous licence CC0, recolorées aux couleurs du logo.
+  Les polices sont Source Serif 4 et Source Sans 3, sous licence libre. Rien n'est envoyé sur Internet : tout se passe dans ce fichier.
+</footer>
+
+<script>
+const ASSETS = __ASSETS__;
+
+/* ---- Les formats ------------------------------------------------------- */
+const FORMATS = {
+  'fb-couverture': { label: 'Bannière de page Facebook (1640 × 624)', w: 1640, h: 624 },
+  'fb-evenement':  { label: "Bannière d'événement Facebook (1920 × 1005)", w: 1920, h: 1005 },
+  'publication':   { label: 'Publication carrée, Facebook ou Instagram (1080 × 1080)', w: 1080, h: 1080 },
+  'story':         { label: 'Story ou Reel (1080 × 1920)', w: 1080, h: 1920 },
+  'partage':       { label: "Carte d'aperçu d'un lien (1200 × 630)", w: 1200, h: 630 },
+  'affiche':       { label: 'Affiche 8,5 × 11 pouces, 300 ppp (2550 × 3300)', w: 2550, h: 3300 },
+};
+
+/* ---- Les trois habillages ---------------------------------------------- */
+const THEMES = {
+  creme:      { bg: '#FAF9F5', ink: '#141413', ink2: '#55534E', sur: '#B4573A', wash: 'rgba(218,119,87,.20)',
+                pastilleFond: '#141413', pastilleTexte: '#FFFFFF', logo: 'couleur' },
+  encre:      { bg: '#141413', ink: '#FFFFFF', ink2: '#C9C6BC', sur: '#F2B79F', wash: 'rgba(218,119,87,.30)',
+                pastilleFond: '#DA7757', pastilleTexte: '#FFFFFF', logo: 'blanc' },
+  terracotta: { bg: '#DA7757', ink: '#FFFFFF', ink2: '#FBE7DE', sur: '#FFFFFF', wash: 'rgba(255,255,255,.16)',
+                pastilleFond: '#141413', pastilleTexte: '#FFFFFF', logo: 'blanc' },
+};
+
+/* ---- Préparation -------------------------------------------------------- */
+const $ = (id) => document.getElementById(id);
+const canvas = $('c'), ctx = canvas.getContext('2d');
+const images = {};
+let pretes = false;
+
+function remplirListes() {
+  $('format').innerHTML = Object.entries(FORMATS).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
+  $('illustration').innerHTML = '<option value="aucune">Aucune</option>' +
+    Object.keys(ASSETS.illustrations).map((k) => `<option value="${k}">${ASSETS.illustrations[k].nom}</option>`).join('');
+  $('illustration').value = Object.keys(ASSETS.illustrations)[0];
+}
+
+function charger(src) {
+  return new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = src; });
+}
+
+async function preparer() {
+  for (const [nom, def] of Object.entries(ASSETS.polices)) {
+    const f = new FontFace(def.famille, `url(${def.data})`, { weight: def.graisse });
+    await f.load(); document.fonts.add(f);
+  }
+  for (const [k, v] of Object.entries(ASSETS.illustrations)) {
+    images['i:' + k] = await charger(v.data);
+    if (v.clair) images['ic:' + k] = await charger(v.clair);
+  }
+  for (const [k, v] of Object.entries(ASSETS.logos)) images['l:' + k] = await charger(v);
+  pretes = true;
+}
+
+/* ---- Outils de dessin --------------------------------------------------- */
+function couper(texte, taille, famille, graisse, largeurMax) {
+  ctx.font = `${graisse} ${taille}px ${famille}`;
+  const lignes = [];
+  for (const paragraphe of String(texte).split('\n')) {
+    let courante = '';
+    for (const mot of paragraphe.split(/\s+/).filter(Boolean)) {
+      const essai = courante ? courante + ' ' + mot : mot;
+      if (ctx.measureText(essai).width > largeurMax && courante) { lignes.push(courante); courante = mot; }
+      else courante = essai;
+    }
+    lignes.push(courante);
+  }
+  return lignes.filter((l) => l !== '');
+}
+
+// Réduit la taille jusqu'à ce que le bloc tienne dans la hauteur donnée.
+function ajuster(texte, tailleDepart, famille, graisse, largeur, hauteurMax, interligne) {
+  let taille = tailleDepart;
+  for (let i = 0; i < 40; i++) {
+    const lignes = couper(texte, taille, famille, graisse, largeur);
+    if (lignes.length * taille * interligne <= hauteurMax || taille < 10) return { taille, lignes };
+    taille *= 0.94;
+  }
+  return { taille, lignes: couper(texte, taille, famille, graisse, largeur) };
+}
+
+function ecrire(lignes, x, y, taille, famille, graisse, couleur, interligne, espacement) {
+  ctx.fillStyle = couleur;
+  ctx.font = `${graisse} ${taille}px ${famille}`;
+  ctx.textBaseline = 'alphabetic';
+  if (espacement) ctx.letterSpacing = espacement + 'px';
+  let cy = y + taille;
+  for (const l of lignes) { ctx.fillText(l, x, cy); cy += taille * interligne; }
+  if (espacement) ctx.letterSpacing = '0px';
+  return y + lignes.length * taille * interligne;
+}
+
+function rectArrondi(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+
+function placerImage(img, bx, by, bw, bh) {
+  if (!img) return;
+  const r = Math.min(bw / img.naturalWidth, bh / img.naturalHeight);
+  const w = img.naturalWidth * r, h = img.naturalHeight * r;
+  ctx.drawImage(img, bx + (bw - w) / 2, by + (bh - h) / 2, w, h);
+}
+
+/* ---- Le dessin ---------------------------------------------------------- */
+function dessiner(pourTelechargement) {
+  if (!pretes) return;
+  const fmt = FORMATS[$('format').value];
+  const t = THEMES[$('theme').value];
+  const W = fmt.w, H = fmt.h;
+  canvas.width = W; canvas.height = H;
+  $('dim').textContent = W + ' × ' + H + ' px';
+
+  const ratio = W / H;
+  const mode = ratio >= 1.5 ? 'large' : (ratio >= 0.85 ? 'carre' : 'haut');
+  const marge = Math.round(Math.min(W, H) * (mode === 'large' ? 0.085 : 0.075));
+  const serif = '"Source Serif 4", Georgia, serif';
+  const sans = '"Source Sans 3", Arial, sans-serif';
+
+  ctx.fillStyle = t.bg; ctx.fillRect(0, 0, W, H);
+
+  // Sur un fond foncé, une illustration à l'encre disparaîtrait : on prend sa
+  // version claire, où l'encre a été remplacée par la crème.
+  const cleIllu = $('illustration').value;
+  const fonce = $('theme').value !== 'creme';
+  const illu = images[(fonce ? 'ic:' : 'i:') + cleIllu] || images['i:' + cleIllu] || null;
+
+  // La zone de texte et la zone d'image, selon l'orientation.
+  let tx = marge, ty = marge, tw, th, ix, iy, iw, ih;
+  if (mode === 'large') {
+    tw = Math.round((W - marge * 2) * 0.58);
+    th = H - marge * 2;
+    iw = Math.round((W - marge * 2) * 0.36); ih = Math.round(H * 0.74);
+    ix = W - marge - iw; iy = (H - ih) / 2;
+  } else if (mode === 'carre') {
+    tw = W - marge * 2; th = Math.round(H * 0.50);
+    iw = Math.round(W * 0.50); ih = Math.round(H * 0.30);
+    ix = W - marge - iw; iy = H - marge - ih - Math.round(H * 0.02);
+  } else {
+    tw = W - marge * 2; th = Math.round(H * 0.44);
+    iw = W - marge * 2; ih = Math.round(H * 0.34);
+    ix = marge; iy = Math.round(H * 0.50);
+  }
+
+  // Le halo derrière l'illustration, pour que le fond ne soit pas un aplat mort.
+  if (illu) {
+    const cx = ix + iw / 2, cy = iy + ih / 2, r = Math.max(iw, ih) * 0.78;
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    g.addColorStop(0, t.wash); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    placerImage(illu, ix, iy, iw, ih);
+  }
+
+  // Le logo, mesuré en premier : le texte s'arrête au-dessus de lui.
+  const genre = $('logo').value;
+  let hauteurLogo = 0, logoY = 0;
+  if (genre !== 'aucun') {
+    const img = images['l:' + genre + '-' + t.logo];
+    if (img) {
+      hauteurLogo = Math.round(genre === 'vertical' ? H * (mode === 'large' ? 0.26 : 0.13) : H * (mode === 'large' ? 0.11 : 0.055));
+      const l = img.naturalWidth / img.naturalHeight * hauteurLogo;
+      // Au pied de la colonne de texte quand elle occupe toute la hauteur, au
+      // pied de l'image dans les autres cas : le logo signe, il ne s'intercale pas.
+      logoY = mode === 'large' ? ty + th - hauteurLogo : H - marge - hauteurLogo;
+      ctx.drawImage(img, tx, logoY, l, hauteurLogo);
+    }
+  }
+
+  const dispo = mode === 'large'
+    ? th - (hauteurLogo ? hauteurLogo + marge * 0.55 : 0)
+    : th;
+  let y = ty;
+
+  // Surtitre : un trait, puis de petites majuscules interlettrées.
+  const surtitre = $('surtitre').value.trim();
+  if (surtitre) {
+    const ts = Math.max(11, Math.round(Math.min(W, H) * (mode === 'large' ? 0.028 : 0.022)));
+    const trait = ts * 1.7;
+    ctx.strokeStyle = t.sur; ctx.lineWidth = Math.max(2, ts * 0.13); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(tx, y + ts * 0.62); ctx.lineTo(tx + trait, y + ts * 0.62); ctx.stroke();
+    ctx.letterSpacing = (ts * 0.13) + 'px';
+    ctx.fillStyle = t.sur; ctx.font = `600 ${ts}px ${sans}`; ctx.textBaseline = 'alphabetic';
+    ctx.fillText(surtitre.toLocaleUpperCase('fr-CA'), tx + trait + ts * 0.7, y + ts * 0.62 + ts * 0.36);
+    ctx.letterSpacing = '0px';
+    y += ts * 2.5;
+  }
+
+  const reste = () => dispo - (y - ty);
+
+  // Titre
+  const titre = $('titre').value.trim();
+  if (titre) {
+    const depart = Math.round(H * (mode === 'large' ? 0.135 : mode === 'carre' ? 0.10 : 0.062));
+    const { taille, lignes } = ajuster(titre, depart, serif, 500, tw, reste() * 0.62, 1.12);
+    ctx.letterSpacing = (-taille * 0.02) + 'px';
+    y = ecrire(lignes, tx, y, taille, serif, 500, t.ink, 1.12, 0);
+    ctx.letterSpacing = '0px';
+    y += taille * 0.35;
+  }
+
+  // Sous-titre
+  const soustitre = $('soustitre').value.trim();
+  if (soustitre) {
+    const depart = Math.round(H * (mode === 'large' ? 0.050 : mode === 'carre' ? 0.042 : 0.028));
+    const { taille, lignes } = ajuster(soustitre, depart, sans, 400, tw * 0.95, reste() * 0.6, 1.45);
+    y = ecrire(lignes, tx, y, taille, sans, 400, t.ink2, 1.45, 0);
+    y += taille * 0.5;
+  }
+
+  // Pastille
+  const pastille = $('pastille').value.trim();
+  if (pastille && reste() > H * 0.04) {
+    const ts = Math.max(12, Math.round(H * (mode === 'large' ? 0.045 : mode === 'carre' ? 0.036 : 0.024)));
+    ctx.font = `600 ${ts}px ${sans}`;
+    const l = ctx.measureText(pastille).width, px = ts * 0.9, py = ts * 0.6;
+    ctx.fillStyle = t.pastilleFond;
+    rectArrondi(tx, y, l + px * 2, ts + py * 2, (ts + py * 2) / 2); ctx.fill();
+    ctx.fillStyle = t.pastilleTexte; ctx.textBaseline = 'alphabetic';
+    ctx.fillText(pastille, tx + px, y + py + ts * 0.79);
+  }
+
+  // Le repère de zone sûre : à l'écran seulement.
+  if ($('zone').checked && !pourTelechargement) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(31,95,191,.85)'; ctx.lineWidth = Math.max(2, W * 0.002);
+    ctx.setLineDash([W * 0.012, W * 0.012]);
+    ctx.strokeRect(W * 0.10, H * 0.075, W * 0.80, H * 0.85);
+    ctx.restore();
+  }
+}
+
+/* ---- L'interface -------------------------------------------------------- */
+const EXEMPLE = {
+  surtitre: 'Banque alimentaire depuis 1984',
+  titre: "Nourrir le corps, ce n’est que la moitié du travail.",
+  soustitre: 'Chaque mois, plus de 250 familles du quartier Notre-Dame trouvent ici un supplément alimentaire.',
+  pastille: 'Du mardi au jeudi, 9H30 à 12H30',
+};
+
+$('tele').addEventListener('click', () => {
+  dessiner(true);
+  canvas.toBlob((b) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'centre-espoir-' + $('format').value + '-' + new Date().toISOString().slice(0, 10) + '.png';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    dessiner(false);
+  }, 'image/png');
+});
+
+$('reset').addEventListener('click', () => {
+  for (const [k, v] of Object.entries(EXEMPLE)) $(k).value = v;
+  dessiner(false);
+});
+
+document.addEventListener('input', () => dessiner(false));
+document.addEventListener('change', () => dessiner(false));
+
+/* ---- Pilotage par l'adresse --------------------------------------------
+   studio.html?format=fb-evenement&theme=encre&titre=Collecte%20du%2012%20octobre
+   remplit les champs d'avance. En ajoutant #image à la fin, la page n'affiche
+   plus que l'image, à sa taille réelle. */
+function appliquerAdresse() {
+  const p = new URLSearchParams(location.search);
+  for (const champ of ['format', 'theme', 'surtitre', 'titre', 'soustitre', 'pastille', 'illustration', 'logo']) {
+    if (p.has(champ)) $(champ).value = p.get(champ);
+  }
+  if (location.hash === '#image') document.body.classList.add('image');
+}
+
+remplirListes();
+appliquerAdresse();
+preparer().then(() => dessiner(document.body.classList.contains('image')));
+</script>
+</body>
+</html>

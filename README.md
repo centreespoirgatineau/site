@@ -16,7 +16,16 @@ build/serve.mjs     un serveur local pour regarder le résultat
 build/make-images.mjs  redessine og.png et apple-touch-icon.png (Chrome, sans tête)
 deploy/             nginx.conf, security.inc, l'override Traefik du serveur
 test/               vérifie ce qui sort de la construction
+media/              l'atelier d'images : bannières, publications, affiches
 ```
+
+Deux documents à lire avant de toucher à l'allure du site ou d'une affiche :
+
+- **`DESIGN.md`** — les couleurs, les polices, les espacements, les composants,
+  le mouvement, l'accessibilité, et la règle qui prime sur toutes les autres :
+  le site ne doit pas avoir l'air fabriqué à la chaîne.
+- **`media/README.md`** — la même méthode appliquée aux bannières Facebook, aux
+  publications et aux affiches. Ouvrez `media/studio.html` d'un double-clic.
 
 ## Travailler dessus
 
