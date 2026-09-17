@@ -9,4 +9,6 @@ REMOTE=$(git rev-parse origin/main)
 [ "$LOCAL" = "$REMOTE" ] && exit 0
 echo "[$(date -Is)] $LOCAL → $REMOTE"
 git reset -q --hard origin/main
-SITE_NO_PULL=1 ./update.sh
+# Called through bash rather than as ./update.sh: a checkout from a Windows
+# machine can arrive without the executable bit, and this must not depend on it.
+SITE_NO_PULL=1 bash ./update.sh
