@@ -1,0 +1,18 @@
+# The public site, reachable only from the VPS itself (127.0.0.1:8089).
+# Traefik forwards centreespoir.ca and www.centreespoir.ca to it: see
+# deploy/docker-compose.override.traefik.yml, which update.sh copies in place.
+services:
+  site:
+    build: .
+    image: centreespoir-site:latest
+    container_name: site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8089:8080"
+    mem_limit: 64m
+    cpus: 0.25
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+    security_opt:
+      - no-new-privileges:true

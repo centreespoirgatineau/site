@@ -1,0 +1,23 @@
+  <header class="site-header" id="haut">
+    <div class="container header-bar">
+      <a class="brand" href="/" aria-label="Centre Espoir de Gatineau, accueil">
+        <img src="/assets/img/logo-horizontal.svg" alt="Centre Espoir de Gatineau, banque alimentaire" width="335" height="77">
+      </a>
+      <nav class="site-nav" id="menu" aria-label="Navigation principale">
+        <ul>
+          <li><a href="/aide-alimentaire"{{ nav.aide-alimentaire }}>Aide alimentaire</a></li>
+          <li><a href="/benevolat"{{ nav.benevolat }}>Bénévolat</a></li>
+          <li><a href="/a-propos"{{ nav.a-propos }}>À propos</a></li>
+          <li><a href="/nous-joindre"{{ nav.nous-joindre }}>Nous joindre</a></li>
+          <li class="nav-cta"><a class="btn btn-primary" href="/dons"{{ nav.dons }}>Faire un don</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary btn-sm header-don" href="/dons">Faire un don</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+          <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="menu-label">Menu</span>
+        </button>
+      </div>
+    </div>
+  </header>

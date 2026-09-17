@@ -1,0 +1,27 @@
+# The override used on the VPS (Traefik in container root-traefik-1, network
+# root_default, certificate resolver "mytlschallenge"). update.sh copies it to
+# /opt/site/docker-compose.override.yml on every deploy, so a routing change is
+# a push to GitHub and nothing more.
+#
+# Both centreespoir.ca and www.centreespoir.ca get a certificate; the www
+# address is redirected to the bare domain so there is only one address to
+# share, search and remember.
+services:
+  site:
+    networks:
+      - default
+      - root_default
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=root_default
+      - traefik.http.routers.site.rule=Host(`centreespoir.ca`) || Host(`www.centreespoir.ca`)
+      - traefik.http.routers.site.entrypoints=websecure
+      - traefik.http.routers.site.tls.certresolver=mytlschallenge
+      - traefik.http.routers.site.middlewares=site-www
+      - traefik.http.middlewares.site-www.redirectregex.regex=^https://www\.centreespoir\.ca/(.*)
+      - traefik.http.middlewares.site-www.redirectregex.replacement=https://centreespoir.ca/$${1}
+      - traefik.http.middlewares.site-www.redirectregex.permanent=true
+      - traefik.http.services.site.loadbalancer.server.port=8080
+networks:
+  root_default:
+    external: true

@@ -1,0 +1,5 @@
+public/
+docker-compose.override.yml
+node_modules/
+.DS_Store
+Thumbs.db

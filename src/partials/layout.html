@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr-CA" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <link rel="canonical" href="{{ canonical }}">
+  <meta name="theme-color" content="#FAF9F5">
+  <script>document.documentElement.className="js"</script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Centre Espoir de Gatineau">
+  <meta property="og:locale" content="fr_CA">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="https://centreespoir.ca/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="/assets/fonts/SourceSerif4-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/SourceSans3-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ css }}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "name": "Centre Espoir de Gatineau",
+    "alternateName": "Centre Espoir",
+    "url": "https://centreespoir.ca",
+    "logo": "https://centreespoir.ca/assets/img/logo-vertical.svg",
+    "foundingDate": "1984",
+    "telephone": "+1-819-663-3238",
+    "email": "info@centreespoir.ca",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "791, boulevard Maloney Est",
+      "addressLocality": "Gatineau",
+      "addressRegion": "QC",
+      "postalCode": "J8P 1H8",
+      "addressCountry": "CA"
+    },
+    "sameAs": [
+      "https://www.facebook.com/centreespoirgatineau",
+      "https://www.instagram.com/centreespoirgatineau"
+    ]
+  }
+  </script>
+</head>
+<body class="{{ body_class }}" data-page="{{ page }}">
+  <a class="skip" href="#contenu">Aller au contenu</a>
+{{> header }}
+  <main id="contenu">
+{{ content }}
+  </main>
+{{> footer }}
+  <script src="{{ js }}" defer></script>
+</body>
+</html>

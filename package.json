@@ -1,0 +1,14 @@
+{
+  "name": "centreespoir-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Le site public du Centre Espoir de Gatineau : des pages statiques, sans dépendance.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node build/build.mjs",
+    "serve": "node build/serve.mjs",
+    "images": "node build/make-images.mjs",
+    "test": "node --test test/**/*.test.js"
+  }
+}
