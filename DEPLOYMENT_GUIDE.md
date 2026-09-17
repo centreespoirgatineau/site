@@ -4,6 +4,10 @@ Written for David. Every command is meant to be pasted as is. The site runs on
 the same VPS as the surplus platforms, behind the same Traefik, and updates
 itself the same way: a push to `main` is live within two minutes.
 
+> **The site has been online since 17 September 2026.** Sections 1 to 4 are done
+> and are kept as a record of how it was set up, and of what to redo if the
+> server is ever rebuilt. For day-to-day work, go to section 5.
+
 ## What is where
 
 | Thing | Where |
@@ -15,14 +19,14 @@ itself the same way: a push to `main` is live within two minutes.
 | Domain | Cloudflare, `centreespoir.ca` |
 | Auto-update log | `/var/log/site-autoupdate.log` |
 
-## 1. Create the GitHub repository (once, 2 minutes)
+## 1. Create the GitHub repository (done)
 
 1. Go to https://github.com/new while signed in as `centreespoirgatineau`.
 2. Repository name: `site`. Visibility: Public. Leave every checkbox empty
    (no README, no .gitignore, no licence). Click **Create repository**.
 3. Tell Claude it is created. Claude pushes the code from `C:\Dev\site`.
 
-## 2. Install on the VPS (once, 5 minutes)
+## 2. Install on the VPS (done)
 
 Open a terminal on the VPS (Hostinger panel → Browser terminal, or PuTTY), as
 root, and paste this block:
@@ -42,13 +46,10 @@ minutes:
 At this point the site answers on the VPS but nobody can reach it yet: Traefik
 only routes `centreespoir.ca` once the domain points at the server.
 
-## 3. Point the domain at the VPS (the switch from Wix)
+## 3. Point the domain at the VPS (done)
 
-Do this when you are ready for the new site to replace the Wix one. It takes
-effect within minutes and is reversible by putting the old records back.
-
-**Before you switch, write down the current values** of the `@` and `www`
-records in Cloudflare (DNS → Records), so you can restore them.
+What was changed, and what to put back to return to Wix: the root record was
+`A 185.230.63.171` and `www` was `CNAME www27.wixdns.net`.
 
 1. Cloudflare → `centreespoir.ca` → **DNS** → **Records**.
 2. Delete the existing records for the root (`@` or `centreespoir.ca`) and for
@@ -71,26 +72,20 @@ redirects to it. If it does not after ten minutes:
 docker logs root-traefik-1 --tail 50 | grep -i centreespoir
 ```
 
-## 4. The two forms: the one thing to fix right after the switch
+## 4. The two forms (done, but temporary)
 
-The "Demande d'aide alimentaire" and "Devenir bénévole" forms still live on Wix,
-at `www.centreespoir.ca/aide` and `www.centreespoir.ca/embauche`. **Once the
-domain points at the VPS, those two addresses stop reaching Wix**, and the two
-buttons on the new site would land on the new site's redirect pages instead of
-the forms.
+The "Demande d'aide alimentaire" and "Devenir bénévole" forms still live on Wix.
+Since `centreespoir.ca` now serves this site, they are reached through the free
+Wix address instead:
 
-Two ways out, pick one:
+- https://centreespoir.wixsite.com/accueil/aide
+- https://centreespoir.wixsite.com/accueil/embauche
 
-- **Quick (same day).** Every Wix site keeps a free address of the form
-  `https://<account>.wixsite.com/<site>`. In the Wix dashboard: Settings →
-  Domains, or Site → "Free Wix domain". The forms are reachable at
-  `https://<that address>/aide` and `/embauche`. Send both addresses to Claude,
-  who changes them in `URLS` at the top of `build/build.mjs` and pushes.
-- **Proper (later).** Rebuild the two forms elsewhere (Google Forms, Zeffy forms,
-  or a small form on this site that emails `info@`), then swap the addresses the
-  same way.
+Both buttons on the site point there. **Keep that Wix site published**, or the
+two forms stop working.
 
-Until the switch happens, the current links work and nothing needs doing.
+These are meant to be replaced by something built here. When that day comes, the
+two addresses live in `URLS` at the top of `build/build.mjs`, and nowhere else.
 
 ## 5. Everyday changes
 

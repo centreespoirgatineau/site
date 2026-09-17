@@ -15,12 +15,15 @@ const SRC = path.join(ROOT, 'src');
 const OUT = path.join(ROOT, 'public');
 const SITE_URL = 'https://centreespoir.ca';
 
-// Addresses that appear on several pages, kept in one place. The two forms are
-// still the old Wix ones: once centreespoir.ca points at this site, they must be
-// reached through the free *.wixsite.com address (or rebuilt), so change them here.
+// Addresses that appear on several pages, kept in one place.
+//
+// The two forms are still on Wix, reached through its free address because
+// centreespoir.ca now serves this site. They are temporary: David intends to
+// replace them with something built here. When that happens, change them here
+// and nowhere else.
 export const URLS = {
-  'url.form_aide': 'https://www.centreespoir.ca/aide',
-  'url.form_benevole': 'https://www.centreespoir.ca/embauche',
+  'url.form_aide': 'https://centreespoir.wixsite.com/accueil/aide',
+  'url.form_benevole': 'https://centreespoir.wixsite.com/accueil/embauche',
   'url.don': 'https://www.zeffy.com/fr-CA/donation-form/faire-un-don-en-ligne-3',
   'url.etats_financiers': 'https://drive.google.com/drive/folders/174pVZCi2dR_dj7QNkUAm2wepAFVV2odh?usp=sharing',
   'url.rapports_annuels': 'https://drive.google.com/drive/folders/1IR1wQ3CXVYM0lJXzO0_vBQ0pJwWTFGYS?usp=sharing',
