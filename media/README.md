@@ -33,12 +33,25 @@ couper des mots, pas agrandir l'image.
 
 ### La zone sûre
 
-Facebook ne montre pas la même chose sur un téléphone et sur un ordinateur : la
-bannière de page est entière sur ordinateur (16:9) et réduite à une bande
-horizontale prise au milieu sur téléphone. Mesuré sur la page du Centre le
-18 septembre 2026. La case **Afficher la zone sûre** trace le repère : ce qui
-est à l'intérieur sera visible partout. Il n'apparaît jamais dans le fichier
-téléchargé.
+Facebook ne montre pas la même chose sur un téléphone et sur un ordinateur.
+Mesuré sur une capture de la page du Centre, dans l'application iOS, le
+18 septembre 2026 :
+
+- **Ordinateur** : l'image entière, en 16:9, avec l'avatar en bas à gauche.
+- **Téléphone** : seulement une bande de 2,38:1 prise au milieu, et surtout
+  **l'avatar est centré et énorme** (48 % de la largeur), son bord supérieur à
+  28 % de cette bande. Il masque le milieu de la bannière, pas un coin.
+
+Conséquence : **tout le texte se place dans la bande au-dessus de l'avatar**,
+soit environ 160 px de haut dans un fichier de 924. Le bas ne porte que des
+illustrations, qui peuvent être recouvertes sans dommage. Une pastille d'heures
+n'y tient généralement pas, et les heures sont de toute façon dans les
+informations de la page.
+
+La case **Afficher la zone sûre** trace le repère : ce qui est à l'intérieur
+sera visible partout. Il n'apparaît jamais dans le fichier téléchargé. Avant de
+livrer une couverture, **simuler le téléphone** : découper la bande du milieu et
+y superposer un cercle centré de 48 % de la largeur.
 
 ---
 

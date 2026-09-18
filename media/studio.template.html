@@ -250,12 +250,16 @@ function dessiner(pourTelechargement) {
   $('dim').textContent = W + ' × ' + H + ' px';
 
   const ratio = W / H;
-  // Une couverture Facebook a ses propres contraintes, mesurées sur la page du
-  // Centre le 18 septembre 2026 : l'ordinateur l'affiche en 16:9, le téléphone
-  // n'en garde qu'une bande horizontale (2,4:1 à 2,7:1) prise au milieu, et
-  // l'avatar de la page chevauche le bas (à gauche sur ordinateur, au centre sur
-  // téléphone). Le fichier est donc en 16:9, et tous les mots tiennent dans la
-  // bande du milieu. Le logo n'y figure pas : l'avatar le montre déjà.
+  // Une couverture Facebook a ses propres contraintes, mesurées sur une capture
+  // de la page du Centre prise dans l'application iOS le 18 septembre 2026 :
+  //   • l'ordinateur affiche l'image entière, en 16:9 ;
+  //   • le téléphone n'en garde qu'une bande de 2,38:1 prise au milieu ;
+  //   • sur téléphone l'avatar est CENTRÉ et énorme (48 % de la largeur), et son
+  //     bord supérieur tombe à 28 % de cette bande : il masque donc tout le
+  //     milieu de l'image, et pas seulement un coin.
+  // Le seul endroit sûr sur les deux est la BANDE AU-DESSUS DE L'AVATAR. Tous
+  // les mots y tiennent ; le bas ne porte que des illustrations, qui peuvent
+  // être recouvertes sans dommage. Le logo n'y figure pas : l'avatar le montre.
   if (fmt.couverture) return dessinerCouverture(W, H, t, pourTelechargement);
   const mode = ratio >= 1.5 ? 'large' : (ratio >= 0.85 ? 'carre' : 'haut');
   const marge = Math.round(Math.min(W, H) * (mode === 'large' ? 0.085 : 0.075));
@@ -379,37 +383,41 @@ function dessinerCouverture(W, H, t, pourTelechargement) {
   const sans = '"Source Sans 3", Arial, sans-serif';
   ctx.fillStyle = t.bg; ctx.fillRect(0, 0, W, H);
 
-  // La bande que le téléphone garde (2,4:1, centrée), avec une marge : c'est là,
-  // et seulement là, que les mots se placent.
-  const bandeH = W / 2.4, bandeY = (H - bandeH) / 2;
-  const haut = bandeY + bandeH * 0.12, bas = bandeY + bandeH * 0.9;
+  // La bande que le téléphone garde, et l'avatar qui la recouvre à partir de 28 %.
+  // Les mots vivent entre le haut de la bande et le haut de l'avatar.
+  const bandeH = W / 2.38, bandeY = (H - bandeH) / 2;
+  const avatarY = bandeY + bandeH * 0.285, avatarD = W * 0.48;
+  const haut = bandeY + 10, bas = avatarY - 18;
+  const dispoStrip = bas - haut;   // environ 170 px sur 924 : c'est tout ce qu'il y a.
 
   const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * 0.32);
   g.addColorStop(0, t.wash); g.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
-  // L'illustration à droite, dans la bande, hors de la colonne de texte.
+  // L'illustration à droite, à côté de l'avatar et non derrière lui : elle
+  // commence après le bord droit du cercle.
   const cleIllu = $('illustration').value;
   const fonce = $('theme').value !== 'creme';
   const illu = images[(fonce ? 'ic:' : 'i:') + cleIllu] || images['i:' + cleIllu] || null;
   if (illu) {
-    const iw = W * 0.2, ih = bandeH * 0.62;
-    placerImage(illu, W - W * 0.025 - iw, bandeY + bandeH * 0.19, iw, ih);
+    const iw = Math.min(W * 0.2, (W - avatarD) / 2 - W * 0.04);
+    placerImage(illu, W - W * 0.03 - iw, avatarY - bandeH * 0.06, iw, bandeH * 0.58);
   }
 
   // Le texte, centré dans la bande : on le mesure d'abord, on le pose ensuite.
-  const largeur = W * 0.58;
+  // Le téléphone coupe en hauteur, pas en largeur : le texte peut courir large.
+  const largeur = W * 0.78;
   const surtitre = $('surtitre').value.trim();
   const titre = $('titre').value.trim();
   const soustitre = $('soustitre').value.trim();
   const pastille = $('pastille').value.trim();
   const tsSur = Math.round(bandeH * 0.034), tsPas = Math.round(bandeH * 0.036);
-  const T = titre ? ajuster(titre, Math.round(bandeH * 0.115), serif, 500, largeur, bandeH * 0.42, 1.08) : null;
-  const S = soustitre ? ajuster(soustitre, Math.round(bandeH * 0.042), sans, 400, largeur, bandeH * 0.14, 1.4) : null;
+  const T = titre ? ajuster(titre, Math.round(bandeH * 0.078), serif, 500, largeur, dispoStrip * 0.60, 1.08) : null;
+  const S = soustitre ? ajuster(soustitre, Math.round(bandeH * 0.035), sans, 400, largeur, dispoStrip * 0.22, 1.35) : null;
   let total = 0;
-  if (surtitre) total += tsSur * 2.4;
-  if (T) total += T.lignes.length * T.taille * 1.08 + T.taille * 0.3;
-  if (S) total += S.lignes.length * S.taille * 1.4 + S.taille * 0.6;
+  if (surtitre) total += tsSur * 2.0;
+  if (T) total += T.lignes.length * T.taille * 1.08 + T.taille * 0.22;
+  if (S) total += S.lignes.length * S.taille * 1.35;
   if (pastille) total += tsPas * 2.2;
   let y = Math.max(haut, (haut + bas) / 2 - total / 2);
   ctx.textAlign = 'center';
@@ -425,17 +433,19 @@ function dessinerCouverture(W, H, t, pourTelechargement) {
     ctx.moveTo(W / 2 - l / 2 - ecart - trait, y + tsSur * 0.62); ctx.lineTo(W / 2 - l / 2 - ecart, y + tsSur * 0.62);
     ctx.moveTo(W / 2 + l / 2 + ecart, y + tsSur * 0.62); ctx.lineTo(W / 2 + l / 2 + ecart + trait, y + tsSur * 0.62);
     ctx.stroke(); ctx.letterSpacing = '0px';
-    y += tsSur * 2.4;
+    y += tsSur * 2.0;
   }
   if (T) {
     ctx.letterSpacing = (-T.taille * 0.02) + 'px';
     y = ecrire(T.lignes, W / 2, y, T.taille, serif, 500, t.ink, 1.08, 0);
-    ctx.letterSpacing = '0px'; y += T.taille * 0.3;
+    ctx.letterSpacing = '0px'; y += T.taille * 0.22;
   }
   if (S) {
-    y = ecrire(S.lignes, W / 2, y, S.taille, sans, 400, t.ink2, 1.4, 0);
-    y += S.taille * 0.6;
+    y = ecrire(S.lignes, W / 2, y, S.taille, sans, 400, t.ink2, 1.35, 0);
+    y += S.taille * 0.4;
   }
+  // La pastille ne tient que si le titre est court : au-dessus de l'avatar il n'y
+  // a qu'environ 160 px. Sinon elle est simplement omise, plutôt que masquée.
   if (pastille && y + tsPas * 2.2 <= bas) {
     ctx.font = `600 ${tsPas}px ${sans}`;
     const l = ctx.measureText(pastille).width, px = tsPas * 1.1, py = tsPas * 0.6;
@@ -451,10 +461,12 @@ function dessinerCouverture(W, H, t, pourTelechargement) {
     ctx.save();
     ctx.fillStyle = 'rgba(31,95,191,.18)';
     ctx.fillRect(0, 0, W, bandeY); ctx.fillRect(0, bandeY + bandeH, W, H - bandeY - bandeH);
+    // L'avatar sur téléphone : centré, 48 % de la largeur, à partir de 28 % de la bande.
+    ctx.fillStyle = 'rgba(200,120,40,.38)';
+    ctx.beginPath(); ctx.arc(W / 2, avatarY + avatarD / 2, avatarD / 2, 0, Math.PI * 2); ctx.fill();
+    // L'avatar sur ordinateur : en bas à gauche.
     ctx.fillStyle = 'rgba(200,40,40,.35)';
-    ctx.beginPath(); ctx.arc(W * 0.128, H, W * 0.09, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = 'rgba(200,120,40,.35)';
-    ctx.beginPath(); ctx.arc(W / 2, H, W * 0.085, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(W * 0.145, H - W * 0.02, W * 0.105, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   }
 }
