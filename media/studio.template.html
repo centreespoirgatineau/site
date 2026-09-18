@@ -117,7 +117,7 @@
         </select>
       </label>
       <label class="case"><input type="checkbox" id="zone"> Afficher la zone sûre</label>
-      <span class="aide" style="color:var(--ink-3);font-size:.8rem;">Le repère n'apparaît pas dans le fichier téléchargé. Facebook rogne les bords selon l'appareil : gardez l'essentiel à l'intérieur.</span>
+      <span class="aide" style="color:var(--ink-3);font-size:.8rem;">Le repère n'apparaît pas dans le fichier téléchargé. Facebook rogne les bords selon l'appareil : gardez l'essentiel à l'intérieur. Sur la bannière de page, le bleu est ce que le téléphone rogne, le rouge l'avatar sur ordinateur, l'orange l'avatar sur téléphone ; le logo n'y est pas dessiné, l'avatar le montre déjà.</span>
     </div>
   </form>
 
@@ -141,7 +141,7 @@ const ASSETS = __ASSETS__;
 
 /* ---- Les formats ------------------------------------------------------- */
 const FORMATS = {
-  'fb-couverture': { label: 'Bannière de page Facebook (1640 × 624)', w: 1640, h: 624 },
+  'fb-couverture': { label: 'Bannière de page Facebook (1640 × 624)', w: 1640, h: 624, couverture: true },
   'fb-evenement':  { label: "Bannière d'événement Facebook (1920 × 1005)", w: 1920, h: 1005 },
   'publication':   { label: 'Publication carrée, Facebook ou Instagram (1080 × 1080)', w: 1080, h: 1080 },
   'story':         { label: 'Story ou Reel (1080 × 1920)', w: 1080, h: 1920 },
@@ -250,6 +250,12 @@ function dessiner(pourTelechargement) {
   $('dim').textContent = W + ' × ' + H + ' px';
 
   const ratio = W / H;
+  // Une couverture Facebook a ses propres contraintes : l'avatar de la page
+  // couvre le coin inférieur gauche (ordinateur) ou le bas au centre
+  // (téléphone), et le téléphone rogne environ 16 % de chaque côté. Le texte
+  // se place donc au centre, dans le haut, et le logo n'y figure pas :
+  // l'avatar le montre déjà.
+  if (fmt.couverture) return dessinerCouverture(W, H, t, pourTelechargement);
   const mode = ratio >= 1.5 ? 'large' : (ratio >= 0.85 ? 'carre' : 'haut');
   const marge = Math.round(Math.min(W, H) * (mode === 'large' ? 0.085 : 0.075));
   const serif = '"Source Serif 4", Georgia, serif';
@@ -363,6 +369,87 @@ function dessiner(pourTelechargement) {
     ctx.strokeStyle = 'rgba(31,95,191,.85)'; ctx.lineWidth = Math.max(2, W * 0.002);
     ctx.setLineDash([W * 0.012, W * 0.012]);
     ctx.strokeRect(W * 0.10, H * 0.075, W * 0.80, H * 0.85);
+    ctx.restore();
+  }
+}
+
+function dessinerCouverture(W, H, t, pourTelechargement) {
+  const serif = '"Source Serif 4", Georgia, serif';
+  const sans = '"Source Sans 3", Arial, sans-serif';
+  ctx.fillStyle = t.bg; ctx.fillRect(0, 0, W, H);
+
+  // Le halo au centre, derrière les mots.
+  const g = ctx.createRadialGradient(W / 2, H * 0.4, 0, W / 2, H * 0.4, W * 0.3);
+  g.addColorStop(0, t.wash); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+  // L'illustration à droite, au-dessus de la ligne de l'avatar, dans la zone
+  // que le téléphone rogne : sur téléphone il ne reste que les mots, sur
+  // ordinateur les mots et la figure. Le coin gauche reste libre pour l'avatar.
+  const cleIllu = $('illustration').value;
+  const fonce = $('theme').value !== 'creme';
+  const illu = images[(fonce ? 'ic:' : 'i:') + cleIllu] || images['i:' + cleIllu] || null;
+  if (illu) {
+    const iw = W * 0.2, ih = H * 0.5;
+    placerImage(illu, W - W * 0.025 - iw, H * 0.26, iw, ih);
+  }
+
+  const largeur = W * 0.56;
+  let y = H * 0.09;
+  ctx.textAlign = 'center';
+
+  const surtitre = $('surtitre').value.trim();
+  if (surtitre) {
+    const ts = Math.round(H * 0.034);
+    ctx.font = `600 ${ts}px ${sans}`; ctx.letterSpacing = (ts * 0.13) + 'px';
+    const texte = surtitre.toLocaleUpperCase('fr-CA');
+    const l = ctx.measureText(texte).width, trait = ts * 1.6, ecart = ts * 0.7;
+    ctx.fillStyle = t.sur; ctx.textBaseline = 'alphabetic';
+    ctx.fillText(texte, W / 2, y + ts);
+    ctx.strokeStyle = t.sur; ctx.lineWidth = Math.max(2, ts * 0.13); ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - l / 2 - ecart - trait, y + ts * 0.62); ctx.lineTo(W / 2 - l / 2 - ecart, y + ts * 0.62);
+    ctx.moveTo(W / 2 + l / 2 + ecart, y + ts * 0.62); ctx.lineTo(W / 2 + l / 2 + ecart + trait, y + ts * 0.62);
+    ctx.stroke(); ctx.letterSpacing = '0px';
+    y += ts * 2.4;
+  }
+
+  const titre = $('titre').value.trim();
+  if (titre) {
+    const { taille, lignes } = ajuster(titre, Math.round(H * 0.115), serif, 500, largeur, H * 0.4, 1.08);
+    ctx.letterSpacing = (-taille * 0.02) + 'px';
+    y = ecrire(lignes, W / 2, y, taille, serif, 500, t.ink, 1.08, 0);
+    ctx.letterSpacing = '0px';
+    y += taille * 0.3;
+  }
+
+  const soustitre = $('soustitre').value.trim();
+  if (soustitre) {
+    const { taille, lignes } = ajuster(soustitre, Math.round(H * 0.042), sans, 400, largeur, H * 0.14, 1.4);
+    y = ecrire(lignes, W / 2, y, taille, sans, 400, t.ink2, 1.4, 0);
+    y += taille * 0.6;
+  }
+
+  const pastille = $('pastille').value.trim();
+  if (pastille && y < H * 0.62) {
+    const ts = Math.round(H * 0.036);
+    ctx.font = `600 ${ts}px ${sans}`;
+    const l = ctx.measureText(pastille).width, px = ts * 1.1, py = ts * 0.6;
+    ctx.fillStyle = t.pastilleFond;
+    rectArrondi(W / 2 - l / 2 - px, y, l + px * 2, ts + py * 2, (ts + py * 2) / 2); ctx.fill();
+    ctx.fillStyle = t.pastilleTexte; ctx.fillText(pastille, W / 2, y + py + ts * 0.79);
+  }
+  ctx.textAlign = 'left';
+
+  // Les vraies zones à risque d'une couverture, à l'écran seulement.
+  if ($('zone').checked && !pourTelechargement) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(31,95,191,.16)';
+    ctx.fillRect(0, 0, W * 0.16, H); ctx.fillRect(W - W * 0.16, 0, W * 0.16, H);
+    ctx.fillStyle = 'rgba(200,40,40,.35)';
+    ctx.beginPath(); ctx.arc(W * 0.14, H + H * 0.03, H * 0.28, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'rgba(200,120,40,.35)';
+    ctx.beginPath(); ctx.arc(W / 2, H + H * 0.02, H * 0.24, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   }
 }
