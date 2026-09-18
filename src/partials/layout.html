@@ -17,35 +17,69 @@
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
   <meta property="og:url" content="{{ canonical }}">
-  <meta property="og:image" content="https://centreespoir.ca/og.png?v={{ og_v }}">
+  <meta property="og:image" content="{{ og_image }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ og_alt }}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:image" content="{{ og_image }}">
+  <meta name="twitter:image:alt" content="{{ og_alt }}">
   <link rel="preload" href="/assets/fonts/SourceSerif4-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/SourceSans3-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ css }}">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "NGO",
-    "name": "Centre Espoir de Gatineau",
-    "alternateName": "Centre Espoir",
-    "url": "https://centreespoir.ca",
-    "logo": "https://centreespoir.ca/assets/img/logo-vertical.svg",
-    "foundingDate": "1984",
-    "telephone": "+1-819-663-3238",
-    "email": "info@centreespoir.ca",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "791, boulevard Maloney Est",
-      "addressLocality": "Gatineau",
-      "addressRegion": "QC",
-      "postalCode": "J8P 1H8",
-      "addressCountry": "CA"
-    },
-    "sameAs": [
-      "https://www.facebook.com/centreespoirgatineau",
-      "https://www.instagram.com/centreespoirgatineau"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://centreespoir.ca/#site",
+        "url": "https://centreespoir.ca",
+        "name": "Centre Espoir de Gatineau",
+        "inLanguage": "fr-CA",
+        "publisher": { "@id": "https://centreespoir.ca/#org" }
+      },
+      {
+        "@type": ["NGO", "LocalBusiness"],
+        "@id": "https://centreespoir.ca/#org",
+        "name": "Centre Espoir de Gatineau",
+        "alternateName": "Centre Espoir",
+        "legalName": "Centre Espoir de Gatineau",
+        "description": "Banque alimentaire fondée en 1984 au service du quartier Notre-Dame et des secteurs environnants de Gatineau. Plus de 250 familles aidées chaque mois.",
+        "slogan": "Nourrir le corps, ce n’est que la moitié du travail.",
+        "url": "https://centreespoir.ca",
+        "logo": "https://centreespoir.ca/assets/img/logo-vertical.svg",
+        "image": "https://centreespoir.ca/og.png",
+        "foundingDate": "1984",
+        "taxID": "848106365RR0001",
+        "telephone": "+1-819-663-3238",
+        "email": "info@centreespoir.ca",
+        "priceRange": "$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "791, boulevard Maloney Est",
+          "addressLocality": "Gatineau",
+          "addressRegion": "QC",
+          "postalCode": "J8P 1H8",
+          "addressCountry": "CA"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": 45.4830815, "longitude": -75.614716 },
+        "hasMap": "https://maps.google.com/?q=791+Boulevard+Maloney+E,+Gatineau,+QC+J8P+1H8",
+        "areaServed": { "@type": "City", "name": "Gatineau", "sameAs": "https://www.wikidata.org/wiki/Q140884" },
+        "openingHoursSpecification": [{
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Tuesday", "Wednesday", "Thursday"],
+          "opens": "09:30",
+          "closes": "12:30"
+        }],
+        "knowsLanguage": ["fr-CA", "en-CA"],
+        "sameAs": [
+          "https://www.facebook.com/centreespoirgatineau",
+          "https://www.instagram.com/centreespoirgatineau"
+        ]
+      }
     ]
   }
   </script>

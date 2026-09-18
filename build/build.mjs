@@ -111,10 +111,9 @@ for (const { file, rel } of assetFiles.filter((a) => /\.(css|js)$/.test(a.rel)))
 
 // Files that must sit at the root under a fixed name.
 const rootVersion = {};
-for (const name of ['favicon.svg', 'og.png', 'apple-touch-icon.png', 'site.webmanifest']) {
-  const p = path.join(SRC, 'root', name);
-  if (!fs.existsSync(p)) continue;
-  const buf = fs.readFileSync(p);
+for (const file of walk(path.join(SRC, 'root'))) {
+  const name = path.basename(file);
+  const buf = fs.readFileSync(file);
   write(path.join(OUT, name), buf);
   rootVersion[name] = hash(buf);
 }
@@ -137,8 +136,12 @@ for (const file of walk(path.join(SRC, 'pages'))) {
     js: assetMap['/assets/js/site.js'],
     // Fixed-name files carry a version tag so a changed icon or card is refetched.
     favicon_v: rootVersion['favicon.svg'] ?? '0',
-    og_v: rootVersion['og.png'] ?? '0',
     touch_v: rootVersion['apple-touch-icon.png'] ?? '0',
+    // Each page may name its own share card (og_image in the front matter);
+    // the home card is the fallback. The version tag makes social networks
+    // refetch a redrawn card instead of showing the one they cached.
+    og_image: `${SITE_URL}/${meta.og_image ?? 'og.png'}?v=${rootVersion[meta.og_image ?? 'og.png'] ?? '0'}`,
+    og_alt: meta.og_alt ?? 'Le phare du Centre Espoir de Gatineau sur fond terracotta, et les mots « Nourrir le corps, ce n’est que la moitié du travail »',
     year: String(new Date().getFullYear()),
     content: render(body, { ...URLS }),
     ...URLS,

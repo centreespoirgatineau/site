@@ -98,14 +98,18 @@ Text, hours, names, links: tell Claude, or edit the file yourself on GitHub
 rebuilds and is live in about two minutes. `update.sh` copies the reverse-proxy
 file from `deploy/` on every deploy, so routing changes ship the same way.
 
-The share-card image (`og.png`) and the iOS icon are generated files. When the
-logo or the card wording changes:
+The share cards (`og.png` for the home page, `og-<page>.png` for each other
+page: what Facebook, Messenger or a text message shows when a link is sent) and
+the iOS icon are generated files. Their wording lives in `build/make-images.mjs`.
+When the logo or that wording changes:
 
 ```bash
 node build/make-images.mjs
 ```
 
-then commit `src/root/og.png` and `src/root/apple-touch-icon.png`.
+then commit everything in `src/root/`. Facebook keeps its own copy of a card;
+paste the address in https://developers.facebook.com/tools/debug/ and press
+"Scrape again" to make it fetch the new one.
 
 ## 6. Facts on the site still to confirm
 
@@ -131,7 +135,48 @@ These were written from what you told me and from the old site. Read them once:
   est le directeur des opérations." Quebec's Law 25 requires naming one; change
   if it is someone else.
 
-## 7. If something breaks
+## 7. Being found on Google (your part, about 20 minutes)
+
+The site does its share: every page has a title under 60 characters and a
+description under 160, a sitemap at `/sitemap.xml`, and structured data that
+tells Google it is a food bank in Gatineau, with the address, the coordinates,
+the hours and the charity number. Google itself still shows the old Wix result
+until it recrawls; the old Wix addresses it lists (`/aide`, the privacy policy)
+redirect to the right pages, so nobody lands on an error. Three things only you
+can do will speed it up and put the Centre in the map results:
+
+**A. Google Search Console.** Your domain is already verified there (a
+`google-site-verification` record exists in Cloudflare). Go to
+https://search.google.com/search-console, pick the `centreespoir.ca` property,
+then:
+1. **Sitemaps** (left menu) → enter `sitemap.xml` → **Submit**.
+2. **URL inspection** (top bar) → paste `https://centreespoir.ca/` → **Request
+   indexing**. Repeat for `/aide-alimentaire`, `/dons`, `/benevolat`,
+   `/a-propos`, `/nous-joindre`. Each request takes a minute; Google usually
+   recrawls within a day or two.
+
+**B. Google Business Profile.** This is what puts the Centre on the map when
+someone searches "banque alimentaire Gatineau". Go to
+https://business.google.com, claim or open the profile for Centre Espoir de
+Gatineau, and check:
+- **Website**: `https://centreespoir.ca` (not the Wix address).
+- **Hours**: Tuesday, Wednesday, Thursday, 9:30 to 12:30, closed the other days.
+- **Category**: "Banque alimentaire" first, then "Organisme sans but lucratif".
+- **Description**: paste the first paragraph of the home page.
+- **Photos**: a photo of the entrance and one of the shelves. Profiles with
+  photos get chosen far more often, and this is the one place illustrations
+  cannot stand in.
+- Turn on **messages** or leave the phone as the contact, your choice.
+
+**C. Hide the Wix site from Google.** It is still published for the two forms,
+and Google may keep listing it next to the new site. In the Wix dashboard:
+Settings → SEO → uncheck "Let search engines index your site" (the wording
+varies). The forms keep working; only the listing disappears.
+
+Optional, five minutes: https://www.bing.com/webmasters, import the site from
+Search Console, and Bing (and so Copilot and DuckDuckGo) follows.
+
+## 8. If something breaks
 
 ```bash
 cd /opt/site && docker compose ps && docker compose logs --tail=40 site

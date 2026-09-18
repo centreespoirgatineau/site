@@ -39,6 +39,19 @@ test('every page has a title, a description, one h1, and no leftover template ma
   }
 });
 
+test('titles fit a search result and descriptions fit a preview', () => {
+  for (const [f, h] of Object.entries(html)) {
+    const title = h.match(/<title>([^<]+)<\/title>/)[1];
+    const desc = h.match(/<meta name="description" content="([^"]+)"/)[1];
+    assert.ok(title.length <= 60, `${f}: title is ${title.length} chars, max 60`);
+    assert.ok(desc.length >= 110 && desc.length <= 158, `${f}: description is ${desc.length} chars, want 110 to 158`);
+    const og = h.match(/<meta property="og:image" content="https:\/\/centreespoir\.ca\/([^"?]+)\?v=[0-9a-f]{10}"/);
+    assert.ok(og, `${f}: og:image must be an absolute, versioned address`);
+    assert.ok(fs.existsSync(path.join(OUT, og[1])), `${f}: share card ${og[1]} does not exist`);
+    assert.match(h, /"@type": \["NGO", "LocalBusiness"\]/, `${f}: structured data`);
+  }
+});
+
 test('internal links and local assets resolve to files', () => {
   const exists = (u) => {
     const clean = u.split(/[?#]/)[0];
