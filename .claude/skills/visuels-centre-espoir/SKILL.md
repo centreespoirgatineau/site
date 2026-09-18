@@ -51,9 +51,9 @@ alone at full size, which a headless Chrome screenshot then captures exactly.
 | Link preview card | 1200 × 630 |
 | Poster, 8.5 × 11 in at 300 dpi | 2550 × 3300 |
 
-### The Facebook page cover: measured three times, wrong twice
+### The Facebook page cover: measured four times, wrong three times
 
-This cost David two rounds of rework on 18 September 2026. **Guessing from the
+This cost David three rounds of rework on 18 September 2026. **Guessing from the
 desktop page failed. Reasoning from published specifications failed** — nearly
 every guide online still describes the pre-2023 layout of 820 × 312. What finally
 worked, and what to do next time:
@@ -68,22 +68,27 @@ The result, for a **1640 × 924** file:
   **crops about 4 % off each side**. It is *not* a narrow middle band, which is
   what the second measurement wrongly concluded. Two things sit on top of it:
   - the app's own controls (back, share, search, menu) float over the **top
-    240 px** of the file;
-  - the **avatar** is a centred circle **47 % of the width**, its top edge at
-    **y 490**.
+    222 px** of the file;
+  - the **avatar** is a centred circle **44 % of the width**, white ring
+    included, its top edge at **y 420**.
 
-So the safe area for words is a band across the middle: **y 255 to 465**, inside
-**x 150 to 1490**. Illustrations go below it, in the columns either side of the
-avatar circle. An hours pill usually will not fit, and the hours are in the
-page's information section anyway.
+So the safe area for words is a band across the middle: **y 240 to 412**, inside
+**x 150 to 1490** — about **170 px**, which holds an eyebrow, a **single-line**
+title and one line of subtitle, and nothing more. Illustrations go below it, in
+the columns either side of the avatar circle. An hours pill does not fit, and the
+hours are in the page's information section anyway.
 
 **Never put the logo or the mark on the cover** — David's instruction, and
 correct: the avatar already shows it.
 
-**Simulate before delivering.** Crop 4 % from each side, darken the top 240 px,
-lay a centred circle of 47 % starting at y 490, and look at the result. The
+**Simulate before delivering.** Crop 4 % from each side, darken the top 222 px,
+lay a centred circle of 44 % starting at y 420, and look at the result. The
 studio's *Afficher la zone sûre* box draws the same thing. A flat file tells you
 nothing: every cover that went wrong looked perfectly fine flat.
+
+Each wrong version was wrong by a smaller margin than the last, and each time the
+only thing that settled it was a fresh screenshot from David with a known file
+installed. **Ask for one, rather than iterating on a guess.**
 
 ## 3. The three colour schemes
 

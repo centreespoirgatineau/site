@@ -42,17 +42,19 @@ une capture d'écran de l'application.
 - **Téléphone** : presque toute l'image aussi, légèrement agrandie pour remplir,
   ce qui **rogne environ 4 % de chaque côté**. Mais deux choses la recouvrent :
   les **commandes de l'application** (retour, partage, recherche, menu) flottent
-  sur les **240 premiers pixels**, et l'**avatar**, centré, large de **47 %**,
-  monte jusqu'à **y 490**.
+  sur les **222 premiers pixels**, et l'**avatar**, centré, large de **44 %**
+  (cercle blanc compris), monte jusqu'à **y 420**.
 
-Il reste donc une bande au milieu, **y 255 à 465 dans un fichier de 1640 x 924**.
+Il reste donc une bande au milieu, **y 240 à 412 dans un fichier de 1640 x 924**,
+soit environ 170 px : un surtitre, un titre sur une seule ligne et une ligne de
+sous-titre, pas davantage.
 Tout le texte y va. Les illustrations descendent de part et d'autre du cercle de
 l'avatar, sans entrer dans les 4 % rognés. Une pastille d'heures n'y tient
 généralement pas, et les heures figurent déjà dans les informations de la page.
 
 La case **Afficher la zone sûre** trace tout cela. **Avant de livrer une
 couverture, simuler le téléphone** : rogner 4 % de chaque côté, assombrir les
-240 premiers pixels, poser un cercle centré de 47 % à partir de y 490, et
+222 premiers pixels, poser un cercle centré de 44 % à partir de y 420, et
 regarder.
 
 ---

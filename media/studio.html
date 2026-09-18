@@ -388,9 +388,9 @@ function dessinerCouverture(W, H, t, pourTelechargement) {
 
   // La géométrie mesurée, en proportions du fichier.
   const rognage = W * 0.04;        // ce que le téléphone coupe de chaque côté
-  const navBas = H * 0.26;         // les commandes de l'application flottent au-dessus
-  const avD = W * 0.47, avY = H * 0.53;   // l'avatar, centré
-  const haut = navBas + H * 0.016, bas = avY - H * 0.027;
+  const navBas = H * 0.24;         // les commandes de l'application flottent au-dessus
+  const avD = W * 0.44, avY = H * 0.455;  // l'avatar, centré, cercle blanc compris
+  const haut = navBas + H * 0.02, bas = avY - H * 0.009;
   const dispo = bas - haut;
 
   // Le halo, large et doux, centré sur la bande de texte.
@@ -406,7 +406,7 @@ function dessinerCouverture(W, H, t, pourTelechargement) {
   if (illu) {
     const libre = (W - avD) / 2 - rognage - W * 0.03;   // la colonne libre d'un côté
     const iw = Math.min(W * 0.2, libre), ih = H * 0.38;
-    placerImage(illu, W - rognage - W * 0.03 - iw, avY - H * 0.06, iw, ih);
+    placerImage(illu, W - rognage - W * 0.045 - iw, avY + H * 0.01, iw, ih);
   }
 
   // Le texte, centré dans la bande. Le téléphone coupe en hauteur bien plus qu'en
@@ -416,9 +416,9 @@ function dessinerCouverture(W, H, t, pourTelechargement) {
   const titre = $('titre').value.trim();
   const soustitre = $('soustitre').value.trim();
   const pastille = $('pastille').value.trim();
-  const tsSur = Math.round(H * 0.024), tsPas = Math.round(H * 0.028);
-  const T = titre ? ajuster(titre, Math.round(H * 0.058), serif, 500, largeur, dispo * 0.56, 1.1) : null;
-  const S = soustitre ? ajuster(soustitre, Math.round(H * 0.027), sans, 400, largeur, dispo * 0.2, 1.35) : null;
+  const tsSur = Math.round(H * 0.022), tsPas = Math.round(H * 0.026);
+  const T = titre ? ajuster(titre, Math.round(H * 0.050), serif, 500, largeur, dispo * 0.58, 1.1) : null;
+  const S = soustitre ? ajuster(soustitre, Math.round(H * 0.025), sans, 400, largeur, dispo * 0.22, 1.35) : null;
   let total = 0;
   if (surtitre) total += tsSur * 2.1;
   if (T) total += T.lignes.length * T.taille * 1.1 + T.taille * 0.24;
