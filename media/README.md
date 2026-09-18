@@ -104,8 +104,11 @@ la méthode :
 | `#FF5678` (le rose d'Open Doodles) | `#DA7757` | Le terracotta du logo |
 | `#000000` (le noir) | `#141413` | L'encre du site, un noir chaud |
 
-Sur les fonds foncés, un troisième remplacement est appliqué au vol :
-`#141413` devient `#FAF9F5`, la crème.
+Sur les fonds foncés, l'atelier applique un troisième remplacement au vol, et il
+dépend de la collection : pour un dessin d'**Open Doodles**, `#141413` devient
+`#FAF9F5` ; pour une figure d'**Open Peeps**, dont les vêtements sont remplis de
+blanc, il faut **échanger l'encre et le blanc**, sinon le personnage devient une
+silhouette blanche sans visage.
 
 ### Ajouter une illustration
 

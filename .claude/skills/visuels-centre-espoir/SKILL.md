@@ -116,7 +116,15 @@ sign, commercial use allowed.
 | `#FF5678` (Open Doodles pink) | `#DA7757`, the logo's terracotta |
 | `#000000` | `#141413`, the site's warm ink |
 
-On dark backgrounds a third is applied on the fly: `#141413` becomes `#FAF9F5`.
+On a dark background a third replacement is applied on the fly, **and it differs
+by collection**:
+
+- **Open Doodles**: `#141413` becomes `#FAF9F5`. Done.
+- **Open Peeps**: that alone turns the figure into a **white silhouette with no
+  face**, because their clothing is filled white. **Swap both**: `#141413` to
+  `#FAF9F5` and `#FFFFFF` to `#141413`. That gives a light line drawing that
+  reads on ink.
+
 Files live in `src/assets/img/illustrations/`, and the light copies are named
 `-clair.svg`.
 

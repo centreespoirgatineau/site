@@ -30,8 +30,18 @@ Deux règles, données par David le 18 septembre 2026 :
   une avant de les retenir. `peep-standing-1` et `peep-standing-7` ont été
   retirées pour cette raison.
 
-Les versions `-clair.svg` (l'encre remplacée par la crème `#FAF9F5`) servent sur
-les fonds foncés.
+## Sur un fond foncé
+
+Une illustration à l'encre y disparaît, mais la correction n'est pas la même
+selon la collection :
+
+- **Open Doodles** : remplacer l'encre `#141413` par la crème `#FAF9F5`. Le
+  terracotta reste. C'est ce que font les fichiers `-clair.svg`.
+- **Open Peeps** : ne surtout pas s'arrêter là. Leurs vêtements sont **remplis de
+  blanc**, alors éclaircir seulement les contours transforme le personnage en
+  **silhouette blanche**, visage compris. Il faut **échanger les deux** :
+  `#141413` devient `#FAF9F5` et `#FFFFFF` devient `#141413`. On retrouve un
+  dessin au trait clair, lisible, sur le fond foncé.
 
 ## En ajouter une
 

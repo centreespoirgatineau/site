@@ -58,9 +58,16 @@ const fontface = Object.values(polices).map((p) =>
 // ---- Les illustrations ----------------------------------------------------
 const illustrations = {};
 // Chaque illustration existe en deux versions : à l'encre pour les fonds clairs,
-// et à la crème pour les fonds foncés, où l'encre disparaîtrait. Le terracotta,
-// lui, ne change jamais : c'est la couleur de la marque.
-const eclaircir = (s) => s.replace(/#141413/gi, '#FAF9F5');
+// et une version pour les fonds foncés. Le terracotta, lui, ne change jamais :
+// c'est la couleur de la marque.
+//
+// Attention : remplacer seulement l'encre par la crème suffit pour un dessin
+// d'Open Doodles, mais transforme une figure d'Open Peeps en silhouette blanche,
+// parce que ses vêtements sont remplis de blanc. Il faut alors échanger les deux,
+// l'encre ET le blanc, ce qui redonne un dessin au trait clair sur fond foncé.
+const eclaircir = (s) => s.includes('#FFFFFF') || s.includes('#ffffff')
+  ? s.replace(/#141413/gi, '@@I@@').replace(/#FFFFFF/gi, '#141413').replace(/@@I@@/g, '#FAF9F5')
+  : s.replace(/#141413/gi, '#FAF9F5');
 for (const [cle, nom] of ILLUSTRATIONS) {
   const p = path.join(ASSETS, 'img', 'illustrations', `${cle}.svg`);
   if (!fs.existsSync(p)) throw new Error(`illustration absente : ${cle}.svg`);
