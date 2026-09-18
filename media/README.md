@@ -33,10 +33,12 @@ couper des mots, pas agrandir l'image.
 
 ### La zone sûre
 
-Facebook rogne les bords des bannières, et pas de la même façon sur un téléphone
-et sur un ordinateur. La case **Afficher la zone sûre** trace un repère : ce qui
-est à l'intérieur sera visible partout. Le repère n'apparaît jamais dans le
-fichier téléchargé.
+Facebook ne montre pas la même chose sur un téléphone et sur un ordinateur : la
+bannière de page est entière sur ordinateur (16:9) et réduite à une bande
+horizontale prise au milieu sur téléphone. Mesuré sur la page du Centre le
+18 septembre 2026. La case **Afficher la zone sûre** trace le repère : ce qui
+est à l'intérieur sera visible partout. Il n'apparaît jamais dans le fichier
+téléchargé.
 
 ---
 
@@ -44,7 +46,7 @@ fichier téléchargé.
 
 | Choix | Dimensions | Pour |
 |---|---|---|
-| Bannière de page Facebook | 1640 × 624 | L'en-tête de la page du Centre |
+| Bannière de page Facebook | 1640 × 924 | L'en-tête de la page du Centre. Un ordinateur la montre entière (16:9), un téléphone n'en garde que la bande du milieu : les mots y restent, sans logo, l'avatar le montre déjà. |
 | Bannière d'événement Facebook | 1920 × 1005 | Un événement, une collecte, un souper |
 | Publication carrée | 1080 × 1080 | Une publication Facebook ou Instagram |
 | Story ou Reel | 1080 × 1920 | Les stories, à lire à la verticale |
