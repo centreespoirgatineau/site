@@ -34,24 +34,26 @@ couper des mots, pas agrandir l'image.
 ### La zone sûre
 
 Facebook ne montre pas la même chose sur un téléphone et sur un ordinateur.
-Mesuré sur une capture de la page du Centre, dans l'application iOS, le
-18 septembre 2026 :
+Mesuré **trois fois** le 18 septembre 2026, les deux premières fois à tort : la
+seule méthode fiable a été d'installer un fichier connu sur la page et de lire
+une capture d'écran de l'application.
 
-- **Ordinateur** : l'image entière, en 16:9, avec l'avatar en bas à gauche.
-- **Téléphone** : seulement une bande de 2,38:1 prise au milieu, et surtout
-  **l'avatar est centré et énorme** (48 % de la largeur), son bord supérieur à
-  28 % de cette bande. Il masque le milieu de la bannière, pas un coin.
+- **Ordinateur** : l'image entière, en 16:9, l'avatar en bas à gauche.
+- **Téléphone** : presque toute l'image aussi, légèrement agrandie pour remplir,
+  ce qui **rogne environ 4 % de chaque côté**. Mais deux choses la recouvrent :
+  les **commandes de l'application** (retour, partage, recherche, menu) flottent
+  sur les **240 premiers pixels**, et l'**avatar**, centré, large de **47 %**,
+  monte jusqu'à **y 490**.
 
-Conséquence : **tout le texte se place dans la bande au-dessus de l'avatar**,
-soit environ 160 px de haut dans un fichier de 924. Le bas ne porte que des
-illustrations, qui peuvent être recouvertes sans dommage. Une pastille d'heures
-n'y tient généralement pas, et les heures sont de toute façon dans les
-informations de la page.
+Il reste donc une bande au milieu, **y 255 à 465 dans un fichier de 1640 x 924**.
+Tout le texte y va. Les illustrations descendent de part et d'autre du cercle de
+l'avatar, sans entrer dans les 4 % rognés. Une pastille d'heures n'y tient
+généralement pas, et les heures figurent déjà dans les informations de la page.
 
-La case **Afficher la zone sûre** trace le repère : ce qui est à l'intérieur
-sera visible partout. Il n'apparaît jamais dans le fichier téléchargé. Avant de
-livrer une couverture, **simuler le téléphone** : découper la bande du milieu et
-y superposer un cercle centré de 48 % de la largeur.
+La case **Afficher la zone sûre** trace tout cela. **Avant de livrer une
+couverture, simuler le téléphone** : rogner 4 % de chaque côté, assombrir les
+240 premiers pixels, poser un cercle centré de 47 % à partir de y 490, et
+regarder.
 
 ---
 
