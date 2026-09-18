@@ -37,11 +37,17 @@ selon la collection :
 
 - **Open Doodles** : remplacer l'encre `#141413` par la crème `#FAF9F5`. Le
   terracotta reste. C'est ce que font les fichiers `-clair.svg`.
-- **Open Peeps** : ne surtout pas s'arrêter là. Leurs vêtements sont **remplis de
-  blanc**, alors éclaircir seulement les contours transforme le personnage en
-  **silhouette blanche**, visage compris. Il faut **échanger les deux** :
-  `#141413` devient `#FAF9F5` et `#FFFFFF` devient `#141413`. On retrouve un
-  dessin au trait clair, lisible, sur le fond foncé.
+- **Open Peeps** : on ne touche pas au dessin, on éclaircit seulement les
+  vêtements, `#FFFFFF` devient `#FAF9F5`. Le personnage garde exactement l'allure
+  qu'il a sur fond clair. Mais ses cheveux et ses pantalons foncés se perdraient
+  dans le fond : on trace donc **un contour crème autour de la silhouette**,
+  épais d'environ **1,4 % de la largeur de la figure** (1,5 px pour une figure de
+  110 px). L'atelier le fait tout seul.
+
+  Arrêté le 18 septembre 2026 après comparaison de six recolorations. Deux
+  impasses écartées : éclaircir seulement les contours donne une silhouette
+  blanche sans visage, et échanger l'encre et le blanc donne des vêtements foncés
+  et des traits clairs, que David a trouvés inversés.
 
 ## En ajouter une
 

@@ -120,10 +120,18 @@ On a dark background a third replacement is applied on the fly, **and it differs
 by collection**:
 
 - **Open Doodles**: `#141413` becomes `#FAF9F5`. Done.
-- **Open Peeps**: that alone turns the figure into a **white silhouette with no
-  face**, because their clothing is filled white. **Swap both**: `#141413` to
-  `#FAF9F5` and `#FFFFFF` to `#141413`. That gives a light line drawing that
-  reads on ink.
+- **Open Peeps**: leave the drawing in ink and lighten only the garments,
+  `#FFFFFF` to `#FAF9F5`, so the figure keeps the look it has on a light page.
+  Then **trace a cream outline around the silhouette**, about **1.4 % of the
+  figure's width** (1.5 px on a 110 px figure), or the hair and the dark trousers
+  dissolve into the background. The studio does this itself, with eight
+  drop-shadows and no blur, applied at draw time, so the source files stay usable
+  on light pages.
+
+  Two dead ends, both shown to David on 18 September 2026 and rejected:
+  lightening only the outlines gives a **white silhouette with no face**, and
+  swapping ink and white gives dark garments with light lines, which he read as
+  inverted.
 
 Files live in `src/assets/img/illustrations/`, and the light copies are named
 `-clair.svg`.

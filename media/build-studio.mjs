@@ -65,13 +65,25 @@ const illustrations = {};
 // d'Open Doodles, mais transforme une figure d'Open Peeps en silhouette blanche,
 // parce que ses vêtements sont remplis de blanc. Il faut alors échanger les deux,
 // l'encre ET le blanc, ce qui redonne un dessin au trait clair sur fond foncé.
-const eclaircir = (s) => s.includes('#FFFFFF') || s.includes('#ffffff')
-  ? s.replace(/#141413/gi, '@@I@@').replace(/#FFFFFF/gi, '#141413').replace(/@@I@@/g, '#FAF9F5')
+//
+// Choix de David, le 18 septembre 2026, après avoir comparé six recolorations :
+//   • **Open Doodles** (aucun aplat blanc) : l'encre devient crème. Le dessin
+//     apparaît en clair sur le fond foncé.
+//   • **Open Peeps** (vêtements remplis de blanc) : on garde le dessin à l'encre
+//     et on éclaircit les vêtements. Le personnage ressemble alors à ce qu'il est
+//     sur fond clair, mais ses cheveux et ses pantalons foncés se perdraient dans
+//     le fond : l'atelier trace donc un **contour crème** autour de la silhouette
+//     au moment du dessin (voir `contour` dans studio.template.html).
+const aDesAplatsBlancs = (s) => /#FFFFFF/i.test(s);
+const eclaircir = (s) => aDesAplatsBlancs(s)
+  ? s.replace(/#FFFFFF/gi, '#FAF9F5')
   : s.replace(/#141413/gi, '#FAF9F5');
 for (const [cle, nom] of ILLUSTRATIONS) {
   const p = path.join(ASSETS, 'img', 'illustrations', `${cle}.svg`);
   if (!fs.existsSync(p)) throw new Error(`illustration absente : ${cle}.svg`);
-  illustrations[cle] = { nom, data: svgData(p), clair: svgData(p, eclaircir) };
+  const brut = fs.readFileSync(p, 'utf8');
+  // `contour` dit au dessin qu'il faut cerner cette figure sur un fond foncé.
+  illustrations[cle] = { nom, data: svgData(p), clair: svgData(p, eclaircir), contour: aDesAplatsBlancs(brut) };
 }
 
 // ---- Les logos, en deux versions ------------------------------------------

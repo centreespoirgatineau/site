@@ -233,6 +233,19 @@ function rectArrondi(x, y, w, h, r) {
   ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
 }
 
+// Un contour crème autour de la silhouette : huit ombres portées sans flou, qui
+// suivent tout ce qui est opaque, cheveux compris. 1,5 px pour une figure de
+// 110 px de large, soit 1,36 % de sa largeur.
+function contourCreme(largeurDessinee) {
+  const px = Math.max(1, largeurDessinee * 0.0136);
+  let f = '';
+  for (let i = 0; i < 8; i++) {
+    const a = (Math.PI * 2 * i) / 8;
+    f += `drop-shadow(${(Math.cos(a) * px).toFixed(2)}px ${(Math.sin(a) * px).toFixed(2)}px 0 #FAF9F5) `;
+  }
+  return f.trim();
+}
+
 function placerImage(img, bx, by, bw, bh) {
   if (!img) return;
   const r = Math.min(bw / img.naturalWidth, bh / img.naturalHeight);
@@ -270,11 +283,12 @@ function dessiner(pourTelechargement) {
 
   ctx.fillStyle = t.bg; ctx.fillRect(0, 0, W, H);
 
-  // Sur un fond foncé, une illustration à l'encre disparaîtrait : on prend sa
-  // version claire, où l'encre a été remplacée par la crème.
+  // Sur un fond foncé, on prend la version claire de l'illustration, et si c'est
+  // une figure d'Open Peeps on la cerne d'un contour crème (voir contourCreme).
   const cleIllu = $('illustration').value;
   const fonce = $('theme').value !== 'creme';
   const illu = images[(fonce ? 'ic:' : 'i:') + cleIllu] || images['i:' + cleIllu] || null;
+  const cerner = fonce && ASSETS.illustrations[cleIllu] && ASSETS.illustrations[cleIllu].contour;
 
   // La zone de texte et la zone d'image, selon l'orientation.
   let tx = marge, ty = marge, tw, th, ix, iy, iw, ih;
@@ -299,7 +313,9 @@ function dessiner(pourTelechargement) {
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
     g.addColorStop(0, t.wash); g.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = g; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    if (cerner) ctx.filter = contourCreme(iw);
     placerImage(illu, ix, iy, iw, ih);
+    if (cerner) ctx.filter = 'none';
   }
 
   // Le logo, mesuré en premier : le texte s'arrête au-dessus de lui.
@@ -405,7 +421,10 @@ function dessinerCouverture(W, H, t, pourTelechargement) {
   if (illu) {
     const libre = (W - avD) / 2 - rognage - W * 0.03;   // la colonne libre d'un côté
     const iw = Math.min(W * 0.2, libre), ih = H * 0.38;
+    const cerner = fonce && ASSETS.illustrations[cleIllu] && ASSETS.illustrations[cleIllu].contour;
+    if (cerner) ctx.filter = contourCreme(iw);
     placerImage(illu, W - rognage - W * 0.045 - iw, avY + H * 0.01, iw, ih);
+    if (cerner) ctx.filter = 'none';
   }
 
   // Le texte, centré dans la bande. Le téléphone coupe en hauteur bien plus qu'en
