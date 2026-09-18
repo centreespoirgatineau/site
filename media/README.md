@@ -101,7 +101,9 @@ Sur les fonds foncés, un troisième remplacement est appliqué au vol :
 
 Le Centre sert un quartier varié, et ses bénévoles le sont aussi. Sur une série
 d'images, **les personnages doivent l'être également** : des âges différents, des
-allures différentes. Les images générées automatiquement, elles, ramènent
+origines différentes, des allures différentes. **Aucune prothèse ni membre
+appareillé**, en revanche : ce n'est pas la réalité du Centre, et plusieurs
+figures d'Open Peeps en portent une. Les vérifier avant de les retenir. Les images générées automatiquement, elles, ramènent
 toujours le même visage; c'est une des choses qui trahissent le plus vite une
 communication fabriquée sans regard humain. Les illustrations retenues ici
 couvrent volontairement plusieurs âges et plusieurs silhouettes.

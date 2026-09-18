@@ -24,8 +24,10 @@ const ILLUSTRATIONS = [
   ['sitting-reading', 'Personne assise qui lit'],
   ['reading-side', 'Personne qui lit, de côté'],
   ['peep-standing-30', 'Homme âgé debout'],
-  ['peep-standing-1', 'Femme debout, lunettes'],
-  ['peep-standing-7', 'Personne debout, mains aux hanches'],
+  ['peep-standing-5', 'Femme debout, foulard'],
+  ['peep-standing-25', 'Personne debout, cheveux afro'],
+  ['peep-standing-16', 'Femme qui pointe du doigt'],
+  ['peep-standing-17', 'Femme âgée qui pointe du doigt'],
   ['peep-standing-26', 'Personne debout, de profil'],
   ['peep-sitting-17', 'Personne assise, jambes croisées'],
 ];

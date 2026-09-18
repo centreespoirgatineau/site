@@ -18,6 +18,21 @@ Trois retouches, appliquées à chaque fichier :
 3. Les commentaires, les titres, les identifiants et les sauts de ligne inutiles
    ont été retirés, ce qui divise le poids par deux environ.
 
+## Le choix des personnages
+
+Deux règles, données par David le 18 septembre 2026 :
+
+- **Les personnages sont visiblement divers** : âges, origines, allures, sur
+  chaque page et d'une page à l'autre. Un site dont tous les personnages se
+  ressemblent trahit un regard absent.
+- **Aucune prothèse, aucun membre appareillé.** Ce n'est pas la réalité du
+  Centre, et plusieurs figures d'Open Peeps en portent une : les vérifier une à
+  une avant de les retenir. `peep-standing-1` et `peep-standing-7` ont été
+  retirées pour cette raison.
+
+Les versions `-clair.svg` (l'encre remplacée par la crème `#FAF9F5`) servent sur
+les fonds foncés.
+
 ## En ajouter une
 
 Téléchargez le SVG depuis le site d'origine, puis appliquez les mêmes

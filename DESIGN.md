@@ -38,8 +38,8 @@ Toutes déclarées en haut de `site.css`, et employées uniquement par leur nom
 |---|---|---|
 | `--bg` | `#FAF9F5` | Le fond de toutes les pages. Un blanc cassé chaud, jamais du blanc pur. |
 | `--surface` | `#FFFFFF` | Les cartes et les panneaux, qui ressortent ainsi sur le fond. |
-| `--surface-2` | `#F3F1EA` | Les sections alternées, le pied de page. |
-| `--ink` | `#141413` | Le texte. Un noir chaud, tiré du logo. |
+| `--surface-2` | `#F3F1EA` | Les sections alternées (sable). |
+| `--ink` | `#141413` | Le texte, les sections d'encre et le pied de page. Un noir chaud, tiré du logo. |
 | `--ink-2` | `#55534E` | Le texte secondaire, les paragraphes d'accompagnement. |
 | `--ink-3` | `#85837C` | Les étiquettes, les mentions légales. |
 | `--line` | `#E8E6DF` | Les séparations. |
@@ -54,10 +54,21 @@ Trois choses à retenir :
   plateforme des surplus utilise `#D97757`, un chiffre de différence, hérité
   d'avant le logo. Si les deux doivent un jour s'aligner, c'est `#DA7757` qui
   gagne.
-- **L'accent ne sert jamais de fond de page.** Il attire l'œil sur une action;
-  s'il couvre une surface, il ne veut plus rien dire.
+- **L'accent en fond de section, oui, mais une fois par page.** Une bande
+  terracotta pleine largeur (les chiffres de l'accueil, le dernier appel d'une
+  page) rythme la lecture et rappelle les bannières. Deux bandes sur la même
+  page, et il ne veut plus rien dire. Les sections d'encre (`.section-ink`) et
+  le pied de page, foncé lui aussi, complètent la gamme : crème, sable, blanc,
+  encre, terracotta. Cinq fonds, pas davantage.
 - **Le texte sur terracotta est blanc**, jamais gris ni crème, pour garder le
   contraste au-dessus de 4,5:1.
+
+**Le logo, en trois formes.** L'en-tête porte `logo-header.svg`, le
+verrouillage compact « Centre Espoir » sans la mention « Banque alimentaire »,
+parce qu'à 42 px de haut la mention devenait illisible. Le pied de page, foncé,
+porte `logo-vertical-blanc.svg`, où l'encre est devenue blanche. Les bannières
+et les affiches emploient le verrouillage complet. Aucun n'est retapé : ce sont
+les fichiers de David, et rien d'autre.
 
 ---
 
@@ -121,7 +132,8 @@ Règles de composition :
 | `.hours` | Bloc noir | **Un seul par page**, réservé au fait qu'on vient chercher : les heures. |
 | `.steps` | Liste numérotée en pastilles | Une marche à suivre, trois ou quatre étapes. |
 | `.stats` | Trois grands chiffres | Uniquement des chiffres vrais et vérifiables. |
-| `.cta-band` | Bandeau noir en fin de page | Le dernier appel. Un par page, jamais deux. |
+| `.cta-band` | Bandeau en fin de page, encre ou terracotta (`.terracotta`) | Le dernier appel. Un par page, jamais deux. |
+| `.section-ink` / `.section-terracotta` | Une section entière sur fond foncé ou terracotta | Une par page au plus. L'illustration y passe en version claire (`-clair.svg`). |
 | `.timeline` | Frise verticale | L'histoire, les étapes dans le temps. |
 
 Les icônes sont des SVG au trait, **1,8 px d'épaisseur, bouts arrondis**, dans
