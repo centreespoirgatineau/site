@@ -134,6 +134,27 @@ couvrent volontairement plusieurs âges et plusieurs silhouettes.
 
 ---
 
+## 4b. La bannière de page Facebook : un script à part
+
+Elle a trop de contraintes pour être faite à la main, alors elle a son propre
+générateur :
+
+```bash
+node media/couverture-facebook.mjs
+```
+
+Il écrit trois fichiers dans `media/exemples/` : la bannière à téléverser, **une
+simulation du téléphone** et une simulation de l'ordinateur. Le texte, les
+couleurs et les illustrations se changent dans l'objet `COUVERTURE` au début du
+script.
+
+**Regardez la simulation du téléphone avant de livrer.** Une bannière à plat a
+l'air correcte à chaque fois : c'est exactement comme cela que quatre versions
+fautives sont passées. La géométrie mesurée et les raisons de chaque contrainte
+sont écrites en tête du script.
+
+---
+
 ## 5. Refabriquer l'atelier
 
 `studio.html` est un fichier **fabriqué**. On ne le modifie pas à la main.
