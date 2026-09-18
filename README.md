@@ -52,9 +52,13 @@ Il n'y a rien à installer. Node 22 suffit.
   (`#DA7757`), et le noir par l'encre (`#141413`). Pas de photos pour l'instant.
 - **Les vidéos YouTube** ne se chargent qu'au clic (`youtube-nocookie.com`) :
   page rapide, et rien de YouTube tant qu'on ne regarde pas.
-- **La feuille de style et le script ont un nom haché** (`site.<hash>.css`). Le
-  HTML n'est jamais mis en cache. Un style périmé dans un cache a déjà cassé une
-  mise en page ailleurs ; ici, c'est impossible.
+- **Tout fichier a son empreinte dans son nom** (`site.<hash>.css`,
+  `loving.<hash>.svg`, les polices aussi) et se garde un an; le HTML, lui, n'est
+  jamais mis en cache. Un fichier modifié est un fichier nouveau, que le
+  navigateur va chercher aussitôt : personne n'a jamais à « vider son cache ».
+  Le 18 septembre 2026, les pages intérieures sont parties une journée sans cet
+  en-tête et David a vu l'ancienne version pendant des heures ; c'est corrigé
+  dans `deploy/nginx.conf`, avec un commentaire qui explique le piège.
 - **Les règles d'écriture** sont celles de David : pas de tiret cadratin, les
   heures en `9H30`, le téléphone en `819‑663‑3238`. Un test les vérifie.
 

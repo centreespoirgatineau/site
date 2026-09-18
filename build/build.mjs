@@ -77,27 +77,46 @@ function render(tpl, vars, depth = 0) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 
-// ---- assets: copy, hashing CSS and JS ---------------------------------------
-// Fonts, images and the like keep their names (they are referenced from the CSS
-// and change rarely); the stylesheet and the script get a hash, because a stale
-// cached stylesheet once broke a live layout and it is not going to happen twice.
+// ---- assets: every file gets its content hash in its name -------------------
+// A changed file is a new file the browser has never seen, so it is fetched at
+// once, while unchanged ones stay cached for a year. HTML itself is never
+// cached (see deploy/nginx.conf), so a visitor always gets the current names.
+// Nobody ever has to "clear their cache". Fonts and images are hashed first,
+// then the stylesheet (which refers to them) is rewritten and hashed in turn.
 const assetMap = {};
-for (const file of walk(path.join(SRC, 'assets'))) {
-  const rel = path.relative(SRC, file).split(path.sep).join('/');
+const hashedName = (rel, buf) => {
+  const ext = path.extname(rel);
+  return rel.slice(0, -ext.length) + '.' + hash(buf) + ext;
+};
+const assetFiles = walk(path.join(SRC, 'assets'))
+  .filter((f) => !/\.md$/i.test(f))
+  .map((f) => ({ file: f, rel: path.relative(SRC, f).split(path.sep).join('/') }));
+
+for (const { file, rel } of assetFiles.filter((a) => !/\.(css|js)$/.test(a.rel))) {
   const buf = fs.readFileSync(file);
-  let outRel = rel;
-  if (/\.(css|js)$/.test(rel)) {
-    const ext = path.extname(rel);
-    outRel = rel.slice(0, -ext.length) + '.' + hash(buf) + ext;
-  }
-  assetMap[rel] = '/' + outRel;
+  const outRel = hashedName(rel, buf);
+  assetMap['/' + rel] = '/' + outRel;
+  write(path.join(OUT, outRel), buf);
+}
+// Replace every `/assets/...` reference in a text with its hashed twin.
+function rewriteAssets(text) {
+  return text.replace(/\/assets\/[\w./-]+/g, (m) => assetMap[m] ?? m);
+}
+for (const { file, rel } of assetFiles.filter((a) => /\.(css|js)$/.test(a.rel))) {
+  const buf = Buffer.from(rewriteAssets(read(file)), 'utf8');
+  const outRel = hashedName(rel, buf);
+  assetMap['/' + rel] = '/' + outRel;
   write(path.join(OUT, outRel), buf);
 }
 
 // Files that must sit at the root under a fixed name.
+const rootVersion = {};
 for (const name of ['favicon.svg', 'og.png', 'apple-touch-icon.png', 'site.webmanifest']) {
   const p = path.join(SRC, 'root', name);
-  if (fs.existsSync(p)) write(path.join(OUT, name), fs.readFileSync(p));
+  if (!fs.existsSync(p)) continue;
+  const buf = fs.readFileSync(p);
+  write(path.join(OUT, name), buf);
+  rootVersion[name] = hash(buf);
 }
 
 // ---- pages -----------------------------------------------------------------
@@ -114,8 +133,12 @@ for (const file of walk(path.join(SRC, 'pages'))) {
     canonical: SITE_URL + (url === '/' ? '' : url),
     page: slug,
     body_class: meta.body_class ?? '',
-    css: assetMap['assets/css/site.css'],
-    js: assetMap['assets/js/site.js'],
+    css: assetMap['/assets/css/site.css'],
+    js: assetMap['/assets/js/site.js'],
+    // Fixed-name files carry a version tag so a changed icon or card is refetched.
+    favicon_v: rootVersion['favicon.svg'] ?? '0',
+    og_v: rootVersion['og.png'] ?? '0',
+    touch_v: rootVersion['apple-touch-icon.png'] ?? '0',
     year: String(new Date().getFullYear()),
     content: render(body, { ...URLS }),
     ...URLS,
@@ -124,7 +147,7 @@ for (const file of walk(path.join(SRC, 'pages'))) {
   for (const s of ['index', 'aide-alimentaire', 'benevolat', 'dons', 'a-propos', 'nous-joindre']) {
     vars[`nav.${s}`] = s === slug ? ' aria-current="page"' : '';
   }
-  const html = render(layout, vars);
+  const html = rewriteAssets(render(layout, vars));
   write(path.join(OUT, `${slug}.html`), html);
   if (meta.sitemap !== 'no') pages.push({ url, priority: meta.priority ?? '0.7' });
 }

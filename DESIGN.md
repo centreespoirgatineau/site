@@ -213,7 +213,8 @@ que les vérifications ont été faites.
 ## 9. Ce que tout ça donne comme poids
 
 Une page complète, avec ses polices et ses illustrations, tient sous **300 Ko**.
-Il n'y a aucune bibliothèque, aucun cadriciel, aucun traqueur. La feuille de
-style et le script portent un nom haché (`site.a1b2c3d4e5.css`) et sont mis en
-cache un an; le HTML n'est jamais mis en cache. Les vidéos YouTube ne se
+Il n'y a aucune bibliothèque, aucun cadriciel, aucun traqueur. Chaque fichier
+(style, script, police, illustration) porte son empreinte dans son nom
+(`site.a1b2c3d4e5.css`) et se garde un an; le HTML n'est jamais mis en cache,
+alors un changement se voit à la visite suivante, sans rien vider. Les vidéos YouTube ne se
 chargent qu'au moment où l'on appuie sur lecture.
