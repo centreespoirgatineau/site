@@ -438,6 +438,12 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 @media (min-width: 860px) { .page-head-grid { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 56px; } }
 .page-head-art { width: min(100%, 300px); margin: 0 auto; }
 @media (min-width: 860px) { .page-head-art { margin: 0 0 0 auto; width: min(100%, 320px); } }
+/* Quatre personnes au lieu de trois : il leur faut plus de place, sinon chacune
+   rapetisse d'autant. Elles se touchent sans se chevaucher — la main tendue de
+   la première doit pouvoir désigner sa voisine sans la toucher. */
+.page-head-art--quatuor { display: flex; align-items: flex-end; justify-content: center; width: min(100%, 420px); }
+.page-head-art--quatuor img + img { margin-left: 0; }
+@media (min-width: 860px) { .page-head-art--quatuor { width: min(100%, 440px); } }
 
 /* ---- Équipe ----------------------------------------------------------------------- */
 .team { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
