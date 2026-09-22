@@ -153,6 +153,22 @@ l'air correcte à chaque fois : c'est exactement comme cela que quatre versions
 fautives sont passées. La géométrie mesurée et les raisons de chaque contrainte
 sont écrites en tête du script.
 
+Il produit aussi le **JPG** à téléverser, à côté du PNG.
+
+### La bannière installée ne porte aucun texte
+
+`disposition: 'foule'` : dix personnages sur une rangée, et rien d'autre. Ce
+choix vient d'un constat de David le 22 septembre 2026 — **la place et la taille
+de l'avatar changent d'un téléphone à l'autre**. Une bannière sans un seul mot ne
+peut pas se faire couper une phrase, quel que soit l'appareil.
+
+Les dix personnages sont tous différents : des âges, des genres, des origines et
+des silhouettes qui ne se répètent pas. Les plus reconnaissables sont placés aux
+extrémités, parce que l'avatar recouvre le milieu de la rangée sur un téléphone.
+
+L'autre disposition, `'texte'`, reste disponible dans le script pour le jour où
+la bannière devra dire quelque chose.
+
 ---
 
 ## 5. Refabriquer l'atelier

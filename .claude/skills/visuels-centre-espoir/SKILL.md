@@ -69,6 +69,55 @@ be forgotten.
 banner looks fine every single time; that is precisely how four wrong versions
 reached him.
 
+#### Deux dispositions, et pourquoi celle en ligne n'a aucun texte
+
+`disposition: 'foule'` — **la bannière installée**. Dix personnages sur une
+rangée, rien d'autre. David l'a choisie le 22 septembre 2026 après avoir constaté
+que **la place et la taille de l'avatar changent d'un téléphone à l'autre** : la
+géométrie mesurée ci-dessous est juste pour l'appareil qui a servi à la mesurer,
+pas pour tous. Un fichier sans un seul mot ne peut pas se faire couper une
+phrase. C'est la réponse robuste au problème, et non un compromis.
+
+`disposition: 'texte'` — la version à surtitre, titre et sous-titre, conservée
+telle quelle. Elle reste juste dans sa bande sûre et resservira le jour où une
+bannière devra dire quelque chose.
+
+#### Dessiner une rangée de personnages
+
+Trois choses, apprises en se trompant :
+
+1. **Une seule échelle pour toute la rangée.** Chaque figure d'Open Peeps est
+   dessinée dans un canevas serré sur elle : la hauteur de son `viewBox` **est**
+   sa taille, de 617 à 713 unités selon le personnage. On multiplie tout le monde
+   par le même facteur et les écarts de taille restent ceux du dessin. La
+   première version tirait en plus une taille au hasard par position, et le
+   personnage de gauche héritait toujours du plus petit tirage : un grand
+   gaillard s'est retrouvé plus court que tous ses voisins. David l'a vu
+   immédiatement. **Ne jamais remettre de facteur par position.**
+2. **L'ordre compte.** Sur un téléphone l'avatar recouvre le milieu de la rangée;
+   il ne reste que trois personnages à gauche et quatre à droite. Les plus
+   reconnaissables vont aux extrémités, le milieu prend ceux dont l'absence se
+   remarque le moins, et les figures qui se ressemblent (les deux afros) sont
+   écartées l'une de l'autre.
+3. **Un léger chevauchement**, une marge négative d'environ 30 px, permet de
+   dessiner les personnages grands sans dépasser la largeur visible. Sans lui,
+   dix figures tiennent dans la largeur mais font la moitié de la hauteur et les
+   deux tiers de l'image restent vides.
+
+Le casting est **dix personnages tous différents** — âges, genres, origines,
+silhouettes — parce que c'est la demande de David et parce qu'une série où tout
+le monde se ressemble est l'un des plus sûrs indices d'une image fabriquée sans
+regard humain. Aucune des figures qui portent une prothèse (1, 2, 7, 8, 28, 29).
+
+#### Le JPG
+
+Chrome sans tête n'écrit que du PNG. Le script convertit en lui faisant dessiner
+le PNG dans un canevas puis le renvoyer en JPEG à un petit serveur `node:http`
+local — plutôt que d'ajouter une bibliothèque d'images, qui serait la première
+dépendance du projet. **Le serveur est lancé avec `execFile`, jamais
+`execFileSync`** : la version synchrone bloque la boucle d'événements, le serveur
+n'accepte jamais le POST de Chrome, et les deux s'attendent indéfiniment.
+
 #### The constraints, and where they come from
 
 Measured on 18 September 2026 by uploading a file of known geometry and solving
@@ -111,8 +160,9 @@ iterating on a guess.**
 2. Nothing readable under the top 222 px or behind the centred circle.
 3. Nothing important in the outer 4 % of the width.
 4. No logo.
-5. Title on one line.
-6. Delivered as PNG and, if asked, JPG, at exactly 1640 × 924, ready to upload.
+5. Title on one line — or, in the 'foule' layout, no text at all.
+6. Delivered as PNG **and JPG**, at exactly 1640 × 924, ready to upload. The
+   script writes both.
 7. Say that Facebook will offer to reposition the image, and that it should be
    left centred.
 

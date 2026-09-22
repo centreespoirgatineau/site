@@ -37,11 +37,22 @@
 // illustrations descendent plus bas, de part et d'autre du cercle.
 //
 // Et pas de logo : l'avatar de la page le montre déjà.
+//
+// ---------------------------------------------------------------------------
+// DEUX DISPOSITIONS
+//
+//   'foule' — celle qui est en ligne. Aucun texte : une rangée de personnages,
+//     et c'est tout. David l'a choisie le 22 septembre 2026 parce que la place
+//     et la taille de l'avatar CHANGENT d'un téléphone à l'autre ; un fichier
+//     sans un seul mot ne peut pas se faire couper une phrase.
+//   'texte' — un surtitre, un titre sur une ligne, un sous-titre, dans la bande
+//     sûre. Elle reste ici : elle est juste, et elle resservira le jour où la
+//     bannière devra dire quelque chose.
 // ---------------------------------------------------------------------------
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFile, execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -50,7 +61,32 @@ const OUT = path.join(ROOT, 'media', 'exemples');
 // ---- Ce qu'il y a sur la bannière -----------------------------------------
 // Le contenu approuvé par David le 18 septembre 2026. Changez ce bloc, relancez.
 const COUVERTURE = {
-  theme: 'encre',                  // 'creme' | 'encre' | 'terracotta'
+  disposition: 'foule',            // 'foule' (sans texte) | 'texte'
+  theme: 'creme',                  // 'creme' | 'encre' | 'terracotta'
+
+  // LA FOULE, de gauche à droite. Dix personnages choisis un par un pour être
+  // visiblement différents : des âges, des origines, des silhouettes et des
+  // genres qui ne se répètent pas. C'est la demande de David, et c'est aussi
+  // ce qui distingue une image regardée par quelqu'un d'une image fabriquée en
+  // série. Les deux afros (25 et 27) sont écartés l'un de l'autre, et aucune
+  // des figures qui portent une prothèse (1, 2, 7, 8, 28, 29) n'y est.
+  // L'ORDRE COMPTE. Sur un téléphone, l'avatar recouvre le milieu de la rangée :
+  // il ne reste que trois personnages à gauche et quatre à droite. Les plus
+  // reconnaissables vont donc aux extrémités, et le milieu prend ceux dont
+  // l'absence se remarque le moins. Les deux afros sont séparés.
+  foule: [
+    'peep-standing-3',    // homme âgé, chapeau, moustache        │ visible
+    'peep-standing-16',   // femme forte, chignon                 │ visible
+    'peep-standing-5',    // personne voilée                      │ visible
+    'peep-standing-25',   // afro, t-shirt foncé                  · derrière l'avatar
+    'peep-standing-9',    // femme, longs cheveux raides          · derrière l'avatar
+    'peep-standing-22',   // femme, lunettes, carré               · derrière l'avatar
+    'peep-standing-27',   // afro, t-shirt clair                  │ visible
+    'peep-standing-19',   // homme barbu, casquette, pois         │ visible
+    'peep-standing-17',   // femme âgée, cheveux bouclés          │ visible
+    'peep-standing-12',   // personne au bandana                  │ visible
+  ],
+
   surtitre: 'Banque alimentaire du quartier Notre\u2011Dame, Gatineau',
   titre: 'Nourrir le corps, ce n\u2019est que la moiti\u00e9 du travail.',
   soustitre: 'Plus de 250 familles aid\u00e9es chaque mois, depuis 1984.',
@@ -112,7 +148,75 @@ function groupe(noms, t, largeurTotale) {
   }).join('');
 }
 
+// ---- La rangée de personnages ----------------------------------------------
+// UNE SEULE ÉCHELLE POUR TOUT LE MONDE, et c'est la seule chose à retenir ici.
+// Chaque figure d'Open Peeps est dessinée dans un canevas serré sur elle : la
+// hauteur de son viewBox EST sa taille. En multipliant tout le monde par le
+// même facteur, les grands restent grands et les petits petits — 617 à 713
+// unités d'un personnage à l'autre, soit 15 % d'écart, exactement ce qu'on voit
+// dans une vraie file d'attente.
+//
+// La première version tirait en plus une taille au hasard par position. Le
+// personnage de gauche tombait toujours sur le plus petit tirage, si bien qu'un
+// grand gaillard se retrouvait plus court que tous ses voisins. David l'a vu
+// tout de suite. Ne pas remettre de facteur par position.
+const HAUTEUR_MAX = 450;   // la plus grande figure, en pixels
+const ESPACE = -30;        // négatif : les personnages se chevauchent un peu,
+                           // comme dans une vraie file. C'est ce qui permet de les
+                           // dessiner grands sans dépasser la largeur visible.
+
+function boite(svg) {
+  const m = svg.match(/viewBox="([\d.\s-]+)"/i);
+  if (!m) throw new Error(`figure sans viewBox : impossible de la mettre à l’échelle`);
+  const [, , l, h] = m[1].trim().split(/\s+/).map(Number);
+  return { l, h };
+}
+
+function foule(noms, t) {
+  const bruts = noms.map(illustration);
+  const boites = bruts.map(boite);
+  const k = HAUTEUR_MAX / Math.max(...boites.map((b) => b.h));
+  const largeur = boites.reduce((n, b) => n + b.l * k, 0) + ESPACE * (noms.length - 1);
+  const interieur = W - ROGNAGE * 2;
+  if (largeur > interieur) {
+    console.warn(`la rangée fait ${Math.round(largeur)} px pour ${interieur} px visibles sur un téléphone : `
+      + `baissez HAUTEUR_MAX ou ESPACE, sinon quelqu’un sera coupé.`);
+  }
+  const img = bruts.map((brut, i) => {
+    const svg = t.fonce ? pourFondFonce(brut) : brut;
+    const f = t.fonce && aDesAplatsBlancs(brut) ? `filter:${contourCreme(boites[i].l * k)};` : '';
+    return `<img style="height:${Math.round(boites[i].h * k)}px;${f}" src="${svgUri(svg)}">`;
+  }).join('');
+  return { img, largeur };
+}
+
+function banniereFoule(c) {
+  const t = THEMES[c.theme];
+  if (!t) throw new Error(`thème inconnu : ${c.theme}`);
+  const { img, largeur } = foule(c.foule, t);
+  console.log(`rangée : ${c.foule.length} personnages sur ${Math.round(largeur)} px`
+    + ` (${W - ROGNAGE * 2} px visibles sur un téléphone)`);
+  return `<!doctype html><meta charset="utf-8"><style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: ${W}px; height: ${H}px; overflow: hidden; }
+  body { background: ${t.fond}; position: relative; }
+  .halo { position: absolute; left: 50%; top: 78%; transform: translate(-50%, -50%);
+          width: 1500px; height: 560px; border-radius: 50%;
+          background: radial-gradient(ellipse, ${t.halo} 0%, rgba(0,0,0,0) 70%); }
+  .sol { position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%);
+         width: 1360px; height: 3px; border-radius: 2px;
+         background: linear-gradient(to right, rgba(0,0,0,0), ${t.trait}, rgba(0,0,0,0)); opacity: .5; }
+  .rangee { position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%);
+            display: flex; align-items: flex-end; }
+  .rangee img + img { margin-left: ${ESPACE}px; }
+</style>
+<div class="halo"></div>
+<div class="sol"></div>
+<div class="rangee">${img}</div>`;
+}
+
 function banniere(c) {
+  if (c.disposition === 'foule') return banniereFoule(c);
   const t = THEMES[c.theme];
   if (!t) throw new Error(`thème inconnu : ${c.theme}`);
   const serif = fs.readFileSync(path.join(ROOT, 'src/assets/fonts/SourceSerif4-normal-400-700.woff2')).toString('base64');
@@ -175,6 +279,56 @@ function capturer(html, sortie, w, h) {
   throw new Error(`aucun navigateur n'a produit ${sortie}`);
 }
 
+// ---- Du PNG au JPG ---------------------------------------------------------
+// Chrome sans tête ne sait écrire que du PNG, et Facebook préfère un JPG. Plutôt
+// que d'ajouter une bibliothèque d'images — la première dépendance du projet —
+// on fait faire la conversion à Chrome lui-même : un petit serveur local sert
+// une page qui dessine le PNG dans un canevas, le réencode en JPEG et le
+// renvoie. Tout est dans node:http, déjà là.
+async function versJpeg(png, jpg, qualite = 0.92) {
+  const octets = fs.readFileSync(png).toString('base64');
+  const { createServer } = await import('node:http');
+  const recu = await new Promise((resolve, reject) => {
+    const serveur = createServer((req, rep) => {
+      if (req.method === 'POST') {
+        const morceaux = [];
+        req.on('data', (d) => morceaux.push(d));
+        req.on('end', () => {
+          rep.end('ok');
+          serveur.close();
+          resolve(Buffer.concat(morceaux).toString());
+        });
+        return;
+      }
+      rep.setHeader('content-type', 'text/html; charset=utf-8');
+      rep.end(`<!doctype html><meta charset="utf-8"><script>
+        const i = new Image();
+        i.onload = () => {
+          const c = document.createElement('canvas');
+          c.width = i.width; c.height = i.height;
+          const x = c.getContext('2d');
+          x.fillStyle = '#FFFFFF'; x.fillRect(0, 0, c.width, c.height);
+          x.drawImage(i, 0, 0);
+          fetch('/', { method: 'POST', body: c.toDataURL('image/jpeg', ${qualite}) });
+        };
+        i.src = 'data:image/png;base64,${octets}';
+      <\/script>`);
+    });
+    serveur.on('error', reject);
+    serveur.listen(0, '127.0.0.1', () => {
+      const { port } = serveur.address();
+      // execFile et non execFileSync : la version synchrone bloquerait la boucle
+      // d'événements, le serveur n'accepterait jamais le POST de Chrome, et les
+      // deux s'attendraient indéfiniment. C'est arrivé.
+      execFile(navigateurs[0], ['--headless=new', '--disable-gpu', '--virtual-time-budget=8000',
+        '--dump-dom', `http://127.0.0.1:${port}/`], () => {});
+    });
+  });
+  fs.writeFileSync(jpg, Buffer.from(recu.split(',')[1], 'base64'));
+  const ko = Math.round(fs.statSync(jpg).size / 1024);
+  console.log(`écrit ${path.relative(ROOT, jpg)}  (${ko} Ko)`);
+}
+
 // ---- Les deux simulations : c'est elles qu'il faut regarder ----------------
 // Une bannière à plat a l'air correcte à chaque fois. Ce sont ces deux images
 // qui disent la vérité, et c'est elles qu'il faut montrer à David.
@@ -220,5 +374,6 @@ const html = banniere(COUVERTURE);
 capturer(html, path.join(OUT, 'couverture-facebook.png'), W, H);
 capturer(simulationTelephone(html), path.join(OUT, 'couverture-facebook-telephone.png'), W - ROGNAGE * 2, H);
 capturer(simulationOrdinateur(html), path.join(OUT, 'couverture-facebook-ordinateur.png'), W, H);
+await versJpeg(path.join(OUT, 'couverture-facebook.png'), path.join(OUT, 'couverture-facebook.jpg'));
 console.log(`\ntexte entre y ${TEXTE_HAUT} et ${TEXTE_BAS} | commandes jusqu'\u00e0 y ${NAV_BAS} | avatar \u00d8 ${AV_D} \u00e0 partir de y ${AV_HAUT} | rognage lat\u00e9ral ${ROGNAGE} px`);
 console.log('Regardez la simulation t\u00e9l\u00e9phone avant de livrer quoi que ce soit.');
