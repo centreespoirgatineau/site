@@ -109,6 +109,21 @@ silhouettes — parce que c'est la demande de David et parce qu'une série où t
 le monde se ressemble est l'un des plus sûrs indices d'une image fabriquée sans
 regard humain. Aucune des figures qui portent une prothèse (1, 2, 7, 8, 28, 29).
 
+#### La résolution
+
+La mise en page se pense toujours en **1640 x 924** — la géométrie mesurée, dont
+tous les repères dépendent. `ECHELLE`, en tête du script, ne change que la
+finesse du rendu : elle vaut **3**, donc les fichiers sortent en **4920 x 2772**.
+Les personnages étant vectoriels, Chrome les redessine réellement plus fin; ce
+n'est pas un agrandissement. Facebook réduit le fichier lui-même, et une
+réduction rend toujours mieux qu'un agrandissement.
+
+**Le PNG est le meilleur fichier à téléverser**, parce qu'il est sans perte et
+que Facebook recompressera de toute façon : un JPG lui arrive déjà compressé une
+fois, et sur un dessin au trait c'est le contour noir qui souffre en premier. Le
+JPG reste produit, parce que David l'a demandé et qu'il est plus facile à
+envoyer par courriel.
+
 #### Le JPG
 
 Chrome sans tête n'écrit que du PNG. Le script convertit en lui faisant dessiner

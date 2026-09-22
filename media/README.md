@@ -155,6 +155,22 @@ sont écrites en tête du script.
 
 Il produit aussi le **JPG** à téléverser, à côté du PNG.
 
+### La résolution
+
+La mise en page se pense toujours en **1640 x 924** : c'est la géométrie mesurée
+sur un vrai téléphone, et tous les repères en dépendent. La constante `ECHELLE`,
+en tête du script, ne change que la finesse du rendu — elle vaut **3**, donc les
+fichiers sortent en **4920 x 2772**.
+
+Ce n'est pas un agrandissement : les personnages sont des dessins vectoriels, et
+Chrome les redessine vraiment plus fin. Facebook réduira le fichier lui-même, et
+une réduction rend toujours mieux qu'un agrandissement. Un écran de téléphone
+moderne affiche deux à trois pixels pour un : c'est là que la différence se voit.
+
+**Téléversez de préférence le PNG.** Il est sans perte, alors que le JPG est déjà
+compressé une fois et Facebook le recompressera une seconde. Sur un dessin au
+trait, c'est le contour noir qui souffre en premier.
+
 ### La bannière installée ne porte aucun texte
 
 `disposition: 'foule'` : dix personnages sur une rangée, et rien d'autre. Ce

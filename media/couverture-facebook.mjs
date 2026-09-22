@@ -95,6 +95,14 @@ const COUVERTURE = {
 };
 
 // ---- La géométrie mesurée --------------------------------------------------
+// La mise en page se pense TOUJOURS en 1640 x 924 : c'est la géométrie mesurée,
+// et tous les repères ci-dessous en dépendent. ECHELLE ne change que la finesse
+// du rendu. Les personnages sont des dessins vectoriels, alors Chrome les
+// redessine vraiment plus fin — ce n'est pas un agrandissement. Facebook
+// réduira le fichier lui-même, et une réduction rend toujours mieux qu'un
+// agrandissement : un écran de téléphone moderne affiche deux à trois pixels
+// pour un, et c'est là que la différence se voit.
+const ECHELLE = 3;                      // 1640 x 924 dessiné x3 → 4920 x 2772
 const W = 1640, H = 924;
 const ROGNAGE = Math.round(W * 0.04);   // ce que le téléphone coupe de chaque côté
 const NAV_BAS = 222;                    // les commandes de l'application par-dessus
@@ -262,17 +270,17 @@ const navigateurs = [
 ].filter((p) => fs.existsSync(p));
 if (!navigateurs.length) throw new Error('ni Chrome ni Edge sur cette machine');
 
-function capturer(html, sortie, w, h) {
+function capturer(html, sortie, w, h, echelle = 1) {
   const tmp = path.join(os.tmpdir(), `couv-${process.pid}-${path.basename(sortie)}.html`);
   fs.writeFileSync(tmp, html);
   for (const navigateur of navigateurs) {
     try { fs.unlinkSync(sortie); } catch {}
     execFileSync(navigateur, ['--headless=new', '--disable-gpu', '--hide-scrollbars',
-      '--force-device-scale-factor=1', `--window-size=${w},${h}`, '--virtual-time-budget=6000',
+      `--force-device-scale-factor=${echelle}`, `--window-size=${w},${h}`, '--virtual-time-budget=6000',
       `--screenshot=${sortie}`, 'file:///' + tmp.replace(/\\/g, '/')], { stdio: 'ignore' });
     if (fs.existsSync(sortie) && fs.statSync(sortie).size > 0) {
       fs.unlinkSync(tmp);
-      console.log(`\u00e9crit ${path.relative(ROOT, sortie)}`);
+      console.log(`\u00e9crit ${path.relative(ROOT, sortie)}  (${w * echelle} x ${h * echelle})`);
       return;
     }
   }
@@ -285,7 +293,7 @@ function capturer(html, sortie, w, h) {
 // on fait faire la conversion à Chrome lui-même : un petit serveur local sert
 // une page qui dessine le PNG dans un canevas, le réencode en JPEG et le
 // renvoie. Tout est dans node:http, déjà là.
-async function versJpeg(png, jpg, qualite = 0.92) {
+async function versJpeg(png, jpg, qualite = 0.95) {
   const octets = fs.readFileSync(png).toString('base64');
   const { createServer } = await import('node:http');
   const recu = await new Promise((resolve, reject) => {
@@ -371,7 +379,7 @@ function simulationOrdinateur(html) {
 // ---- Allons-y ---------------------------------------------------------------
 fs.mkdirSync(OUT, { recursive: true });
 const html = banniere(COUVERTURE);
-capturer(html, path.join(OUT, 'couverture-facebook.png'), W, H);
+capturer(html, path.join(OUT, 'couverture-facebook.png'), W, H, ECHELLE);
 capturer(simulationTelephone(html), path.join(OUT, 'couverture-facebook-telephone.png'), W - ROGNAGE * 2, H);
 capturer(simulationOrdinateur(html), path.join(OUT, 'couverture-facebook-ordinateur.png'), W, H);
 await versJpeg(path.join(OUT, 'couverture-facebook.png'), path.join(OUT, 'couverture-facebook.jpg'));
