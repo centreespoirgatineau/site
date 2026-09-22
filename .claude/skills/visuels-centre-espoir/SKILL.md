@@ -227,6 +227,29 @@ by collection**:
 Files live in `src/assets/img/illustrations/`, and the light copies are named
 `-clair.svg`.
 
+### Mettre plusieurs personnages côte à côte
+
+**Une seule échelle pour tout le groupe.** Chaque figure d'Open Peeps est
+dessinée dans un canevas serré sur elle : la hauteur de son `viewBox` **est** sa
+taille, de 617 à 713 unités. Le même facteur pour tout le monde, et les écarts
+qui restent sont ceux du dessin.
+
+**Une largeur identique n'est pas une taille identique**, et c'est le piège.
+Une figure aux bras écartés a un canevas plus large; la ramener à la largeur
+d'une figure aux bras le long du corps rapetisse la personne qui est dedans. Sur
+la page Bénévolat, trois figures posées à `width: 30 %` chacune rendaient la
+femme voilée **32 % plus courte** que son voisin, et David l'a vu. En CSS, la
+règle est : **la largeur de chaque figure est proportionnelle à la largeur de son
+propre `viewBox`**, et le total fait 100 %. Vérifier en mesurant les hauteurs
+rendues divisées par les hauteurs naturelles : ce quotient doit être le même pour
+tout le monde.
+
+Deux corollaires : **ne jamais appliquer de facteur par position** (une taille
+tirée au hasard par rang a fait du personnage de gauche le plus petit sur la
+première bannière Facebook), et **plus de personnes dans la même largeur veut
+dire des personnes plus petites** — il faut élargir le bloc, pas comprimer les
+figures.
+
 ### Choosing the cast — two rules from David
 
 1. **Visibly diverse**: ages, origins, silhouettes, across a page and across a
