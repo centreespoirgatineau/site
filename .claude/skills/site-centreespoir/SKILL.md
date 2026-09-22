@@ -10,6 +10,33 @@ dependencies**, deployed as an nginx container on the same VPS as the surplus
 platforms. Everything below was learned by shipping it; the traps section is a
 list of things that already went wrong once.
 
+## The initiatives page, added 2026-09-22
+
+`/initiatives` (nav label **Initiatives**, footer label *Écoles et organismes*)
+presents the two things the Centre does beyond the food bank, each with its
+own call to action:
+
+- **Elementary schools** come once a week for the surplus fruit, vegetables and
+  snacks, and hand them to children from struggling families and to those who
+  arrive without a lunch. There is no form yet, so *Inscrire mon école* opens a
+  prepared e-mail to info@centreespoir.ca (`url.ecoles` in `build/build.mjs`,
+  built with `encodeURIComponent`, never with `
+` escapes typed through a
+  heredoc, which arrive as real line breaks). David may want a real form later.
+- **The surplus network for organisations**, the Système de Prévention de
+  Pertes at spp.centreespoir.ca (the *wps* codebase, `BRAND=spp`). *Demander
+  l'accès* goes to `/demande`, its join-request form; *Voir la présentation*
+  to `/presentation`, its two-minute deck. Both verified live before linking.
+  Wording rules there: no religious vocabulary of any kind on that platform,
+  and the fairness rules exist, so "des règles simples font tourner les lots"
+  is accurate.
+
+Adding a page means: the file in `src/pages/`, its slug in the `nav.*` list in
+`build/build.mjs`, a link in the header and the footer, a card in
+`build/make-images.mjs`, its own `og_image` in the front matter, and the slug
+in `test/site.test.js`. Adding a **fifth** header link pushed the menu-button
+breakpoint from 900 to **1024 px**: below that the links wrapped onto two lines.
+
 ## 1. Where everything is
 
 | Thing | Where |

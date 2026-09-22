@@ -102,6 +102,7 @@ la méthode :
 | Couleur d'origine | Devient | Pourquoi |
 |---|---|---|
 | `#FF5678` (le rose d'Open Doodles) | `#DA7757` | Le terracotta du logo |
+| `#FF788F` et `#CF536D` | `#DA7757` | Deux autres roses de la même collection : `swinging` et `running` portent le premier, `sleek` le second. Vérifier les couleurs d'un nouveau dessin avant de le retenir. |
 | `#000000` (le noir) | `#141413` | L'encre du site, un noir chaud |
 
 Sur les fonds foncés, l'atelier fait un troisième geste, et il dépend de la

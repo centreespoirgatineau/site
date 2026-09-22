@@ -197,7 +197,10 @@ automatically. Text on terracotta is white, never cream, to hold the contrast.
 Two collections by Pablo Stanley, both **CC0**: no attribution, no licence to
 sign, commercial use allowed.
 
-- **Open Doodles** — https://www.opendoodles.com — figures in movement.
+- **Open Doodles** — https://www.opendoodles.com — figures in movement. The files are
+  not at a guessable address: the download links are in the homepage's HTML,
+  on `cdn.prod.website-files.com/5d5e2ff58f10c53dcffd8683/<id>_<name>.svg`.
+  `curl -sL https://www.opendoodles.com/ | grep -oE 'https?://[^"]+\.svg'` lists them all.
 - **Open Peeps** — https://www.openpeeps.com — figures standing or seated.
 
 **The whole transformation is two colour replacements:**
@@ -205,6 +208,7 @@ sign, commercial use allowed.
 | From | To |
 |---|---|
 | `#FF5678` (Open Doodles pink) | `#DA7757`, the logo's terracotta |
+| `#FF788F`, `#CF536D` (the other Open Doodles pinks: `swinging`/`running`, `sleek`) | `#DA7757` too. Check a new drawing's colours before adopting it; three of eight downloaded on 2026-09-22 used one of these, not `#FF5678`. |
 | `#000000` | `#141413`, the site's warm ink |
 
 On a dark background a third replacement is applied on the fly, **and it differs

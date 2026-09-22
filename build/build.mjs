@@ -30,6 +30,20 @@ export const URLS = {
   'url.maps': 'https://maps.google.com/?q=791+Boulevard+Maloney+E,+Gatineau,+QC+J8P+1H8',
   'url.facebook': 'https://www.facebook.com/centreespoirgatineau',
   'url.instagram': 'https://www.instagram.com/centreespoirgatineau',
+  // The surplus platform for the region's organisations. /demande is its join
+  // request form, /presentation the two-minute slideshow.
+  'url.spp': 'https://spp.centreespoir.ca',
+  'url.spp_demande': 'https://spp.centreespoir.ca/demande',
+  'url.spp_presentation': 'https://spp.centreespoir.ca/presentation',
+  // There is no form for schools yet, so the button opens a prepared e-mail.
+  // encodeURIComponent writes spaces as %20 and line breaks as %0A, which every
+  // mail client understands in a mailto address.
+  'url.ecoles': 'mailto:info@centreespoir.ca?subject=' + encodeURIComponent('Programme des écoles')
+    + '&body=' + encodeURIComponent([
+      'Bonjour,', '',
+      'Notre école aimerait participer à la distribution hebdomadaire de surplus.', '',
+      'École : ', 'Personne à joindre : ', 'Téléphone : ', '',
+    ].join(String.fromCharCode(10))),
 };
 
 // ---- helpers ---------------------------------------------------------------
@@ -147,7 +161,7 @@ for (const file of walk(path.join(SRC, 'pages'))) {
     ...URLS,
     // Nav highlighting: `{{ nav.<slug> }}` renders ` aria-current="page"` or ''.
   };
-  for (const s of ['index', 'aide-alimentaire', 'benevolat', 'dons', 'a-propos', 'nous-joindre']) {
+  for (const s of ['index', 'aide-alimentaire', 'benevolat', 'initiatives', 'dons', 'a-propos', 'nous-joindre']) {
     vars[`nav.${s}`] = s === slug ? ' aria-current="page"' : '';
   }
   const html = rewriteAssets(render(layout, vars));

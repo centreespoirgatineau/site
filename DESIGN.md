@@ -197,7 +197,7 @@ Conçu pour le téléphone d'abord, puis élargi. Les points de bascule utiles :
 | 700 px | Les marges passent à 32 px, l'en-tête à 76 px de haut |
 | 760 px | Les cartes se mettent en ligne, le bandeau d'infos sur trois colonnes |
 | 860 px | Les pages intérieures passent en deux colonnes avec un panneau collant |
-| 900 px | Le menu complet remplace le bouton **Menu** |
+| 1024 px | Le menu complet remplace le bouton **Menu**. Cinq liens et le bouton de don ont besoin d'environ 1000 px à côté du logo; en dessous, ils passaient sur deux lignes. |
 
 **Toute modification se vérifie à 360 px, 440 px et 1280 px avant d'être déclarée
 finie.** Le 360 est le vieux téléphone, le 440 le téléphone récent, le 1280 le

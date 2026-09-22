@@ -194,7 +194,7 @@ button { font: inherit; color: inherit; }
 .site-nav li { margin: 0; }
 .site-nav a:not(.btn) {
   display: inline-block; padding: 10px 14px; border-radius: 999px;
-  color: var(--ink-2); font-weight: 500; text-decoration: none; font-size: 1.0625rem;
+  color: var(--ink-2); font-weight: 500; text-decoration: none; font-size: 1.0625rem; white-space: nowrap;
   transition: background .2s var(--ease), color .2s var(--ease);
 }
 .site-nav a:not(.btn):hover { background: var(--surface-2); color: var(--ink); }
@@ -215,7 +215,9 @@ button { font: inherit; color: inherit; }
 .menu-open .menu-icon i:nth-child(2) { opacity: 0; }
 .menu-open .menu-icon i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-@media (max-width: 899px) {
+/* Five links plus the button need about 1000 px beside the logo; below that,
+   the links wrapped onto two lines. The menu button therefore stays until 1024. */
+@media (max-width: 1023px) {
   .site-nav {
     position: fixed; inset: var(--header-h) 0 0 0; z-index: 39;
     background: var(--bg); padding: 12px var(--gutter) 32px; overflow-y: auto;
@@ -234,7 +236,7 @@ button { font: inherit; color: inherit; }
   .site-nav .nav-cta { margin: 24px 0 0; }
   .site-nav .nav-cta .btn { width: 100%; min-height: 54px; font-size: 1.125rem; }
 }
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   .header-actions { display: none; }
 }
 @media (max-width: 479px) {

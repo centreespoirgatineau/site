@@ -52,6 +52,13 @@ const CARDS = {
     line: 'Trier, préparer les paniers, accueillir. Aucune expérience nécessaire.',
     pill: 'Dès 14 ans',
   },
+  'og-initiatives.png': {
+    illu: 'swinging',
+    eyebrow: 'Écoles et organismes',
+    title: 'Ce que nous recevons en trop nourrit aussi les écoles et les organismes d’ici.',
+    line: 'Des fruits et des collations chaque semaine pour les écoles. Un texto le jour même pour les organismes.',
+    pill: 'spp.centreespoir.ca',
+  },
   'og-dons.png': {
     illu: 'plant',
     eyebrow: 'Faire un don',

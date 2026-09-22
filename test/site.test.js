@@ -20,7 +20,7 @@ const html = Object.fromEntries(pages.map((f) => [f, fs.readFileSync(path.join(O
 const text = (h) => h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
 
 test('the expected pages are built', () => {
-  for (const p of ['index', 'aide-alimentaire', 'benevolat', 'dons', 'a-propos', 'nous-joindre', 'confidentialite', '404']) {
+  for (const p of ['index', 'aide-alimentaire', 'benevolat', 'initiatives', 'dons', 'a-propos', 'nous-joindre', 'confidentialite', '404']) {
     assert.ok(pages.includes(`${p}.html`), `${p}.html missing`);
   }
   assert.ok(fs.existsSync(path.join(OUT, 'sitemap.xml')));

@@ -23,6 +23,8 @@ const ILLUSTRATIONS = [
   ['chilling', 'Personne assise, détendue'],
   ['sitting-reading', 'Personne assise qui lit'],
   ['reading-side', 'Personne qui lit, de côté'],
+  ['swinging', 'Personne sur une balançoire'],
+  ['sleek', 'Personne qui court'],
   ['peep-standing-30', 'Homme âgé debout'],
   ['peep-standing-5', 'Femme debout, foulard'],
   ['peep-standing-25', 'Personne debout, cheveux afro'],
