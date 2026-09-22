@@ -56,7 +56,7 @@ const CARDS = {
     illu: 'swinging',
     eyebrow: 'Écoles et organismes',
     title: 'Ce que nous recevons en trop nourrit aussi les écoles et les organismes d’ici.',
-    line: 'Des fruits et des collations chaque semaine pour les écoles. Un texto le jour même pour les organismes.',
+    line: 'Des fruits et des collations chaque semaine pour les écoles, sans frais. Un texto le jour même pour les organismes.',
     pill: 'spp.centreespoir.ca',
   },
   'og-dons.png': {

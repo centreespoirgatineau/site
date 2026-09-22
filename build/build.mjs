@@ -35,15 +35,9 @@ export const URLS = {
   'url.spp': 'https://spp.centreespoir.ca',
   'url.spp_demande': 'https://spp.centreespoir.ca/demande',
   'url.spp_presentation': 'https://spp.centreespoir.ca/presentation',
-  // There is no form for schools yet, so the button opens a prepared e-mail.
-  // encodeURIComponent writes spaces as %20 and line breaks as %0A, which every
-  // mail client understands in a mailto address.
-  'url.ecoles': 'mailto:info@centreespoir.ca?subject=' + encodeURIComponent('Programme des écoles')
-    + '&body=' + encodeURIComponent([
-      'Bonjour,', '',
-      'Notre école aimerait participer à la distribution hebdomadaire de surplus.', '',
-      'École : ', 'Personne à joindre : ', 'Téléphone : ', '',
-    ].join(String.fromCharCode(10))),
+  // No form for schools, by David's decision (2026-09-22): the button opens an
+  // e-mail with the subject line he chose, and nothing else.
+  'url.ecoles': 'mailto:info@centreespoir.ca?subject=' + encodeURIComponent('J’aimerais inscrire mon école'),
 };
 
 // ---- helpers ---------------------------------------------------------------

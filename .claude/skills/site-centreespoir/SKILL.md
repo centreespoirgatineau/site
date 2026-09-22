@@ -18,11 +18,13 @@ own call to action:
 
 - **Elementary schools** come once a week for the surplus fruit, vegetables and
   snacks, and hand them to children from struggling families and to those who
-  arrive without a lunch. There is no form yet, so *Inscrire mon école* opens a
-  prepared e-mail to info@centreespoir.ca (`url.ecoles` in `build/build.mjs`,
-  built with `encodeURIComponent`, never with `
-` escapes typed through a
-  heredoc, which arrive as real line breaks). David may want a real form later.
+  arrive without a lunch. **Free for the school**, and David does not want the
+  participating schools named. **No form, by his decision**: *Inscrire mon
+  école* opens an e-mail to info@centreespoir.ca with the subject he chose,
+  « J'aimerais inscrire mon école » (`url.ecoles` in `build/build.mjs`, built
+  with `encodeURIComponent`; never type `
+` escapes through a heredoc, they
+  arrive as real line breaks).
 - **The surplus network for organisations**, the Système de Prévention de
   Pertes at spp.centreespoir.ca (the *wps* codebase, `BRAND=spp`). *Demander
   l'accès* goes to `/demande`, its join-request form; *Voir la présentation*
