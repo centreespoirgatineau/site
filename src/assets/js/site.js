@@ -85,7 +85,7 @@
     var out = box.querySelector('[data-calc-out]');
     function show() {
       var v = matrix[adults.value] && matrix[adults.value][children.value];
-      if (v) out.textContent = String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' $';
+      if (v) out.textContent = String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' $';
     }
     adults.addEventListener('change', show);
     children.addEventListener('change', show);

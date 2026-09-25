@@ -594,7 +594,7 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .steps-line > li:not(:last-child)::after { content: ""; position: absolute; left: 22px; top: 52px; bottom: -22px; width: 2px; border-radius: 1px; background: var(--accent-soft); }
 @media (min-width: 860px) { .how-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 56px; } .how-head { position: sticky; top: calc(var(--header-h) + 28px); align-self: start; } }
 /* The service period (#periode): a counter, one bag per visit, a tag tied to each handle (David,
-   2026-09-24). Two shelves of three on a phone, one shelf from 760 px. */
+   2026-09-24). Two shelves of three below 960 px, one shelf from 960 px. */
 .term { background: var(--surface-2); border-radius: var(--radius-l); padding: clamp(22px, 1rem + 3vw, 52px); }
 .term-head { display: grid; gap: 10px; margin-bottom: 40px; }
 .term-head h2 { margin: 0; }
@@ -622,7 +622,7 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .gapl.tail { display: none; }
 .board, .shelves::after { height: 12px; border-radius: 6px; background: #E4DFD3; box-shadow: inset 0 3px 0 #D6CFBF, 0 12px 18px -12px rgba(20, 20, 19, .3); }
 .board { margin: 0 -12px; }
-@media (min-width: 760px) {
+@media (min-width: 960px) {
   .shelves { display: flex; align-items: flex-end; position: relative; gap: 0; padding-bottom: 70px; }
   .shelves::after { content: ""; position: absolute; left: -12px; right: -12px; bottom: 58px; }
   .sh, .sh-row { display: contents; }
@@ -633,7 +633,7 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .term-foot { display: flex; gap: 14px; align-items: center; margin: 0; color: var(--ink-2); }
 .term-foot .ic { flex: none; width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); box-shadow: var(--shadow-1); color: var(--accent-ink); }
 .term-foot .ic svg { width: 20px; height: 20px; }
-@media (max-width: 759px) {
+@media (max-width: 959px) {
   .term-foot { align-items: flex-start; }
   .gapl { padding: 0 0 26px; }
   .bag-tag { min-width: 46px; padding: 10px 6px 5px; }
