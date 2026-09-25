@@ -110,14 +110,31 @@ og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au j
     <section class="aa-block" id="periode">
       <div class="container">
         <div class="term reveal">
-          <p class="eyebrow">Votre période de service</p>
-          <h2>Un soutien temporaire</h2>
-          <ul class="term-tiles">
-            <li><b>6</b><span>rendez‑vous par entente de service</span></li>
-            <li><b>21</b><span>jours au moins entre deux rendez‑vous</span></li>
-            <li><b>1</b><span>absence compte comme un rendez‑vous, sauf si vous le déplacez ou l’annulez à temps</span></li>
-          </ul>
-          <p class="term-after">Après le dernier rendez‑vous, votre dossier se ferme automatiquement. Pour reprendre nos services, il suffit de refaire une demande.</p>
+          <div class="term-head">
+            <div><p class="eyebrow">Votre période de service</p><h2>Un soutien temporaire</h2></div>
+            <p class="how-lead">Six cueillettes, espacées d’au moins trois semaines. Une absence compte aussi, sauf si vous déplacez ou annulez le rendez‑vous à temps.</p>
+          </div>
+          <!-- The counter, as on the platform's home page (aide.centreespoir.ca, _shelf.html): one bag per
+               visit, 21 days between two, the third empty, a tag tied to each handle. Change it with it. -->
+          <svg class="shelf-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><symbol id="bag-full" viewBox="0 0 80 100"><rect x="44" y="6" width="11" height="40" rx="5.5" transform="rotate(12 49 26)" fill="#E8C48E" stroke="#141413" stroke-width="2.4"/><path d="M47 16l6 2M46 23l6 2" stroke="#141413" stroke-width="2" stroke-linecap="round" transform="rotate(12 49 26)"/><path d="M26 40C22 26 28 18 22 12C32 15 34 26 32 40" fill="#7FA36B" stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/><circle cx="36" cy="34" r="10" fill="#B4573A" stroke="#141413" stroke-width="2.4"/><path d="M36 24C37 19 40 17 43 17" stroke="#141413" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M24 42C24 14 56 14 56 42" fill="none" stroke="#141413" stroke-width="3" stroke-linecap="round"/><path d="M12 40H68L70 90Q70 96 64 96H16Q10 96 10 90Z" fill="#F8EDE6" stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/><path d="M14 48H66" stroke="#141413" stroke-width="1.6" stroke-dasharray="3 4" opacity=".45"/><path d="M56 43L60 93" stroke="#85837C" stroke-width="1.4" stroke-linecap="round"/><circle cx="56" cy="43" r="2" fill="#85837C"/></symbol><symbol id="bag-empty" viewBox="0 0 80 100"><path d="M24 42C24 14 56 14 56 42" fill="none" stroke="#B8B5AC" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 5"/><path d="M12 40H68L70 90Q70 96 64 96H16Q10 96 10 90Z" fill="none" stroke="#B8B5AC" stroke-width="2.4" stroke-linejoin="round" stroke-dasharray="4 5"/><path d="M14 48H66" stroke="#B8B5AC" stroke-width="1.6" stroke-dasharray="3 4" opacity=".45"/><path d="M56 43L60 93" stroke="#85837C" stroke-width="1.4" stroke-linecap="round"/><circle cx="56" cy="43" r="2" fill="#85837C"/></symbol><symbol id="bag-last" viewBox="0 0 80 100"><rect x="44" y="6" width="11" height="40" rx="5.5" transform="rotate(12 49 26)" fill="#E8C48E" stroke="#141413" stroke-width="2.4"/><path d="M47 16l6 2M46 23l6 2" stroke="#141413" stroke-width="2" stroke-linecap="round" transform="rotate(12 49 26)"/><path d="M26 40C22 26 28 18 22 12C32 15 34 26 32 40" fill="#7FA36B" stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/><circle cx="36" cy="34" r="10" fill="#B4573A" stroke="#141413" stroke-width="2.4"/><path d="M36 24C37 19 40 17 43 17" stroke="#141413" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M24 42C24 14 56 14 56 42" fill="none" stroke="#141413" stroke-width="3" stroke-linecap="round"/><path d="M12 40H68L70 90Q70 96 64 96H16Q10 96 10 90Z" fill="#DA7757" stroke="#141413" stroke-width="2.4" stroke-linejoin="round"/><path d="M14 48H66" stroke="#141413" stroke-width="1.6" stroke-dasharray="3 4" opacity=".45"/><path d="M56 43L60 93" stroke="#85837C" stroke-width="1.4" stroke-linecap="round"/><circle cx="56" cy="43" r="2" fill="#85837C"/></symbol></defs></svg>
+          <div class="shelves" aria-hidden="true">
+              <div class="sh"><div class="sh-row">
+                <span class="bagw"><span class="bagi"><svg class="bag" viewBox="0 0 80 100"><use href="#bag-full"/></svg><span class="bag-tag t-full"><b>1</b><small>Premier</small></span></span></span>
+                <span class="gapl"><b>21</b><span>jours</span><svg viewBox="0 0 44 10"><path d="M3 5H41M8 1.5L3 5L8 8.5M36 1.5L41 5L36 8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="bagw"><span class="bagi"><svg class="bag" viewBox="0 0 80 100"><use href="#bag-full"/></svg><span class="bag-tag t-full"><b>2</b></span></span></span>
+                <span class="gapl"><b>21</b><span>jours</span><svg viewBox="0 0 44 10"><path d="M3 5H41M8 1.5L3 5L8 8.5M36 1.5L41 5L36 8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="bagw"><span class="bagi"><svg class="bag" viewBox="0 0 80 100"><use href="#bag-empty"/></svg><span class="bag-tag t-empty"><b>3</b><small>Absence</small></span></span></span>
+                <span class="gapl tail"><b>21</b><span>jours</span><svg viewBox="0 0 44 10"><path d="M3 5H41M8 1.5L3 5L8 8.5M36 1.5L41 5L36 8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div><div class="board"></div></div>
+              <div class="sh"><div class="sh-row">
+                <span class="bagw"><span class="bagi"><svg class="bag" viewBox="0 0 80 100"><use href="#bag-full"/></svg><span class="bag-tag t-full"><b>4</b></span></span></span>
+                <span class="gapl"><b>21</b><span>jours</span><svg viewBox="0 0 44 10"><path d="M3 5H41M8 1.5L3 5L8 8.5M36 1.5L41 5L36 8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="bagw"><span class="bagi"><svg class="bag" viewBox="0 0 80 100"><use href="#bag-full"/></svg><span class="bag-tag t-full"><b>5</b></span></span></span>
+                <span class="gapl"><b>21</b><span>jours</span><svg viewBox="0 0 44 10"><path d="M3 5H41M8 1.5L3 5L8 8.5M36 1.5L41 5L36 8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="bagw"><span class="bagi"><svg class="bag" viewBox="0 0 80 100"><use href="#bag-last"/></svg><span class="bag-tag t-last"><b>6</b><small>Dernier</small></span></span></span>
+              </div><div class="board"></div></div>
+          </div>
+          <p class="term-foot"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></span><span>Après la sixième, votre dossier se ferme automatiquement. Pour reprendre nos services, il suffit de refaire une demande.</span></p>
         </div>
       </div>
     </section>

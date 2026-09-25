@@ -593,13 +593,53 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .steps-line { gap: 26px; }
 .steps-line > li:not(:last-child)::after { content: ""; position: absolute; left: 22px; top: 52px; bottom: -22px; width: 2px; border-radius: 1px; background: var(--accent-soft); }
 @media (min-width: 860px) { .how-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 56px; } .how-head { position: sticky; top: calc(var(--header-h) + 28px); align-self: start; } }
-.term { background: var(--surface-2); border-radius: var(--radius-l); padding: clamp(24px, 1rem + 3vw, 48px); }
-.term-tiles { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; }
-.term-tiles li { display: flex; align-items: center; gap: 16px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 16px 18px; margin: 0; }
-.term-tiles b { flex: 0 0 1.6em; font-family: var(--serif); font-weight: 500; font-size: 2.3rem; line-height: 1; color: var(--accent-ink); text-align: center; }
-.term-tiles span { color: var(--ink-2); }
-.term-after { margin-top: 18px; color: var(--ink-2); max-width: 44em; }
-@media (min-width: 760px) { .term-tiles { grid-template-columns: repeat(3, 1fr); gap: 14px; } .term-tiles li { display: block; padding: 22px 24px; } .term-tiles b { display: block; text-align: left; font-size: 3rem; margin-bottom: 10px; } }
+/* The service period (#periode): a counter, one bag per visit, a tag tied to each handle (David,
+   2026-09-24). Two shelves of three on a phone, one shelf from 760 px. */
+.term { background: var(--surface-2); border-radius: var(--radius-l); padding: clamp(22px, 1rem + 3vw, 52px); }
+.term-head { display: grid; gap: 10px; margin-bottom: 40px; }
+.term-head h2 { margin: 0; }
+.term-head .how-lead { margin: 0; color: var(--ink-2); max-width: 34em; }
+@media (min-width: 860px) { .term-head { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 56px; align-items: end; } .term-head .how-lead { margin-bottom: .3em; max-width: 34em; } }
+.shelf-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.shelves { display: grid; gap: 22px; }
+.sh { padding-bottom: 58px; }
+.sh-row { display: flex; align-items: flex-end; }
+.bagw { flex: 1 1 0; min-width: 0; display: flex; justify-content: center; }
+.bagi { position: relative; width: 100%; max-width: 104px; }
+.bag { display: block; width: 100%; height: auto; margin-bottom: -3px; }
+.bag-tag { position: absolute; left: 75%; top: 92%; z-index: 1; transform: translateX(-50%) rotate(-5deg); transform-origin: 50% 0; display: grid; justify-items: center; min-width: 52px; padding: 11px 8px 6px; border-radius: 7px; background: var(--surface); box-shadow: var(--shadow-1); }
+.bagw:nth-child(4n+3) .bag-tag { transform: translateX(-50%) rotate(4deg); }
+.bag-tag::before { content: ""; position: absolute; top: 4px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--line-2); }
+.bag-tag b { font-family: var(--serif); font-weight: 500; font-size: 1.35rem; line-height: 1.1; color: var(--accent-ink); }
+.bag-tag small { font-size: .6875rem; font-weight: 700; letter-spacing: .05em; line-height: 1.3; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+.bag-tag.t-last { background: var(--accent-ink); }
+.bag-tag.t-last b, .bag-tag.t-last small { color: #fff; }
+.bag-tag.t-empty b { color: var(--ink-3); }
+.gapl { flex: 0 0 42px; display: grid; justify-items: center; align-self: center; padding-top: 26px; color: var(--accent-ink); }
+.gapl b { font-family: var(--serif); font-weight: 500; font-size: 1.35rem; line-height: 1; }
+.gapl span { font-size: .75rem; font-weight: 600; line-height: 1.3; color: var(--ink-3); }
+.gapl svg { width: 100%; max-width: 46px; height: 10px; margin-top: 3px; }
+.gapl.tail { display: none; }
+.board, .shelves::after { height: 12px; border-radius: 6px; background: #E4DFD3; box-shadow: inset 0 3px 0 #D6CFBF, 0 12px 18px -12px rgba(20, 20, 19, .3); }
+.board { margin: 0 -12px; }
+@media (min-width: 760px) {
+  .shelves { display: flex; align-items: flex-end; position: relative; gap: 0; padding-bottom: 70px; }
+  .shelves::after { content: ""; position: absolute; left: -12px; right: -12px; bottom: 58px; }
+  .sh, .sh-row { display: contents; }
+  .board { display: none; }
+  .gapl { flex-basis: 56px; }
+  .gapl.tail { display: grid; }
+}
+.term-foot { display: flex; gap: 14px; align-items: center; margin: 0; color: var(--ink-2); }
+.term-foot .ic { flex: none; width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); box-shadow: var(--shadow-1); color: var(--accent-ink); }
+.term-foot .ic svg { width: 20px; height: 20px; }
+@media (max-width: 759px) {
+  .term-foot { align-items: flex-start; }
+  .gapl { padding: 0 0 26px; }
+  .bag-tag { min-width: 46px; padding: 10px 6px 5px; }
+  .bag-tag b { font-size: 1.2rem; }
+  .bag-tag small { font-size: .625rem; letter-spacing: .03em; }
+}
 
 /* /aide-alimentaire is the twin of aide.centreespoir.ca's home page: one vertical rhythm, the
    section unit between blocks and half of it under the introduction. */
