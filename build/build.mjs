@@ -17,12 +17,12 @@ const SITE_URL = 'https://centreespoir.ca';
 
 // Addresses that appear on several pages, kept in one place.
 //
-// The two forms are still on Wix, reached through its free address because
-// centreespoir.ca now serves this site. They are temporary: David intends to
-// replace them with something built here. When that happens, change them here
-// and nowhere else.
+// The application for food aid is the platform's form (aide.centreespoir.ca, since
+// 2026-09-24, David). The volunteer form is still on Wix, reached through its free
+// address because centreespoir.ca now serves this site; when it is replaced,
+// change it here and nowhere else.
 export const URLS = {
-  'url.form_aide': 'https://centreespoir.wixsite.com/accueil/aide',
+  'url.form_aide': 'https://aide.centreespoir.ca/demande',
   // Who can receive help: the income limits, kept current in the platform's Réglages.
   // The table on /aide-alimentaire copies them: update it when the limits change (each year).
   'url.admissibilite': 'https://aide.centreespoir.ca/admissibilite',

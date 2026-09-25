@@ -76,17 +76,16 @@ redirects to it. If it does not after ten minutes:
 docker logs root-traefik-1 --tail 50 | grep -i centreespoir
 ```
 
-## 4. The two forms (done, but temporary)
+## 4. The two forms
 
-The "Demande d'aide alimentaire" and "Devenir bénévole" forms still live on Wix.
-Since `centreespoir.ca` now serves this site, they are reached through the free
-Wix address instead:
+The "Demande d'aide alimentaire" buttons open the platform's form,
+https://aide.centreespoir.ca/demande (since 24 September 2026). The "Devenir
+bénévole" form still lives on Wix, reached through the free Wix address because
+`centreespoir.ca` now serves this site:
 
-- https://centreespoir.wixsite.com/accueil/aide
 - https://centreespoir.wixsite.com/accueil/embauche
 
-Both buttons on the site point there. **Keep that Wix site published**, or the
-two forms stop working.
+**Keep that Wix site published**, or the volunteer form stops working.
 
 These are meant to be replaced by something built here. When that day comes, the
 two addresses live in `URLS` at the top of `build/build.mjs`, and nowhere else.
