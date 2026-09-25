@@ -563,7 +563,7 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .two-lists ul { margin: 0; padding-left: 1.2em; color: var(--ink-2); }
 .two-lists li + li { margin-top: 4px; }
 @media (min-width: 640px) { .two-lists { grid-template-columns: 1fr 1fr; } }
-/* "Ce qui compte comme revenu": a link under the calculator opens what counts and where the limit
+/* "Comment le seuil est calculé": a link under the calculator opens what counts and where the limit
    comes from (David, 2026-09-24). Popover API, no script; without it the text shows in place. */
 .info-more { margin: 12px 0 0; }
 .info-link { display: inline-flex; align-items: center; gap: 8px; padding: 4px 0; border: 0; background: none; font: inherit; font-weight: 600; color: var(--accent-ink); cursor: pointer; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; transition: text-decoration-color .2s var(--ease); }
