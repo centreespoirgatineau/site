@@ -1,6 +1,7 @@
-/* Three small things, and nothing the page needs to be readable:
+/* Four small things, and nothing the page needs to be readable:
    the mobile menu, a shadow under the header once the page scrolls,
-   and the YouTube players that only load once someone presses play. */
+   the YouTube players that only load once someone presses play, and the
+   income-limit calculator on /aide-alimentaire. */
 (function () {
   'use strict';
 
@@ -74,5 +75,19 @@
       box.appendChild(iframe);
       iframe.focus();
     });
+  });
+
+  // ---- Income-limit calculator (/aide-alimentaire): adults and children → the limit ----
+  document.querySelectorAll('[data-calc]').forEach(function (box) {
+    var matrix = JSON.parse(box.getAttribute('data-calc'));
+    var adults = box.querySelector('[data-calc-adults]');
+    var children = box.querySelector('[data-calc-children]');
+    var out = box.querySelector('[data-calc-out]');
+    function show() {
+      var v = matrix[adults.value] && matrix[adults.value][children.value];
+      if (v) out.textContent = String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' $';
+    }
+    adults.addEventListener('change', show);
+    children.addEventListener('change', show);
   });
 })();

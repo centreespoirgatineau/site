@@ -549,12 +549,15 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .price-list span { color: var(--ink-2); }
 @media (min-width: 760px) { .facts { grid-template-columns: 1fr 1fr; gap: 18px; } }
 .how-lead { color: var(--ink-2); max-width: 30em; }
-.elig-tiles { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.elig-tiles li { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 16px 18px; margin: 0; }
-.elig-tiles b { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.7rem; line-height: 1.1; color: var(--accent-ink); white-space: nowrap; }
-.elig-tiles span { display: block; margin-top: 4px; color: var(--ink-2); font-size: .95rem; }
+.calc { margin-top: 20px; max-width: 640px; background: var(--surface-2); border-radius: var(--radius); padding: 18px 20px; }
+.calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.calc-field { display: grid; gap: 6px; align-content: end; font-size: .9375rem; font-weight: 600; color: var(--ink); }
+.calc-field select { font: inherit; font-weight: 400; font-size: 1rem; color: var(--ink); width: 100%; min-height: 50px; padding: 10px 40px 10px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-s); background-color: var(--surface);
+  appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%); background-position: calc(100% - 20px) 22px, calc(100% - 15px) 22px; background-size: 5px 5px; background-repeat: no-repeat; }
+.calc-field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.calc-result { margin: 12px 0 0; font-size: 1.05rem; }
+.calc-result strong { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; color: var(--accent-ink); white-space: nowrap; }
 .elig-after { margin-top: 16px; }
-@media (min-width: 760px) { .elig-tiles { grid-template-columns: repeat(3, 1fr); gap: 14px; } .elig-tiles li { padding: 20px 24px; } .elig-tiles b { font-size: 2.1rem; } }
 .how-grid { display: grid; gap: 22px; }
 .how-head h2 { margin-bottom: .35em; }
 .steps-line { gap: 26px; }
