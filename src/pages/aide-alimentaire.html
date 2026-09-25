@@ -1,19 +1,26 @@
 ---
 title: Aide alimentaire à Gatineau, Centre Espoir
-description: Besoin d’un panier? Le Centre Espoir aide les résidents du quartier Notre-Dame à Gatineau, du mardi au jeudi, 9H30 à 12H30. Comment faire une demande.
+description: Des denrées à prix réduit, chaque mois, pour les familles du territoire. Du mardi au jeudi, 9H30 à 12H30. Qui est admissible, comment s’inscrire.
 priority: 0.9
 og_image: og-aide-alimentaire.png
 og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au jeudi, 9H30 à 12H30.
 ---
+<!-- The same explanation as the platform's home page (aide.centreespoir.ca, David 2026-09-24),
+     in the site's header and footer. Its figures come from the platform's Réglages: when
+     the hours, prices, service rules or income limits change there, change them here too. -->
     <section class="page-head">
       <div class="container page-head-grid">
         <div>
           <p class="eyebrow">Aide alimentaire</p>
-          <h1>Un panier pour passer le mois. Sans jugement.</h1>
-          <p class="lead">Perte d’emploi, loyer qui grimpe, séparation. Si vous habitez notre territoire et que vos revenus sont limités, on est là.</p>
+          <h1>De l’aide alimentaire, près de chez vous.</h1>
+          <p class="lead">Des denrées à prix réduit, chaque mois, pour les familles de notre territoire qui traversent une situation financière difficile.</p>
           <div class="btn-row">
             <a class="btn btn-primary btn-lg" href="{{ url.form_aide }}" target="_blank" rel="noopener">Faire une demande</a>
-            <a class="btn btn-secondary btn-lg" href="tel:+18196633238">Appeler le 819‑663‑3238</a>
+            <a class="btn btn-secondary btn-lg" href="{{ url.territoire }}" target="_blank" rel="noopener">Voir le territoire desservi</a>
+          </div>
+          <div class="notice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <p>Déjà inscrit? Le lien pour prendre ou déplacer votre rendez‑vous est dans le texto que le Centre vous a envoyé. <a href="{{ url.lien }}" target="_blank" rel="noopener">Recevoir mon lien</a></p>
           </div>
         </div>
         <div class="page-head-art reveal">
@@ -23,88 +30,73 @@ og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au j
     </section>
 
     <section class="section-tight">
-      <div class="container two-col">
-        <div>
-          <div class="hours reveal">
-            <span class="hours-title">Heures de distribution</span>
-            <span class="hours-when">Du mardi au jeudi, 9H30 à 12H30</span>
-            <span class="hours-where">791, boulevard Maloney Est, Gatineau. <a href="{{ url.maps }}" target="_blank" rel="noopener">Voir sur la carte</a></span>
+      <div class="container">
+        <div class="facts reveal">
+          <div class="hours">
+            <span class="hours-title">Distribution</span>
+            <span class="hours-when">Du mardi au jeudi</span>
+            <span class="hours-time">9H30 à 12H30</span>
+            <span class="hours-where">791, boulevard Maloney Est, Gatineau (Québec) J8P 1H8</span>
+            <a class="hours-phone" href="tel:+18196633238">819‑663‑3238</a>
           </div>
-
-          <h2 class="reveal" style="margin-top: 2.2em;">Qui peut recevoir de l’aide?</h2>
-          <ul class="checks reveal">
-            <li><strong>Habiter notre territoire</strong> : le quartier Notre‑Dame et les secteurs environnants.</li>
-            <li><strong>Avoir un revenu sous le seuil</strong> qui correspond à la taille du ménage.</li>
-          </ul>
-
-          <table class="limits reveal">
-            <thead><tr><th scope="col">Ménage</th><th scope="col">Revenu net maximal, par mois</th></tr></thead>
-            <tbody>
-              <tr><td>1 personne</td><td>2 636 $</td></tr>
-              <tr><td>2 personnes</td><td>3 728 $</td></tr>
-              <tr><td>3 personnes</td><td>4 566 $</td></tr>
-              <tr><td>4 personnes</td><td>5 272 $</td></tr>
-              <tr><td>5 personnes</td><td>5 895 $</td></tr>
-              <tr><td>6 personnes</td><td>6 457 $</td></tr>
-              <tr><td>7 personnes</td><td>6 975 $</td></tr>
-              <tr><td>8 personnes</td><td>7 456 $</td></tr>
-            </tbody>
-          </table>
-          <p class="limits-note reveal">Seuils 2026, après impôt, pour tout le ménage : les revenus de chaque adulte, les allocations pour enfants et la pension alimentaire reçue. Les crédits d’impôt ne comptent pas. Le seuil vaut 120 % du seuil officiel de pauvreté de Statistique Canada, ajusté au coût du logement à Gatineau. <a href="{{ url.admissibilite }}" target="_blank" rel="noopener">Tous les détails</a></p>
-          <p class="reveal" style="margin-top: 1.2em;">Pas certain d’être admissible? Appelez‑nous au 819‑663‑3238. On regardera votre situation avec vous.</p>
-
-          <h2 class="reveal" style="margin-top: 2.2em;">Une contribution réduite</h2>
-          <p class="reveal">Le dépannage est mensuel, à prix réduit :</p>
-          <ul class="reveal">
-            <li><strong>10 $</strong> par personne seule</li>
-            <li><strong>30 $</strong> par famille, jusqu’à 4 personnes</li>
-            <li><strong>40 $</strong> par famille de 5 personnes et plus</li>
-          </ul>
-
-          <h2 class="reveal" style="margin-top: 2.2em;">Comment faire une demande</h2>
-          <ol class="steps reveal">
-            <li>
-              <h3>Remplissez le formulaire</h3>
-              <p>Quelques minutes en ligne. Ou appelez‑nous, et on le remplit avec vous.</p>
-            </li>
-            <li>
-              <h3>Apportez vos documents</h3>
-              <p>La liste exacte vous arrive par texto. La décision suit, par texto aussi.</p>
-            </li>
-            <li>
-              <h3>Venez chercher votre panier</h3>
-              <p>Sur rendez‑vous, du mardi au jeudi, entre 9H30 et 12H30.</p>
-            </li>
-          </ol>
-
-          <div class="callout reveal" style="margin-top: 2.4em;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".6" fill="currentColor"/></svg>
-            <p><strong>Dans le panier :</strong> produits secs, conserves et, selon les arrivages, fruits, légumes, pain, produits laitiers ou viande.</p>
-          </div>
-        </div>
-
-        <aside>
-          <div class="panel sticky reveal d1">
-            <h3>Faire une demande d’aide</h3>
-            <p class="muted">Le formulaire s’ouvre dans une nouvelle fenêtre. Vos renseignements restent confidentiels.</p>
-            <a class="btn btn-primary btn-lg" href="{{ url.form_aide }}" target="_blank" rel="noopener">Remplir le formulaire</a>
-            <hr>
-            <ul class="panel-list">
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
-                <div><strong>Par téléphone</strong><a href="tel:+18196633238">819‑663‑3238</a></div>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-                <div><strong>Par courriel</strong><a href="mailto:info@centreespoir.ca">info@centreespoir.ca</a></div>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-                <div><strong>En personne</strong>791, boulevard Maloney Est<br>Gatineau (Québec) J8P 1H8</div>
-              </li>
+          <div class="price-card">
+            <span class="price-title">Coût</span>
+            <ul class="price-list">
+              <li><b>10 $</b><span>par personne</span></li>
+              <li><b>30 $</b><span>par famille, jusqu’à 4 personnes</span></li>
+              <li><b>40 $</b><span>par famille de 5 personnes et plus</span></li>
             </ul>
           </div>
-        </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="admissibilite">
+      <div class="container">
+        <p class="eyebrow reveal">Admissibilité</p>
+        <h2 class="reveal">Qui peut s’inscrire</h2>
+        <p class="how-lead reveal">Les ménages de <a href="{{ url.territoire }}" target="_blank" rel="noopener">notre territoire</a> dont le revenu mensuel net, allocations pour enfants comprises, ne dépasse pas :</p>
+        <ul class="elig-tiles reveal">
+          <li><b>2 636 $</b><span>1 personne</span></li>
+          <li><b>3 728 $</b><span>2 personnes</span></li>
+          <li><b>4 566 $</b><span>3 personnes</span></li>
+          <li><b>5 272 $</b><span>4 personnes</span></li>
+          <li><b>5 895 $</b><span>5 personnes</span></li>
+          <li><b>6 457 $</b><span>6 personnes</span></li>
+        </ul>
+        <p class="elig-after reveal">Adultes et enfants comptent chacun pour une personne. <a href="{{ url.admissibilite }}#calcul" target="_blank" rel="noopener">Calculer le seuil de votre ménage</a></p>
+      </div>
+    </section>
+
+    <section class="section-tight" id="fonctionnement">
+      <div class="container how-grid">
+        <div class="how-head reveal">
+          <p class="eyebrow">Le parcours</p>
+          <h2>Comment ça se passe</h2>
+          <p class="how-lead">De votre demande à votre première cueillette, en cinq étapes.</p>
+        </div>
+        <ol class="steps steps-line reveal d1">
+          <li><h3>Vous faites la demande</h3><p>Envoyez‑nous votre information, la composition de votre ménage et vos revenus. Seul le personnel du Centre voit ces renseignements.</p></li>
+          <li><h3>Vous apportez vos documents</h3><p>La liste exacte des documents à apporter vous est envoyée par texto. Apportez les originaux au Centre, du lundi au vendredi, de 12H30 à 14H30.</p></li>
+          <li><h3>Vous recevez la décision</h3><p>Une fois vos documents vérifiés, un texto vous dit si la demande est acceptée ou refusée, ou ce qui manque.</p></li>
+          <li><h3>Vous planifiez votre rendez‑vous</h3><p>Une fois votre demande acceptée, une invitation vous est envoyée afin de planifier votre premier rendez‑vous.</p></li>
+          <li><h3>Vous venez chercher votre cueillette</h3><p>Un rappel arrive 3 jours avant le jour de votre rendez‑vous. Depuis votre lien, vous pouvez déplacer ou annuler le rendez‑vous jusqu’à 48 heures avant la date. Après chaque visite, un texto vous invite à planifier le suivant.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section-tight" id="periode">
+      <div class="container">
+        <div class="term reveal">
+          <p class="eyebrow">Votre période de service</p>
+          <h2>Un soutien temporaire</h2>
+          <ul class="term-tiles">
+            <li><b>6</b><span>rendez‑vous par entente de service</span></li>
+            <li><b>21</b><span>jours au moins entre deux rendez‑vous</span></li>
+            <li><b>1</b><span>absence compte comme un rendez‑vous, sauf si vous le déplacez ou l’annulez à temps</span></li>
+          </ul>
+          <p class="term-after">Après le dernier rendez‑vous, votre dossier se ferme automatiquement. Pour reprendre nos services, il suffit de refaire une demande.</p>
+        </div>
       </div>
     </section>
 
@@ -112,11 +104,12 @@ og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au j
       <div class="container">
         <div class="cta-band terracotta reveal">
           <div>
-            <h2>Vous connaissez quelqu’un qui aurait besoin d’un coup de main?</h2>
-            <p>Parlez‑lui du Centre. Un panier est à quelques minutes de chez lui.</p>
+            <h2>Votre demande, en quelques minutes.</h2>
+            <p>Une question? Appelez‑nous au 819‑663‑3238.</p>
           </div>
           <div class="btn-row">
-            <a class="btn btn-ink btn-lg" href="/nous-joindre">Nous joindre</a>
+            <a class="btn btn-ink btn-lg" href="{{ url.form_aide }}" target="_blank" rel="noopener">Faire une demande</a>
+            <a class="btn btn-light btn-lg" href="{{ url.territoire }}" target="_blank" rel="noopener">Voir le territoire desservi</a>
           </div>
         </div>
       </div>

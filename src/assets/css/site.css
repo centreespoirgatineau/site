@@ -527,11 +527,43 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
   a { color: #000; }
 }
 
-/* ---- Seuils de revenu (aide alimentaire) --------------------------------------- */
-.limits { width: 100%; border-collapse: collapse; margin-top: 1.2em; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-1); overflow: hidden; }
-.limits th, .limits td { padding: 10px 18px; text-align: left; border-top: 1px solid var(--line); }
-.limits thead th { border-top: 0; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
-.limits th:last-child, .limits td:last-child { text-align: right; }
-.limits td { white-space: nowrap; }
-.limits td:last-child { font-weight: 600; color: var(--accent-ink); }
-.limits-note { margin-top: .8em; font-size: .9rem; color: var(--ink-2); }
+/* ---- Aide alimentaire : le même exposé que l'accueil de aide.centreespoir.ca ---------------- */
+.page-head .notice { margin-top: 1.4em; }
+.notice { display: flex; gap: 14px; align-items: flex-start; background: var(--accent-wash); border: 1px solid #F0D9CC; color: var(--ink); border-radius: var(--radius-s); padding: 14px 16px; }
+.notice svg { flex: none; width: 24px; height: 24px; color: var(--accent-ink); margin-top: 2px; }
+.notice p { margin: 0; }
+.notice a { color: var(--accent-ink); font-weight: 600; }
+.facts { display: grid; gap: 14px; }
+.facts .hours { padding: 24px 26px; gap: 2px; align-content: start; }
+.facts .hours .hours-title { margin-bottom: 8px; }
+.facts .hours .hours-time { font-family: var(--serif); font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem); line-height: 1.2; color: #F2B79F; }
+.facts .hours .hours-where { margin-top: 12px; }
+.facts .hours .hours-phone { color: #fff; font-weight: 600; text-decoration: none; justify-self: start; }
+.facts .hours .hours-phone:hover { text-decoration: underline; }
+.price-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 24px 26px 12px; }
+.price-title { display: block; font-size: .8125rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 4px; }
+.price-list { list-style: none; margin: 0; padding: 0; }
+.price-list li { display: flex; align-items: baseline; gap: 16px; padding: 12px 0; margin: 0; }
+.price-list li + li { border-top: 1px solid var(--line); }
+.price-list b { flex: 0 0 2.6em; font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.1; color: var(--accent-ink); }
+.price-list span { color: var(--ink-2); }
+@media (min-width: 760px) { .facts { grid-template-columns: 1fr 1fr; gap: 18px; } }
+.how-lead { color: var(--ink-2); max-width: 30em; }
+.elig-tiles { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.elig-tiles li { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 16px 18px; margin: 0; }
+.elig-tiles b { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.7rem; line-height: 1.1; color: var(--accent-ink); white-space: nowrap; }
+.elig-tiles span { display: block; margin-top: 4px; color: var(--ink-2); font-size: .95rem; }
+.elig-after { margin-top: 16px; }
+@media (min-width: 760px) { .elig-tiles { grid-template-columns: repeat(3, 1fr); gap: 14px; } .elig-tiles li { padding: 20px 24px; } .elig-tiles b { font-size: 2.1rem; } }
+.how-grid { display: grid; gap: 22px; }
+.how-head h2 { margin-bottom: .35em; }
+.steps-line { gap: 26px; }
+.steps-line li:not(:last-child)::after { content: ""; position: absolute; left: 22px; top: 52px; bottom: -22px; width: 2px; border-radius: 1px; background: var(--accent-soft); }
+@media (min-width: 860px) { .how-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 56px; } .how-head { position: sticky; top: calc(var(--header-h) + 28px); align-self: start; } }
+.term { background: var(--surface-2); border-radius: var(--radius-l); padding: clamp(24px, 1rem + 3vw, 48px); }
+.term-tiles { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; }
+.term-tiles li { display: flex; align-items: center; gap: 16px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 16px 18px; margin: 0; }
+.term-tiles b { flex: 0 0 1.6em; font-family: var(--serif); font-weight: 500; font-size: 2.3rem; line-height: 1; color: var(--accent-ink); text-align: center; }
+.term-tiles span { color: var(--ink-2); }
+.term-after { margin-top: 18px; color: var(--ink-2); max-width: 44em; }
+@media (min-width: 760px) { .term-tiles { grid-template-columns: repeat(3, 1fr); gap: 14px; } .term-tiles li { display: block; padding: 22px 24px; } .term-tiles b { display: block; text-align: left; font-size: 3rem; margin-bottom: 10px; } }
