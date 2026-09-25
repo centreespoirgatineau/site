@@ -392,8 +392,8 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 
 /* ---- Étapes ----------------------------------------------------------------------- */
 .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 18px; }
-.steps li { position: relative; padding-left: 64px; counter-increment: s; margin: 0; }
-.steps li::before {
+.steps > li { position: relative; padding-left: 64px; counter-increment: s; margin: 0; }
+.steps > li::before {
   content: counter(s); position: absolute; left: 0; top: -2px; width: 46px; height: 46px; border-radius: 50%;
   background: var(--accent-soft); color: var(--accent-ink); font-family: var(--serif); font-size: 1.35rem; font-weight: 500;
   display: grid; place-items: center;
@@ -549,19 +549,28 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .price-list span { color: var(--ink-2); }
 @media (min-width: 760px) { .facts { grid-template-columns: 1fr 1fr; gap: 18px; } }
 .how-lead { color: var(--ink-2); max-width: 30em; }
-.calc { margin-top: 20px; max-width: 640px; background: var(--surface-2); border-radius: var(--radius); padding: 18px 20px; }
+.calc { margin-top: 14px; background: var(--surface-2); border-radius: var(--radius); padding: 16px 18px; }
 .calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .calc-field { display: grid; gap: 6px; align-content: end; font-size: .9375rem; font-weight: 600; color: var(--ink); }
-.calc-field select { font: inherit; font-weight: 400; font-size: 1rem; color: var(--ink); width: 100%; min-height: 50px; padding: 10px 40px 10px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-s); background-color: var(--surface);
+.calc-field select { font: inherit; font-weight: 400; font-size: var(--text, 1.1875rem); color: var(--ink); width: 100%; min-height: 50px; padding: 10px 40px 10px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-s); background-color: var(--surface);
   appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%); background-position: calc(100% - 20px) 22px, calc(100% - 15px) 22px; background-size: 5px 5px; background-repeat: no-repeat; }
 .calc-field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-.calc-result { margin: 12px 0 0; font-size: 1.05rem; }
+.calc-result { margin: 8px 0 0; }
 .calc-result strong { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; color: var(--accent-ink); white-space: nowrap; }
-.elig-after { margin-top: 16px; }
+.elig-steps > li > p { margin-bottom: 0; }
+.two-lists { display: grid; gap: 14px 28px; margin-top: 18px; }
+.two-lists h4 { font-family: var(--sans); font-size: 1rem; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
+.two-lists ul { margin: 0; padding-left: 1.2em; color: var(--ink-2); }
+.two-lists li + li { margin-top: 4px; }
+@media (min-width: 640px) { .two-lists { grid-template-columns: 1fr 1fr; } }
+.elig-source { margin-top: 16px; font-size: .9375rem; color: var(--ink-3); }
+/* On a phone the calculator and what follows it leave the step indent: room for two selects. */
+@media (max-width: 639px) { .elig-steps .calc, .elig-steps .two-lists, .elig-steps .elig-source { margin-left: -64px; } }
+
 .how-grid { display: grid; gap: 22px; }
 .how-head h2 { margin-bottom: .35em; }
 .steps-line { gap: 26px; }
-.steps-line li:not(:last-child)::after { content: ""; position: absolute; left: 22px; top: 52px; bottom: -22px; width: 2px; border-radius: 1px; background: var(--accent-soft); }
+.steps-line > li:not(:last-child)::after { content: ""; position: absolute; left: 22px; top: 52px; bottom: -22px; width: 2px; border-radius: 1px; background: var(--accent-soft); }
 @media (min-width: 860px) { .how-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 56px; } .how-head { position: sticky; top: calc(var(--header-h) + 28px); align-self: start; } }
 .term { background: var(--surface-2); border-radius: var(--radius-l); padding: clamp(24px, 1rem + 3vw, 48px); }
 .term-tiles { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; }
@@ -570,3 +579,9 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .term-tiles span { color: var(--ink-2); }
 .term-after { margin-top: 18px; color: var(--ink-2); max-width: 44em; }
 @media (min-width: 760px) { .term-tiles { grid-template-columns: repeat(3, 1fr); gap: 14px; } .term-tiles li { display: block; padding: 22px 24px; } .term-tiles b { display: block; text-align: left; font-size: 3rem; margin-bottom: 10px; } }
+
+/* /aide-alimentaire is the twin of aide.centreespoir.ca's home page: one vertical rhythm, the
+   section unit between blocks and half of it under the introduction. */
+.aa-block { padding: calc(var(--section) / 2) 0; }
+.aa-block.aa-first { padding-top: calc(var(--section) / 2 - clamp(1.5rem, 1rem + 2vw, 3rem)); }
+.aa-block.aa-last { padding-bottom: var(--section); }

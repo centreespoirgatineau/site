@@ -25,7 +25,7 @@ export const URLS = {
   'url.form_aide': 'https://aide.centreespoir.ca/demande',
   // Who can receive help: the income limits, kept current in the platform's Réglages.
   // The table on /aide-alimentaire copies them: update it when the limits change (each year).
-  'url.admissibilite': 'https://aide.centreespoir.ca/admissibilite',
+  'url.admissibilite': 'https://aide.centreespoir.ca/#admissibilite',
   'url.territoire': 'https://aide.centreespoir.ca/territoire',
   'url.lien': 'https://aide.centreespoir.ca/lien',
   'url.form_benevole': 'https://centreespoir.wixsite.com/accueil/embauche',

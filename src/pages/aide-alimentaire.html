@@ -29,7 +29,7 @@ og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au j
       </div>
     </section>
 
-    <section class="section-tight">
+    <section class="aa-block aa-first">
       <div class="container">
         <div class="facts reveal">
           <div class="hours">
@@ -51,28 +51,39 @@ og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au j
       </div>
     </section>
 
-    <section class="section-tight" id="admissibilite">
-      <div class="container">
-        <p class="eyebrow reveal">Admissibilité</p>
-        <h2 class="reveal">Qui peut s’inscrire</h2>
-        <p class="how-lead reveal">Les ménages de <a href="{{ url.territoire }}" target="_blank" rel="noopener">notre territoire</a> dont le revenu mensuel net, allocations pour enfants comprises, ne dépasse pas :</p>
-        <!-- The limits for 1–6 adults and 0–8 children, copied from the platform's Réglages
-             (aide.centreespoir.ca/admissibilite): replace this data when the limits change. -->
-        <div class="calc reveal" data-calc='{"1":{"0":2636,"1":3728,"2":4566,"3":5272,"4":5895,"5":6457,"6":6975,"7":7456,"8":7909},"2":{"0":3728,"1":4566,"2":5272,"3":5895,"4":6457,"5":6975,"6":7456,"7":7909,"8":8336},"3":{"0":4566,"1":5272,"2":5895,"3":6457,"4":6975,"5":7456,"6":7909,"7":8336,"8":8743},"4":{"0":5272,"1":5895,"2":6457,"3":6975,"4":7456,"5":7909,"6":8336,"7":8743,"8":9132},"5":{"0":5895,"1":6457,"2":6975,"3":7456,"4":7909,"5":8336,"6":8743,"7":9132,"8":9505},"6":{"0":6457,"1":6975,"2":7456,"3":7909,"4":8336,"5":8743,"6":9132,"7":9505,"8":9864}}'>
-          <div class="calc-fields">
-            <label class="calc-field"><span>Adultes (19 ans et plus)</span>
-              <select data-calc-adults><option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
-            <label class="calc-field"><span>Enfants (18 ans et moins)</span>
-              <select data-calc-children><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></label>
-          </div>
-          <p class="calc-result">Revenu net maximal : <strong data-calc-out>2 636 $</strong> par mois</p>
-          <noscript><p class="calc-result"><a href="{{ url.admissibilite }}#calcul" target="_blank" rel="noopener">Voir le seuil de votre ménage</a></p></noscript>
+    <section class="aa-block" id="admissibilite">
+      <div class="container how-grid">
+        <div class="how-head reveal">
+          <p class="eyebrow">Admissibilité</p>
+          <h2>Qui peut s’inscrire</h2>
+          <p class="how-lead">Deux conditions : habiter notre territoire, et un revenu du ménage sous le seuil qui correspond à sa taille.</p>
         </div>
-        <p class="elig-after reveal"><a href="{{ url.admissibilite }}" target="_blank" rel="noopener">Ce qui compte, et d’où vient ce seuil</a></p>
+        <ol class="steps steps-line elig-steps reveal d1">
+          <li><h3>Habiter notre territoire</h3><p><a href="{{ url.territoire }}" target="_blank" rel="noopener">Vérifier une adresse</a></p></li>
+          <li><h3>Avoir un revenu sous le seuil</h3><p>Le revenu mensuel net de tout le ménage, allocations pour enfants comprises, ne dépasse pas ce seuil :</p>
+            <!-- The limits for 1–6 adults and 0–8 children, copied from the platform's Réglages
+                 (aide.centreespoir.ca, section Qui peut s’inscrire): replace this data when they change. -->
+            <div class="calc" data-calc='{"1":{"0":2636,"1":3728,"2":4566,"3":5272,"4":5895,"5":6457,"6":6975,"7":7456,"8":7909},"2":{"0":3728,"1":4566,"2":5272,"3":5895,"4":6457,"5":6975,"6":7456,"7":7909,"8":8336},"3":{"0":4566,"1":5272,"2":5895,"3":6457,"4":6975,"5":7456,"6":7909,"7":8336,"8":8743},"4":{"0":5272,"1":5895,"2":6457,"3":6975,"4":7456,"5":7909,"6":8336,"7":8743,"8":9132},"5":{"0":5895,"1":6457,"2":6975,"3":7456,"4":7909,"5":8336,"6":8743,"7":9132,"8":9505},"6":{"0":6457,"1":6975,"2":7456,"3":7909,"4":8336,"5":8743,"6":9132,"7":9505,"8":9864}}'>
+              <div class="calc-fields">
+                <label class="calc-field"><span>Adultes (19 ans et plus)</span>
+                  <select data-calc-adults><option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+                <label class="calc-field"><span>Enfants (18 ans et moins)</span>
+                  <select data-calc-children><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></label>
+              </div>
+              <p class="calc-result">Revenu net maximal : <strong data-calc-out>2 636 $</strong> par mois</p>
+              <noscript><p class="calc-result"><a href="{{ url.admissibilite }}" target="_blank" rel="noopener">Voir le seuil de votre ménage</a></p></noscript>
+            </div>
+            <div class="two-lists">
+              <div><h4>Ce qui compte</h4><ul><li>Le revenu net de chaque adulte : salaire, prestations, pension, aide financière aux études.</li><li>Les allocations pour enfants : Allocation canadienne pour enfants et Allocation famille.</li><li>La pension alimentaire reçue.</li></ul></div>
+              <div><h4>Ce qui ne compte pas</h4><ul><li>Les crédits d’impôt et les remboursements : crédit pour solidarité, prestation pour l’épicerie et les essentiels, prime au travail.</li></ul></div>
+            </div>
+            <p class="elig-source">Le seuil vaut 120 % de la mesure du panier de consommation de Statistique Canada, le seuil officiel de pauvreté au Canada, ajustée au coût réel du logement à Gatineau et indexée à l’année en cours. Il est mis à jour chaque année. Le revenu se vérifie au Centre, avec vos documents originaux.</p>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <section class="section-tight" id="fonctionnement">
+    <section class="aa-block" id="fonctionnement">
       <div class="container how-grid">
         <div class="how-head reveal">
           <p class="eyebrow">Le parcours</p>
@@ -89,7 +100,7 @@ og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au j
       </div>
     </section>
 
-    <section class="section-tight" id="periode">
+    <section class="aa-block" id="periode">
       <div class="container">
         <div class="term reveal">
           <p class="eyebrow">Votre période de service</p>
@@ -104,7 +115,7 @@ og_alt: Un panier pour passer le mois, sans jugement. Distribution du mardi au j
       </div>
     </section>
 
-    <section class="section">
+    <section class="aa-block aa-last">
       <div class="container">
         <div class="cta-band terracotta reveal">
           <div>
