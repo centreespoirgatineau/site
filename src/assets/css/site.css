@@ -563,9 +563,30 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .two-lists ul { margin: 0; padding-left: 1.2em; color: var(--ink-2); }
 .two-lists li + li { margin-top: 4px; }
 @media (min-width: 640px) { .two-lists { grid-template-columns: 1fr 1fr; } }
-.elig-source { margin-top: 16px; font-size: .9375rem; color: var(--ink-3); }
+/* "Ce qui compte comme revenu": a link under the calculator opens what counts and where the limit
+   comes from (David, 2026-09-24). Popover API, no script; without it the text shows in place. */
+.info-more { margin: 12px 0 0; }
+.info-link { display: inline-flex; align-items: center; gap: 8px; padding: 4px 0; border: 0; background: none; font: inherit; font-weight: 600; color: var(--accent-ink); cursor: pointer; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; transition: text-decoration-color .2s var(--ease); }
+.info-link:hover { text-decoration-color: currentColor; }
+.info-link svg { width: 20px; height: 20px; flex: none; }
+.info-sheet { width: min(680px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 24px 26px 26px; border: 0; border-radius: var(--radius-l); background: var(--surface); color: var(--ink); box-shadow: 0 24px 60px -12px rgba(20, 20, 19, .35); overflow: auto; overscroll-behavior: contain; }
+.info-sheet::backdrop { background: rgba(20, 20, 19, .45); }
+.info-sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.info-sheet .info-sheet-head h3 { margin: 4px 0 0; font-size: var(--h3); }
+.info-sheet-close { flex: none; width: 40px; height: 40px; margin: -4px -8px 0 0; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--surface-2); color: var(--ink); cursor: pointer; }
+.info-sheet-close:hover { background: var(--surface-3); }
+.info-sheet-close svg { width: 18px; height: 18px; }
+.info-sheet .two-lists { margin-top: 0; }
+.info-sheet > h4 { font-family: var(--sans); font-size: 1rem; font-weight: 600; margin: 20px 0 4px; color: var(--ink); }
+.info-sheet > p { margin: 0; color: var(--ink-2); }
+@media (max-width: 480px) { .info-sheet { padding: 20px 18px 22px; } }
+@supports not selector(:popover-open) {
+  .info-more, .info-sheet-head { display: none; }
+  .info-sheet { width: auto; max-height: none; margin: 18px 0 0; padding: 0; background: none; box-shadow: none; border-radius: 0; overflow: visible; }
+  @media (max-width: 639px) { .elig-steps .info-sheet { margin-left: -64px; } }
+}
 /* On a phone the calculator and what follows it leave the step indent: room for two selects. */
-@media (max-width: 639px) { .elig-steps .calc, .elig-steps .two-lists, .elig-steps .elig-source { margin-left: -64px; } }
+@media (max-width: 639px) { .elig-steps .calc, .elig-steps .info-more { margin-left: -64px; } }
 
 .how-grid { display: grid; gap: 22px; }
 .how-head h2 { margin-bottom: .35em; }
