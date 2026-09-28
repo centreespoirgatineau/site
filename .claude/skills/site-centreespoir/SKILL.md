@@ -10,6 +10,65 @@ dependencies**, deployed as an nginx container on the same VPS as the surplus
 platforms. Everything below was learned by shipping it; the traps section is a
 list of things that already went wrong once.
 
+## The projects page, `/projets`, added 2026-09-28
+
+Concrete projects a business or a family can fund instead of giving to the
+general budget. David's idea, after the Famille Ravenda gave $10,000 over two
+years and asked how it would be spent. **Unlisted for now** (`sitemap: no`, no
+link from any page) until David has reviewed it; to publish it, drop that line
+and link it from the donation page, the footer and the home page.
+
+**One file per project in `src/projets/`**, rendered twice by
+`build/projets.mjs`: as a card on the page and as a one-page Letter PDF fiche
+(`build/make-fiches.mjs`, headless Chrome, committed in `src/assets/fiches/`
+because the server has no Chrome). `build/fiches.lock.json` holds each fiche's
+fingerprint, so **the test fails if a project changed and its PDF was not
+redrawn**. The budget total, the amount raised and the remainder are computed,
+never typed. `_outils.mjs` holds `avecTaxes()` (TPS + TVQ, 14.975 %).
+
+- **Add a project:** copy a file in `src/projets/`, edit it, run
+  `node build/make-fiches.mjs`, `node build/make-images.mjs` only if a share
+  card changed, then `node build/build.mjs` and the tests.
+- **Add a donor or partner:** a line in that project's `partenaires`
+  (`{ nom }` for a donor; `{ nom, logo }` with the file in
+  `src/assets/img/partenaires/` for a sponsor), and the amount in
+  `financement`. Then redraw the fiches.
+- **A project moves on:** `statut` goes `a-financer` → `en-cours` → `realise`;
+  each budget line can carry `etat`: `commande`, `en-attente`, `a-venir`, `fait`.
+
+**Rules David set:**
+- Amounts are written **`$0,000.00`** (English order), by his decision, on this
+  page and its fiches. `argent()` does it without Intl.
+- The logo is the **V2 lockup** (`logo-header.svg`).
+- **Famille Ravenda may be named** (his OK, 2026-09-28). Name any other donor
+  only with that donor's permission, and a company logo only with its consent.
+
+**Tax framing (CRA), and why the page is worded as it is.** A donor gets a full
+official receipt and is *acknowledged*: name only, listed like every other
+donor. A business whose **logo is advertised** (the truck's side panels, a
+prominent godfather) is a **sponsor**: no official receipt, deductible for it as
+an advertising expense instead. The page and every fiche say this plainly, so
+nobody is promised a receipt for advertising. Source: canada.ca, *Sponsorship*
+(receiving gifts). David was advised to have his accountant confirm before the
+first sponsorship pitch.
+
+**The projects as of 2026-09-28:**
+- `camion-refrigere`: used refrigerated cube truck, 12 to 16 ft, **$65,000.00**
+  all-in, the Centre committing **$15,000.00** of its own funds (from the
+  2026-05-08 FQIS proposal). Sponsors' logos on the side; the card draws the
+  truck with eight dashed logo spaces (`camionSVG()`). Whether the FQIS grant
+  came through was not known; the page does not mention it.
+- `nouveau-local`: about 3,000 sq ft, with the café space from the vision. No
+  budget yet ("s'établit avec vous").
+- `paniers-et-couleurs`: the Ravenda project. Year 1: sign $970.00 + taxes
+  (pending), pasta (ordered). Year 2: van lettering $227.99 + taxes, pasta.
+- **Godfather / parrain**: a static section of the page, not a project file:
+  a multi-year lead partner, terms to be agreed. It is sponsorship.
+
+Beware: `Projet d'acquisition d'un camion de livraison réfrigéré.docx` in
+David's Documents folder does **not** hold the truck project; its body is the
+driver-position proposal (29,000 $). The **PDF** of the same name is the truck.
+
 ## The initiatives page, added 2026-09-22
 
 `/initiatives` (nav label **Initiatives**, footer label *Écoles et organismes*)

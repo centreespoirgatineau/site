@@ -20,7 +20,7 @@ const html = Object.fromEntries(pages.map((f) => [f, fs.readFileSync(path.join(O
 const text = (h) => h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
 
 test('the expected pages are built', () => {
-  for (const p of ['index', 'aide-alimentaire', 'benevolat', 'initiatives', 'dons', 'a-propos', 'nous-joindre', 'confidentialite', '404']) {
+  for (const p of ['index', 'aide-alimentaire', 'benevolat', 'initiatives', 'projets', 'dons', 'a-propos', 'nous-joindre', 'confidentialite', '404']) {
     assert.ok(pages.includes(`${p}.html`), `${p}.html missing`);
   }
   assert.ok(fs.existsSync(path.join(OUT, 'sitemap.xml')));
@@ -104,4 +104,28 @@ test('the site-wide content security policy allows the inline bootstrap script b
   const csp = fs.readFileSync(path.join(ROOT, 'deploy/security.inc'), 'utf8');
   assert.ok(csp.includes(`'sha256-${hash}'`), 'security.inc must carry the hash of the inline script');
   assert.ok(!/script-src[^;]*unsafe-inline/.test(csp));
+});
+
+test('every project is complete, adds up, and has an up-to-date PDF fiche', async () => {
+  const { chargerProjets, ficheHTML, empreinte, STATUTS, ETATS } = await import('../build/projets.mjs');
+  const lock = JSON.parse(fs.readFileSync(path.join(ROOT, 'build/fiches.lock.json'), 'utf8'));
+  const projets = await chargerProjets();
+  assert.ok(projets.length > 0);
+  for (const p of projets) {
+    for (const k of ['titre', 'accroche', 'pourquoi', 'statut', 'reconnaissance', 'partenaires']) assert.ok(p[k] != null, `${p.slug}: ${k} missing`);
+    assert.ok(p.statut in STATUTS, `${p.slug}: unknown status ${p.statut}`);
+    assert.ok(['don', 'commandite'].includes(p.reconnaissance), `${p.slug}: reconnaissance`);
+    for (const x of (p.budget ?? []).flatMap((g) => g.postes)) {
+      assert.ok(x.montant > 0, `${p.slug}: ${x.poste} has no amount`);
+      if (x.etat) assert.ok(x.etat in ETATS, `${p.slug}: unknown state ${x.etat}`);
+    }
+    if (p.objectif != null) assert.ok(p.reuni <= p.objectif + 0.005, `${p.slug}: more raised than the budget`);
+    if (p.statut !== 'a-financer' && p.objectif != null) assert.equal(Math.round(p.reuni * 100), Math.round(p.objectif * 100), `${p.slug}: a project in progress should be fully funded`);
+    for (const x of p.partenaires) if (x.logo) assert.ok(fs.existsSync(path.join(ROOT, 'src/assets/img/partenaires', x.logo)), `${p.slug}: logo ${x.logo} missing`);
+    assert.ok(fs.existsSync(path.join(ROOT, 'src/assets/fiches', `${p.slug}.pdf`)), `${p.slug}: no PDF fiche, run node build/make-fiches.mjs`);
+    assert.equal(lock[p.slug], empreinte(ficheHTML(p)), `${p.slug}: the PDF fiche is out of date, run node build/make-fiches.mjs`);
+    assert.ok(html['projets.html'].includes(`id="${p.slug}"`), `${p.slug}: not on the page`);
+  }
+  // Amounts are written the way David chose: $1,115.26.
+  assert.match(text(html['projets.html']), /\$10,000\.00/);
 });

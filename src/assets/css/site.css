@@ -464,6 +464,56 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .timeline .when { display: block; font-family: var(--serif); font-size: 1.35rem; font-weight: 500; color: var(--accent-ink); margin-bottom: .15em; }
 .timeline p { color: var(--ink-2); margin: 0; }
 
+/* ---- Projets à financer ------------------------------------------------------------ */
+/* Une carte par projet : le récit et le budget à gauche, l'avancement, les
+   partenaires et les boutons à droite. Les données viennent de src/projets/. */
+.steps-row { margin-top: 1.4em; }
+@media (min-width: 760px) { .steps-row { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+.projets { display: grid; gap: 28px; }
+.projet { display: grid; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-l); box-shadow: var(--shadow-1); overflow: hidden; }
+.projet-main { padding: clamp(24px, 1.5rem + 1.5vw, 44px); }
+.projet-main h3 { font-size: var(--h2); margin: .35em 0 .3em; }
+.projet-main > p { color: var(--ink-2); }
+.projet-main > p.projet-accroche { font-size: var(--lead); line-height: 1.5; color: var(--ink); }
+.projet-art { margin: 1.4em 0 1.2em; max-width: 520px; }
+.projet-art svg { display: block; width: 100%; height: auto; }
+.projet-side { display: flex; flex-direction: column; gap: 18px; padding: clamp(24px, 1.5rem + 1vw, 36px); background: var(--surface-2); border-top: 1px solid var(--line); }
+@media (min-width: 860px) {
+  .projet { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+  .projet-side { border-top: 0; border-left: 1px solid var(--line); }
+}
+.statut { display: inline-block; padding: 5px 12px; border-radius: 999px; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.statut--a-financer { background: var(--accent-soft); color: var(--accent-ink); }
+.statut--en-cours { background: var(--ink); color: #fff; }
+.statut--realise { background: var(--surface-3); color: var(--ink-2); }
+
+.budget { width: 100%; border-collapse: collapse; margin-top: 1.6em; font-size: var(--text-s); }
+.budget td, .budget th { padding: 12px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.budget .groupe th { padding-top: 20px; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.budget .note { display: block; color: var(--ink-3); font-size: .875rem; }
+.budget .montant { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; padding-left: 12px; }
+.budget .etat-cell { text-align: right; padding-left: 12px; white-space: nowrap; }
+.budget tfoot th, .budget tfoot td { border-bottom: 0; border-top: 2px solid var(--ink); font-weight: 700; font-size: 1.0625rem; }
+.pastille { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .75rem; font-weight: 600; background: var(--surface-2); color: var(--ink-2); }
+.pastille--fait { background: var(--ink); color: #fff; }
+.pastille--commande { background: var(--accent-soft); color: var(--accent-ink); }
+.projet-vide { margin-top: 1.6em; padding: 16px 18px; border-radius: var(--radius-s); background: var(--accent-wash); color: var(--ink-2); }
+
+.avancement .chiffres { margin: 0 0 10px; font-size: var(--text-s); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.avancement .chiffres strong { display: block; font-family: var(--serif); font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem); font-weight: 500; line-height: 1.1; color: var(--ink); }
+.barre { height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.barre span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+.avancement .reste { margin: 10px 0 0; font-size: var(--text-s); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.partenaires-titre { margin: 0 0 6px; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.partenaires { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; font-weight: 600; }
+.partenaires li { margin: 0; }
+.partenaires img { height: 40px; width: auto; }
+.projet-side .reconnaissance { margin: 0; color: var(--ink-2); }
+.projet-side .reconnaissance strong { color: var(--ink); }
+.btn-col { display: grid; gap: 10px; margin-top: auto; }
+.btn-col .btn { width: 100%; }
+.checks-clair li strong { color: #fff; }
+
 /* ---- Bandeau d'appel ---------------------------------------------------------------- */
 .cta-band { background: var(--ink); color: #EDEBE4; border-radius: var(--radius-l); padding: clamp(2rem, 1.5rem + 2.5vw, 4rem); display: grid; gap: 24px; align-items: center; position: relative; overflow: hidden; }
 .cta-band::after { content: ""; position: absolute; right: -120px; top: -160px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(218,119,87,.35) 0%, rgba(218,119,87,0) 70%); pointer-events: none; }

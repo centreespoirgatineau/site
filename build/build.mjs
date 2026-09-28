@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { chargerProjets, carteHTML } from './projets.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -131,6 +132,15 @@ for (const file of walk(path.join(SRC, 'root'))) {
   rootVersion[name] = hash(buf);
 }
 
+// ---- projects ----------------------------------------------------------------
+// One file per project in src/projets/, rendered as cards on /projets (see
+// build/projets.mjs, which also draws the PDF fiches).
+const projets = await chargerProjets();
+const PROJETS = {
+  'projets.a_financer': projets.filter((p) => p.statut === 'a-financer').map(carteHTML).join('\n'),
+  'projets.en_cours': projets.filter((p) => p.statut !== 'a-financer').map(carteHTML).join('\n'),
+};
+
 // ---- pages -----------------------------------------------------------------
 const layout = read(path.join(SRC, 'partials', 'layout.html'));
 const pages = [];
@@ -156,7 +166,7 @@ for (const file of walk(path.join(SRC, 'pages'))) {
     og_image: `${SITE_URL}/${meta.og_image ?? 'og.png'}?v=${rootVersion[meta.og_image ?? 'og.png'] ?? '0'}`,
     og_alt: meta.og_alt ?? 'Le phare du Centre Espoir de Gatineau sur fond terracotta, et les mots « Nourrir le corps, ce n’est que la moitié du travail »',
     year: String(new Date().getFullYear()),
-    content: render(body, { ...URLS }),
+    content: render(body, { ...URLS, ...PROJETS }),
     ...URLS,
     // Nav highlighting: `{{ nav.<slug> }}` renders ` aria-current="page"` or ''.
   };

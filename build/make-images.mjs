@@ -59,6 +59,13 @@ const CARDS = {
     line: 'Des fruits et des collations chaque semaine pour les écoles, sans frais. Un texto le jour même pour les organismes.',
     pill: 'spp.centreespoir.ca',
   },
+  'og-projets.png': {
+    illu: 'coffee',
+    eyebrow: 'Financer un projet',
+    title: 'Des projets concrets, dont vous verrez le résultat.',
+    line: 'Un camion réfrigéré, un nouveau local, des paniers mieux garnis.',
+    pill: 'Pour les entreprises et les familles',
+  },
   'og-dons.png': {
     illu: 'plant',
     eyebrow: 'Faire un don',
