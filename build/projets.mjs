@@ -30,6 +30,8 @@ export function argent(n) {
   return (c < 0 ? '-' : '') + '$' + ent + '.' + String(a % 100).padStart(2, '0');
 }
 const cents = (n) => Math.round(n * 100);
+// En français, on écrit les petits nombres en lettres dans une phrase.
+const enLettres = (n) => ['zéro', 'une', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix'][n] ?? String(n);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const somme = (xs) => xs.reduce((s, x) => s + cents(x), 0) / 100;
 
@@ -76,7 +78,7 @@ export function camionSVG(logoHref, logoDe = () => null, partenaires = []) {
     return src
       ? `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#FFFFFF" stroke="#D9D6CD" stroke-width="1.5"/><image href="${src}" x="${x + 6}" y="${y + 5}" width="${w - 12}" height="${h - 10}"/>`
       : `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#FBF3EE" stroke="#DA7757" stroke-width="2" stroke-dasharray="6 5"/>`
-        + `<text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" font-family="'Source Sans 3', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" fill="#B4573A">${etiquette}</text>`;
+        + `<text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" font-family="'Source Sans 3', 'Segoe UI', Arial, sans-serif" font-size="19" font-weight="600" fill="#8E4229">${etiquette}</text>`;
   };
   const cases = [cadre(284, 56, 138, 54, 'Principal', occupant('principal', 0))];
   for (let r = 0; r < 2; r++) for (let c = 0; c < 3; c++) {
@@ -224,6 +226,9 @@ export function carteHTML(p) {
   const ouvert = p.statut === 'a-financer';
   const logoDe = (f) => `/assets/img/partenaires/${f}`;
   const art = dessin(p, '/assets/img/logo-header.svg', logoDe);
+  // Sur un petit écran, les étiquettes du dessin deviennent minuscules : la
+  // légende les redit en texte.
+  const legende = p.offres ? `<p class="dessin-legende">${p.offres.map((o) => `${o.places === 1 ? 'Une place' : `${enLettres(o.places)} places`} de ${o.nom.toLowerCase()}`).join(', ')}</p>` : '';
   const fiche = `<a class="lien-fiche" href="/assets/fiches/${p.slug}.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>${ouvert ? 'Télécharger la fiche' : 'Voir la fiche'} (PDF)</a>`;
   const cote = [paliers(p), aides(p), repartition(p), listePartenaires(p)].filter(Boolean).join('\n        ');
   return `<article class="projet reveal" id="${p.slug}">
@@ -241,7 +246,7 @@ export function carteHTML(p) {
       </header>
       <div class="projet-corps">
         <div class="projet-recit">
-          ${art ? `<div class="projet-art">${art}</div>` : ''}
+          ${art ? `<div class="projet-art">${art}${legende}</div>` : ''}
           ${p.pourquoi.map((x) => `<p>${esc(x)}</p>`).join('\n          ')}
           ${p.budget ? `<p class="bloc-titre bloc-titre--budget">Budget détaillé</p>
           ${tableBudget(p)}` : ''}

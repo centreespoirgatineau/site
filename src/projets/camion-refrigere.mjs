@@ -10,7 +10,7 @@ export default {
   ],
   statut: 'a-financer',
   illustration: 'camion',
-  bouton: 'Devenir partenaire du camion',
+  bouton: 'Devenir partenaire',
   sujet: 'Partenaire du camion réfrigéré',
   budget: [
     { postes: [
