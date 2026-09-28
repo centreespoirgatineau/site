@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { chargerProjets, carteHTML } from './projets.mjs';
+import { chargerProjets, carteHTML, apercuHTML } from './projets.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -137,6 +137,7 @@ for (const file of walk(path.join(SRC, 'root'))) {
 // build/projets.mjs, which also draws the PDF fiches).
 const projets = await chargerProjets();
 const PROJETS = {
+  'projets.apercu': apercuHTML(projets),
   'projets.a_financer': projets.filter((p) => p.statut === 'a-financer').map(carteHTML).join('\n'),
   'projets.en_cours': projets.filter((p) => p.statut !== 'a-financer').map(carteHTML).join('\n'),
 };

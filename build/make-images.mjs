@@ -16,6 +16,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { camionSVG } from './projets.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'src', 'root');
@@ -24,7 +25,10 @@ fs.mkdirSync(OUT, { recursive: true });
 const b64 = (p) => fs.readFileSync(p).toString('base64');
 const logoHeader = b64(path.join(ROOT, 'src/assets/img/logo-header.svg'));
 const icon = b64(path.join(ROOT, 'src/assets/img/icon.svg'));
-const illustration = (name) => b64(path.join(ROOT, 'src/assets/img/illustrations', `${name}.svg`));
+// 'camion' is not a file: it is the truck drawn by build/projets.mjs, with the logo inlined.
+const illustration = (name) => name === 'camion'
+  ? Buffer.from(camionSVG('data:image/svg+xml;base64,' + logoHeader), 'utf8').toString('base64')
+  : b64(path.join(ROOT, 'src/assets/img/illustrations', `${name}.svg`));
 const serif = b64(path.join(ROOT, 'src/assets/fonts/SourceSerif4-normal-400-700.woff2'));
 const sans = b64(path.join(ROOT, 'src/assets/fonts/SourceSans3-normal-400-700.woff2'));
 
@@ -60,9 +64,9 @@ const CARDS = {
     pill: 'spp.centreespoir.ca',
   },
   'og-projets.png': {
-    illu: 'coffee',
+    illu: 'camion',
     eyebrow: 'Financer un projet',
-    title: 'Des projets concrets, dont vous verrez le résultat.',
+    title: 'Choisissez ce que votre contribution accomplit.',
     line: 'Un camion réfrigéré, un nouveau local, des paniers mieux garnis.',
     pill: 'Pour les entreprises et les familles',
   },

@@ -112,9 +112,14 @@ test('every project is complete, adds up, and has an up-to-date PDF fiche', asyn
   const projets = await chargerProjets();
   assert.ok(projets.length > 0);
   for (const p of projets) {
-    for (const k of ['titre', 'accroche', 'pourquoi', 'statut', 'reconnaissance', 'partenaires']) assert.ok(p[k] != null, `${p.slug}: ${k} missing`);
+    for (const k of ['court', 'titre', 'accroche', 'pourquoi', 'statut', 'partenaires']) assert.ok(p[k] != null, `${p.slug}: ${k} missing`);
     assert.ok(p.statut in STATUTS, `${p.slug}: unknown status ${p.statut}`);
-    assert.ok(['don', 'commandite'].includes(p.reconnaissance), `${p.slug}: reconnaissance`);
+    if (p.offres) {
+      const total = p.offres.reduce((s, o) => s + Math.round(o.montant * 100) * o.places, 0);
+      assert.equal(total, Math.round(p.reste * 100), `${p.slug}: the sponsorship tiers must add up to what is left to raise`);
+      for (const x of p.partenaires) assert.ok(p.offres.some((o) => o.id === x.palier), `${p.slug}: ${x.nom} has an unknown tier`);
+      for (const o of p.offres) assert.ok(o.prises <= o.places, `${p.slug}: too many partners at ${o.nom}`);
+    }
     for (const x of (p.budget ?? []).flatMap((g) => g.postes)) {
       assert.ok(x.montant > 0, `${p.slug}: ${x.poste} has no amount`);
       if (x.etat) assert.ok(x.etat in ETATS, `${p.slug}: unknown state ${x.etat}`);

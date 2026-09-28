@@ -4,50 +4,34 @@ description: Un camion réfrigéré, un nouveau local, des paniers mieux garnis 
 priority: 0.8
 sitemap: no
 og_image: og-projets.png
-og_alt: Des projets concrets, dont vous verrez le résultat. Un camion réfrigéré, un nouveau local, des paniers mieux garnis.
+og_alt: Choisissez ce que votre contribution accomplit. Un camion réfrigéré, un nouveau local, des paniers mieux garnis.
 ---
-    <section class="page-head">
+    <section class="page-head projets-tete">
       <div class="container page-head-grid">
         <div>
           <p class="eyebrow">Financer un projet</p>
-          <h1>Des projets concrets, dont vous verrez le résultat.</h1>
-          <p class="lead">Plutôt qu’un don général, choisissez ce que votre contribution accomplit. Chaque projet dit ce qu’il coûte et où va chaque dollar, et nous vous montrons le résultat.</p>
+          <h1>Choisissez ce que votre contribution accomplit.</h1>
+          <p class="lead">Chaque projet dit ce qu’il coûte, où va chaque dollar et où il en est. Vous choisissez, et nous vous montrons le résultat.</p>
           <div class="btn-row">
             <a class="btn btn-primary btn-lg" href="#a-financer">Voir les projets</a>
-            <a class="btn btn-secondary btn-lg" href="#parrain">Devenir parrain du Centre</a>
+            <a class="btn btn-secondary btn-lg" href="#contact">Nous écrire</a>
           </div>
         </div>
-        <div class="page-head-art reveal">
-          <img src="/assets/img/illustrations/coffee.svg" alt="" width="1024" height="768">
-        </div>
-      </div>
-    </section>
-
-    <section class="section-tight">
-      <div class="container">
-        <h2 class="reveal">Comment ça fonctionne</h2>
-        <ol class="steps steps-row reveal">
-          <li>
-            <h3>Vous choisissez un projet</h3>
-            <p>Seul ou avec d’autres entreprises : un projet peut se partager.</p>
-          </li>
-          <li>
-            <h3>On convient des modalités</h3>
-            <p>Le montant, sur un an ou plusieurs, en don ou en commandite.</p>
-          </li>
-          <li>
-            <h3>Vous voyez le résultat</h3>
-            <p>Nous vous montrons ce que votre contribution a permis, photos à l’appui.</p>
-          </li>
-        </ol>
+        <nav class="apercu reveal d1" aria-label="Les projets en un coup d’œil">
+          <p class="apercu-titre">En un coup d’œil</p>
+          <ul>
+            {{ projets.apercu }}
+          </ul>
+        </nav>
       </div>
     </section>
 
     <section class="section-tight" id="a-financer">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow">Projets à financer</p>
+          <p class="eyebrow">À financer</p>
           <h2>Ce qui nous manque aujourd’hui.</h2>
+          <p>Un projet se finance seul ou à plusieurs. Chaque fiche se télécharge, pour la présenter à votre équipe.</p>
         </div>
         <div class="projets">
 {{ projets.a_financer }}
@@ -55,11 +39,38 @@ og_alt: Des projets concrets, dont vous verrez le résultat. Un camion réfrigé
       </div>
     </section>
 
+    <section class="section section-ink" id="parrain">
+      <div class="container">
+        <div class="parrain">
+          <div class="reveal">
+            <p class="eyebrow">Partenaire principal</p>
+            <h2>Devenez parrain du Centre Espoir.</h2>
+            <p class="lead">Pour une entreprise qui veut aller plus loin qu’un projet : un partenariat de plusieurs années, à nos côtés dans tout ce que nous faisons.</p>
+            <p>Un engagement annuel nous donne ce qui manque le plus à un organisme comme le nôtre : de la stabilité. Nous pouvons planifier au lieu d’improviser, et consacrer notre énergie aux familles.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary btn-lg" href="mailto:direction@centreespoir.ca?subject=Devenir%20parrain%20du%20Centre%20Espoir">Devenir parrain</a>
+            </div>
+          </div>
+          <div class="parrain-offre reveal d1">
+            <p class="bloc-titre">Ce que vous recevez</p>
+            <ul class="checks checks-clair">
+              <li><strong>Votre logo sur notre site</strong>, avec la mention « Partenaire principal ».</li>
+              <li><strong>Une place à part</strong> dans notre rapport annuel et nos communications.</li>
+              <li><strong>Des journées de bénévolat</strong> au Centre pour votre équipe.</li>
+              <li><strong>Un bilan chaque année</strong> de ce que votre soutien a permis.</li>
+            </ul>
+            <p class="small parrain-note">Montant et durée à convenir ensemble. C’est une commandite : pas de reçu officiel, mais une dépense de publicité déductible en général.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section section-alt" id="en-cours">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow">Grâce à nos donateurs</p>
-          <h2>Déjà en cours.</h2>
+          <p class="eyebrow">Déjà financé</p>
+          <h2>Les $10,000.00 de la Famille Ravenda, dollar par dollar.</h2>
+          <p>Voici exactement où va leur contribution, et où en est chaque achat. C’est ce que chaque partenaire peut suivre ici.</p>
         </div>
         <div class="projets">
 {{ projets.en_cours }}
@@ -67,62 +78,92 @@ og_alt: Des projets concrets, dont vous verrez le résultat. Un camion réfrigé
       </div>
     </section>
 
-    <section class="section section-ink" id="parrain">
-      <div class="container two-col">
-        <div class="reveal">
-          <p class="eyebrow">Partenaire principal</p>
-          <h2>Devenir parrain du Centre Espoir</h2>
-          <p class="lead">Nous cherchons une entreprise ou une fondation qui marche à nos côtés sur plusieurs années.</p>
-          <p>Un engagement annuel nous donne de la stabilité, et la relation dépasse le chèque : des visites, du bénévolat en équipe, des projets choisis ensemble. En retour, le parrain occupe une place à part dans nos communications. Les modalités se décident avec vous.</p>
-          <div class="btn-row" style="margin-top: 1.6em;">
-            <a class="btn btn-primary btn-lg" href="mailto:direction@centreespoir.ca?subject=Devenir%20parrain%20du%20Centre%20Espoir">Devenir parrain</a>
-          </div>
-        </div>
-        <aside class="reveal d1">
-          <ul class="checks checks-clair">
-            <li><strong>Un engagement sur plusieurs années</strong>, au montant convenu ensemble.</li>
-            <li><strong>Une place à part</strong> sur notre site, dans nos communications et nos rapports annuels.</li>
-            <li><strong>Une relation</strong> : visites du Centre, activités de bénévolat pour votre équipe.</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section-tight" id="don-ou-commandite">
+    <section class="section" id="engagements">
       <div class="container">
         <div class="section-head reveal">
-          <h2>Don ou commandite</h2>
-          <p>Deux façons de contribuer, qui ne se traitent pas de la même manière aux impôts.</p>
+          <p class="eyebrow">Transparence</p>
+          <h2>Nos engagements envers vous.</h2>
         </div>
-        <div class="two-col equal">
-          <div class="panel reveal">
-            <h3>Un don</h3>
-            <ul class="checks">
-              <li><strong>Un reçu officiel</strong> pour fins d’impôt, pour le montant total.</li>
-              <li><strong>Votre nom</strong> parmi les donateurs du projet, comme tous les autres.</li>
-            </ul>
+        <ol class="engagements">
+          <li class="reveal">
+            <h3>Votre argent reste dans le projet choisi.</h3>
+            <p>Une contribution versée pour un projet sert à ce projet, et à rien d’autre.</p>
+          </li>
+          <li class="reveal d1">
+            <h3>Chaque dollar est détaillé.</h3>
+            <p>Le budget de chaque projet est affiché ligne par ligne, taxes comprises.</p>
+          </li>
+          <li class="reveal d2">
+            <h3>Ce qui n’est pas dépensé nourrit des familles.</h3>
+            <p>Si un projet coûte moins que prévu, la différence sert à acheter des denrées pour les paniers.</p>
+          </li>
+          <li class="reveal d3">
+            <h3>Vous suivez l’avancement.</h3>
+            <p>Cette page est mise à jour à chaque étape, et chaque partenaire reçoit un bilan avec photos.</p>
+          </li>
+        </ol>
+
+        <div class="comparatif reveal">
+          <h3>Don ou commandite : ce que vous recevez</h3>
+          <div class="formes">
+            <div class="forme">
+              <p class="forme-nom">Un don</p>
+              <dl>
+                <dt>Reçu officiel pour fins d’impôt</dt><dd>Oui, pour le montant total</dd>
+                <dt>Reconnaissance</dt><dd>Votre nom parmi les donateurs du projet</dd>
+                <dt>Aux impôts</dt><dd>Un don de bienfaisance</dd>
+              </dl>
+            </div>
+            <div class="forme">
+              <p class="forme-nom">Une commandite</p>
+              <dl>
+                <dt>Reçu officiel pour fins d’impôt</dt><dd>Non</dd>
+                <dt>Reconnaissance</dt><dd>Votre logo mis en valeur : camion, site, rapport annuel</dd>
+                <dt>Aux impôts</dt><dd>Une dépense de publicité, en général</dd>
+              </dl>
+            </div>
           </div>
-          <div class="panel reveal d1">
-            <h3>Une commandite</h3>
-            <ul class="checks">
-              <li><strong>Votre logo mis en valeur</strong> : sur le camion, dans nos communications.</li>
-              <li><strong>Pas de reçu officiel de don</strong> : la visibilité offerte en retour est de la publicité. Elle se déduit généralement comme une dépense d’entreprise.</li>
-            </ul>
+          <p class="small muted">Votre comptable pourra vous confirmer ce qui convient à votre situation. Organisme de bienfaisance enregistré, n<sup>o</sup> 848106365RR0001.</p>
+        </div>
+
+        <div class="documents reveal">
+          <p><strong>Nos comptes sont publics.</strong> Nos états financiers et nos rapports annuels sont en ligne.</p>
+          <div class="btn-row">
+            <a class="btn btn-secondary" href="{{ url.etats_financiers }}" target="_blank" rel="noopener">États financiers</a>
+            <a class="btn btn-secondary" href="{{ url.rapports_annuels }}" target="_blank" rel="noopener">Rapports annuels</a>
           </div>
         </div>
-        <p class="small muted reveal" style="margin-top: 1.4em;">Votre comptable pourra vous confirmer ce qui convient à votre situation. Organisme de bienfaisance enregistré, n<sup>o</sup> 848106365RR0001.</p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section-tight" id="contact">
       <div class="container">
-        <div class="cta-band terracotta reveal">
+        <div class="section-head reveal">
+          <h2>Comment ça se passe</h2>
+        </div>
+        <ol class="steps steps-row reveal">
+          <li>
+            <h3>On en parle</h3>
+            <p>Un appel ou un courriel. Nous répondons à vos questions et vous faisons visiter le Centre si vous le souhaitez.</p>
+          </li>
+          <li>
+            <h3>On s’entend</h3>
+            <p>Le projet, le montant, la durée, et la forme : don ou commandite. Vous recevez la fiche du projet.</p>
+          </li>
+          <li>
+            <h3>Vous suivez le résultat</h3>
+            <p>Sur cette page, et par un bilan avec photos une fois le projet réalisé.</p>
+          </li>
+        </ol>
+
+        <div class="cta-band terracotta contact-band reveal">
           <div>
-            <h2>Une autre idée de projet?</h2>
-            <p>Si votre entreprise veut financer quelque chose de précis, parlons‑en. On vous prépare une fiche.</p>
+            <h2>Parlons de votre contribution.</h2>
+            <p>David Hatin, directeur général, vous répond personnellement.</p>
           </div>
           <div class="btn-row">
-            <a class="btn btn-ink btn-lg" href="mailto:direction@centreespoir.ca?subject=Une%20id%C3%A9e%20de%20projet">Écrire au directeur</a>
+            <a class="btn btn-ink btn-lg" href="mailto:direction@centreespoir.ca?subject=Financer%20un%20projet">direction@centreespoir.ca</a>
+            <a class="btn btn-light btn-lg" href="tel:+18196633238">819‑663‑3238</a>
           </div>
         </div>
       </div>

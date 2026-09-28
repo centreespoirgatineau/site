@@ -465,54 +465,154 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-
 .timeline p { color: var(--ink-2); margin: 0; }
 
 /* ---- Projets à financer ------------------------------------------------------------ */
-/* Une carte par projet : le récit et le budget à gauche, l'avancement, les
-   partenaires et les boutons à droite. Les données viennent de src/projets/. */
-.steps-row { margin-top: 1.4em; }
-@media (min-width: 760px) { .steps-row { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
-.projets { display: grid; gap: 28px; }
-.projet { display: grid; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-l); box-shadow: var(--shadow-1); overflow: hidden; }
-.projet-main { padding: clamp(24px, 1.5rem + 1.5vw, 44px); }
-.projet-main h3 { font-size: var(--h2); margin: .35em 0 .3em; }
-.projet-main > p { color: var(--ink-2); }
-.projet-main > p.projet-accroche { font-size: var(--lead); line-height: 1.5; color: var(--ink); }
-.projet-art { margin: 1.4em 0 1.2em; max-width: 520px; }
-.projet-art svg { display: block; width: 100%; height: auto; }
-.projet-side { display: flex; flex-direction: column; gap: 18px; padding: clamp(24px, 1.5rem + 1vw, 36px); background: var(--surface-2); border-top: 1px solid var(--line); }
+/* La page /projets. Chaque carte a deux étages : en tête, ce qu'est le projet et
+   ce qu'il reste à réunir, avec le bouton, pour qu'on sache en trois secondes de
+   quoi il s'agit; dessous, le récit et le budget à gauche, ce que vous recevez à
+   droite. Les données viennent de src/projets/ (voir build/projets.mjs). */
+
+/* L'aperçu du haut de page : la table des matières, avec les chiffres. */
+.projets-tete .page-head-grid { align-items: center; }
+.apercu { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 22px 24px 10px; width: 100%; max-width: 440px; margin: 0 auto; }
+@media (min-width: 860px) { .apercu { margin: 0 0 0 auto; } }
+.apercu-titre, .bloc-titre { margin: 0 0 10px; font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.apercu ul { list-style: none; margin: 0; padding: 0; }
+.apercu li { margin: 0; border-top: 1px solid var(--line); }
+.apercu a { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; color: var(--ink); text-decoration: none; }
+.apercu a span { font-weight: 600; }
+.apercu a strong { font-weight: 600; color: var(--accent-ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.apercu a:hover span { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.apercu li.fait a strong { color: var(--ink-3); }
+.apercu li.fait a strong::before { content: "✓ "; color: var(--accent); }
+
+.projets { display: grid; gap: 32px; }
+.projet { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-l); box-shadow: var(--shadow-1); overflow: hidden; scroll-margin-top: calc(var(--header-h) + 16px); }
+
+/* L'étage du haut : l'essentiel et le bouton. */
+.projet-tete { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; padding: clamp(24px, 1.5rem + 1.5vw, 44px); border-bottom: 1px solid var(--line); }
+.projet-tete h3 { font-size: var(--h2); margin: .4em 0 .25em; }
+.projet-accroche { margin: 0; font-size: var(--lead); line-height: 1.5; color: var(--ink-2); max-width: 30em; }
+.projet-chiffres { min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: 22px 24px; border-radius: var(--radius); background: var(--accent-wash); border: 1px solid #F0D9CC; align-self: start; }
+.projet-chiffres .grand { margin: 0; font-family: var(--serif); font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem); font-weight: 500; line-height: 1; letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.projet-chiffres .grand--texte { font-size: clamp(1.5rem, 1.3rem + .8vw, 1.875rem); line-height: 1.15; }
+.projet-chiffres .sous { margin: -2px 0 4px; color: var(--ink-2); font-size: var(--text-s); }
+.projet-chiffres .acquis { margin: 0; color: var(--ink-2); font-size: .875rem; }
+.projet-chiffres .btn { width: 100%; margin-top: 6px; white-space: normal; text-align: center; }
+.barre { height: 10px; border-radius: 999px; background: #F0D9CC; overflow: hidden; }
+.barre span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+.barre--plein span { background: var(--ink); }
+.lien-fiche { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 0; font-size: var(--text-s); font-weight: 600; color: var(--accent-ink); text-decoration: none; }
+.lien-fiche svg { width: 18px; height: 18px; flex: none; }
+.lien-fiche:hover { text-decoration: underline; }
 @media (min-width: 860px) {
-  .projet { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
-  .projet-side { border-top: 0; border-left: 1px solid var(--line); }
+  .projet-tete { grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; align-items: start; }
 }
+
+/* L'étage du bas : le récit et le budget, puis ce que vous recevez. */
+.projet-corps { display: grid; grid-template-columns: minmax(0, 1fr); }
+.projet-recit { padding: clamp(24px, 1.5rem + 1.5vw, 44px); }
+.projet-recit > p { color: var(--ink-2); max-width: 36em; }
+.projet-art { margin: 0 0 1.6em; max-width: 540px; }
+.projet-art .dessin { display: block; width: 100%; height: auto; }
+.projet-cote { display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 1.5rem + 1vw, 36px); background: var(--surface-2); border-top: 1px solid var(--line); }
+@media (min-width: 860px) {
+  .projet-corps { grid-template-columns: minmax(0, 1fr) 368px; }
+  .projet-cote { border-top: 0; border-left: 1px solid var(--line); }
+}
+.bloc-titre--budget { margin-top: 2em; }
+.budget { width: 100%; border-collapse: collapse; font-size: var(--text-s); }
+.budget td, .budget th { padding: 12px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.budget .groupe th { padding-top: 18px; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.budget .note { display: block; color: var(--ink-3); font-size: .875rem; }
+.budget .montant { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; padding-left: 12px; }
+.budget .etat-cell { text-align: right; padding-left: 12px; white-space: nowrap; }
+.budget tfoot th, .budget tfoot td { border-bottom: 0; border-top: 2px solid var(--ink); font-weight: 700; font-size: 1.0625rem; }
+@media (max-width: 599px) {
+  .budget tbody tr:not(.groupe), .budget tfoot tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .budget tbody tr:not(.groupe) td, .budget tfoot th, .budget tfoot td { padding: 0; border: 0; }
+  .budget .montant { grid-column: 2; grid-row: 1; }
+  .budget .etat-cell { grid-column: 1; grid-row: 2; text-align: left; padding: 6px 0 0 !important; }
+  .budget .etat-cell:empty { display: none; }
+  .budget .groupe th { display: block; }
+  .budget tfoot tr { border-top: 2px solid var(--ink); border-bottom: 0; }
+}
+.pastille { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .75rem; font-weight: 600; background: var(--surface-2); color: var(--ink-2); }
+.pastille--fait { background: var(--ink); color: #fff; }
+.pastille--commande { background: var(--accent-soft); color: var(--accent-ink); }
+.projet-vide { margin: 0; padding: 16px 18px; border-radius: var(--radius-s); background: var(--accent-wash); color: var(--ink-2); }
+
 .statut { display: inline-block; padding: 5px 12px; border-radius: 999px; font-size: .8125rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .statut--a-financer { background: var(--accent-soft); color: var(--accent-ink); }
 .statut--en-cours { background: var(--ink); color: #fff; }
 .statut--realise { background: var(--surface-3); color: var(--ink-2); }
 
-.budget { width: 100%; border-collapse: collapse; margin-top: 1.6em; font-size: var(--text-s); }
-.budget td, .budget th { padding: 12px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-.budget .groupe th { padding-top: 20px; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
-.budget .note { display: block; color: var(--ink-3); font-size: .875rem; }
-.budget .montant { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; padding-left: 12px; }
-.budget .etat-cell { text-align: right; padding-left: 12px; white-space: nowrap; }
-.budget tfoot th, .budget tfoot td { border-bottom: 0; border-top: 2px solid var(--ink); font-weight: 700; font-size: 1.0625rem; }
-.pastille { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .75rem; font-weight: 600; background: var(--surface-2); color: var(--ink-2); }
-.pastille--fait { background: var(--ink); color: #fff; }
-.pastille--commande { background: var(--accent-soft); color: var(--accent-ink); }
-.projet-vide { margin-top: 1.6em; padding: 16px 18px; border-radius: var(--radius-s); background: var(--accent-wash); color: var(--ink-2); }
+/* Les paliers de commandite. */
+.palier { padding: 18px 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+.palier-tete { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.palier-tete strong { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; }
+.palier-tete span { font-weight: 700; color: var(--accent-ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.palier-places { margin: 2px 0 12px; font-size: .875rem; color: var(--ink-3); }
+.palier .checks { gap: 8px; font-size: var(--text-s); }
+.palier .checks li { padding-left: 32px; }
+.note-offre { margin: 2px 0 0; color: var(--ink-2); }
 
-.avancement .chiffres { margin: 0 0 10px; font-size: var(--text-s); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.avancement .chiffres strong { display: block; font-family: var(--serif); font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem); font-weight: 500; line-height: 1.1; color: var(--ink); }
-.barre { height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
-.barre span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
-.avancement .reste { margin: 10px 0 0; font-size: var(--text-s); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.partenaires-titre { margin: 0 0 6px; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
-.partenaires { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; font-weight: 600; }
+/* Les façons d'aider, pour un projet sans budget arrêté. */
+.aides { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.aides li { margin: 0; padding: 14px 18px; border-radius: var(--radius-s); background: var(--surface); border: 1px solid var(--line); }
+.aides strong { display: block; }
+.aides span { display: block; margin-top: 2px; color: var(--ink-2); font-size: var(--text-s); line-height: 1.45; }
+
+/* Où va l'argent. */
+.rep-barre { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; }
+.rep-denrees { background: var(--accent); }
+.rep-visibilite { background: var(--ink); }
+.rep-equipement { background: var(--ink-3); }
+.rep-legende { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.rep-legende li { margin: 0; display: grid; grid-template-columns: 12px auto 1fr; align-items: baseline; column-gap: 10px; }
+.rep-legende i { width: 12px; height: 12px; border-radius: 50%; align-self: center; }
+.rep-legende strong { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; line-height: 1; }
+.rep-legende span { color: var(--ink-2); }
+.rep-legende em { grid-column: 3; font-style: normal; font-size: .875rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.partenaires { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; font-weight: 600; font-size: 1.0625rem; }
 .partenaires li { margin: 0; }
-.partenaires img { height: 40px; width: auto; }
-.projet-side .reconnaissance { margin: 0; color: var(--ink-2); }
-.projet-side .reconnaissance strong { color: var(--ink); }
-.btn-col { display: grid; gap: 10px; margin-top: auto; }
-.btn-col .btn { width: 100%; }
+.partenaires img { height: 44px; width: auto; }
+.projet-cote .bloc-titre + .partenaires { margin-top: -4px; }
+
+/* Le parrain, sur fond encre. */
+.parrain { display: grid; gap: 40px; align-items: center; }
+.parrain .btn-row { margin-top: 1.6em; }
+.parrain .lead { color: #EDEBE4; }
+.parrain > div > p:not(.eyebrow):not(.lead) { color: #C9C6BC; }
+.parrain-offre { padding: 28px; border-radius: var(--radius); background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .14); }
+.parrain-offre .bloc-titre { color: #F2B79F; }
+.checks-clair li { color: #C9C6BC; }
 .checks-clair li strong { color: #fff; }
+.parrain-note { margin: 18px 0 0; color: #A9A69C; }
+@media (min-width: 860px) { .parrain { grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 72px; } }
+
+/* Les engagements, puis le comparatif. */
+.engagements { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px 40px; counter-reset: e; }
+.engagements li { margin: 0; padding-top: 18px; border-top: 2px solid var(--accent); counter-increment: e; }
+.engagements h3 { font-size: 1.25rem; margin: 0 0 .35em; }
+.engagements p { margin: 0; color: var(--ink-2); }
+@media (min-width: 760px) { .engagements { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .engagements { grid-template-columns: repeat(4, 1fr); } }
+.comparatif { margin-top: clamp(2.5rem, 2rem + 2vw, 4rem); padding: clamp(22px, 1.2rem + 1.5vw, 36px); border-radius: var(--radius-l); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-1); }
+.comparatif h3 { margin-bottom: .8em; }
+.formes { display: grid; gap: 16px; }
+@media (min-width: 760px) { .formes { grid-template-columns: 1fr 1fr; gap: 24px; } }
+.forme { padding: 20px 22px; border-radius: var(--radius); background: var(--surface-2); }
+.forme-nom { margin: 0 0 8px; font-family: var(--serif); font-size: 1.375rem; font-weight: 500; }
+.forme dl { margin: 0; }
+.forme dt { margin-top: 12px; font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.forme dd { margin: 2px 0 0; }
+.comparatif .small { margin: 14px 0 0; }
+.documents { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; margin-top: 24px; padding: 20px 24px; border-radius: var(--radius); background: var(--surface-2); }
+.documents p { margin: 0; }
+
+/* La fin de page : la marche à suivre, puis le contact. */
+.steps-row { margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem); }
+@media (min-width: 760px) { .steps-row { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+.contact-band .btn-row { gap: 10px; }
 
 /* ---- Bandeau d'appel ---------------------------------------------------------------- */
 .cta-band { background: var(--ink); color: #EDEBE4; border-radius: var(--radius-l); padding: clamp(2rem, 1.5rem + 2.5vw, 4rem); display: grid; gap: 24px; align-items: center; position: relative; overflow: hidden; }

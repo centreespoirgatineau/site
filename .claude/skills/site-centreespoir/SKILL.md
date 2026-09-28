@@ -30,9 +30,10 @@ never typed. `_outils.mjs` holds `avecTaxes()` (TPS + TVQ, 14.975 %).
   `node build/make-fiches.mjs`, `node build/make-images.mjs` only if a share
   card changed, then `node build/build.mjs` and the tests.
 - **Add a donor or partner:** a line in that project's `partenaires`
-  (`{ nom }` for a donor; `{ nom, logo }` with the file in
-  `src/assets/img/partenaires/` for a sponsor), and the amount in
-  `financement`. Then redraw the fiches.
+  (`{ nom }` for a donor; `{ nom, palier, logo }` with the file in
+  `src/assets/img/partenaires/` for a sponsor, `palier` being an `offres` id),
+  and the amount in `financement`. Then redraw the fiches: the logo lands in
+  its place on the truck drawing by itself.
 - **A project moves on:** `statut` goes `a-financer` → `en-cours` → `realise`;
   each budget line can carry `etat`: `commande`, `en-attente`, `a-venir`, `fait`.
 
@@ -42,6 +43,43 @@ never typed. `_outils.mjs` holds `avecTaxes()` (TPS + TVQ, 14.975 %).
 - The logo is the **V2 lockup** (`logo-header.svg`).
 - **Famille Ravenda may be named** (his OK, 2026-09-28). Name any other donor
   only with that donor's permission, and a company logo only with its consent.
+
+**Redesigned after a full audit, 2026-09-28.** The rules that came out of it:
+- **Page order is an argument:** what's needed (the projects) → a bigger
+  commitment (parrain, ink band) → proof (the Ravenda project, "dollar par
+  dollar", sand band) → guarantees (four engagements, don vs commandite, the
+  public accounts) → how it goes and who answers (David, terracotta band).
+  No generic "how it works" before the first project.
+- **The hero carries an at-a-glance card** (`apercuHTML`) listing each project
+  with what's left to raise; it is also the table of contents. No mood doodle:
+  a man under a spilling coffee cup was the first draft's hero, wrong for donors.
+- **Illustrate only what is funded**, as line drawings in the site's ink,
+  cream and terracotta (`camionSVG`, `batimentSVG` in `build/projets.mjs`).
+  The truck shows each sponsorship place, and a place takes the partner's logo
+  as soon as one is added. The same drawing is the share card.
+- **Each card has two storeys:** the head says what it is, the amount **left to
+  raise** in large type (never the amount already in hand, which reads as the
+  price), the bar, and the button; the body holds the story and the budget on
+  the left and "Ce que vous recevez" on the right. Never show an empty
+  partners list ("aucun pour l'instant" tells a visitor nobody wants it).
+- **An offer has a price.** The truck's sponsorship tiers (`offres`) must add up
+  exactly to what's left; the test checks it. A project with no budget gets
+  concrete ways to help (`aides`) instead of a figure.
+- **Show the split** (`categorie` on budget lines → "Où va l'argent" bar) when
+  a project mixes kinds of spending; 86 % to food is the strongest line there is.
+- **Phones:** grid columns are `minmax(0, 1fr)` or a card grows wider than the
+  screen; the budget table and the don/commandite comparison stack below
+  600 px instead of scrolling sideways (a sideways table hides its last column).
+- In SVG attributes, quote a font name ending in a digit:
+  `font-family="'Source Sans 3', Arial, sans-serif"`. Unquoted it is invalid
+  and dropped; inline on the page it inherits and looks fine, but inside an
+  `<img>` or a share card it falls back to a serif.
+
+**Commitments the page makes that David must confirm** (written at his request
+to "design it exactly as it should be presented"): the tiers ($20,000.00 × 1,
+$5,000.00 × 6), logo placements on the truck, the parrain's benefits, "toute
+somme non utilisée va aux denrées", and "chaque partenaire reçoit un bilan avec
+photos".
 
 **Tax framing (CRA), and why the page is worded as it is.** A donor gets a full
 official receipt and is *acknowledged*: name only, listed like every other
