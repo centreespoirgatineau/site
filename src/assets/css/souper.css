@@ -1,0 +1,92 @@
+/* L'annonce du Souper Saveurs d'Afrique, en haut de chaque page (src/partials/annonce.html).
+   À retirer après le 14 novembre 2026 avec le reste (voir le commentaire de annonce.html).
+   Le script du <head> pose .sans-souper sur <html> pour qui l'a fermée, et pour tous
+   à partir du 15 novembre : l'annonce n'apparaît alors pas du tout, sans clignoter. */
+.sans-souper .ce-souper-bar { display: none; }
+
+/* Fait des 54 drapeaux d'Afrique, qui défilent lentement vers la gauche, à la
+   demande de David (2026-10-02). L'annonce tient sur une ligne, dans une
+   pastille encre au milieu. Sur un téléphone, la pastille cacherait presque tous
+   les drapeaux : ils passent alors sur leur propre bande, l'annonce en dessous.
+
+   Le défilement : une couche deux fois plus large que nécessaire glisse de la
+   largeur exacte du ruban (9 251 x 104 px à l'origine), puis recommence; comme
+   le ruban se répète, le raccord ne se voit pas. On déplace la couche avec
+   transform, que le navigateur confie à la carte graphique, plutôt que de
+   redessiner l'image à chaque image : c'est fluide et léger pour la batterie. */
+.ce-souper-bar {
+  --ce-drapeaux-h: 32px;
+  --ce-ruban: calc(var(--ce-drapeaux-h) * 9251 / 104);
+  position: relative; z-index: 41; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 6px 56px;
+  background: var(--bg, #FAF9F5);
+  border-bottom: 1px solid var(--line, #E8E6DF);
+  font: 500 .9375rem/1.3 var(--sans); color: #fff;
+}
+.ce-souper-bar::before {
+  content: ""; position: absolute; left: 0; top: 50%;
+  width: calc(100% + var(--ce-ruban)); height: var(--ce-drapeaux-h); margin-top: calc(var(--ce-drapeaux-h) / -2);
+  background: url("/assets/img/souper-drapeaux.webp") 0 0 / auto 100% repeat-x;
+  animation: ce-souper-drapeaux 110s linear infinite;
+  will-change: transform; pointer-events: none;
+}
+@keyframes ce-souper-drapeaux { to { transform: translateX(calc(var(--ce-ruban) * -1)); } }
+@media (prefers-reduced-motion: reduce) { .ce-souper-bar::before { animation: none; } }
+
+.ce-souper-bar-inner {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  min-width: 0; padding: 7px 20px; border-radius: 999px; white-space: nowrap;
+  background: var(--ink, #141413); box-shadow: 0 8px 22px -10px rgba(20, 20, 19, .6);
+}
+.ce-souper-bar-inner > * { line-height: 1; text-box: trim-both cap alphabetic; }
+.ce-souper-bar strong { font-family: var(--serif); font-weight: 600; font-size: 1rem; color: #fff; }
+/* Sans text-box (Firefox, pour l'instant), le titre en Source Serif paraît un peu
+   bas : on le remonte d'un pixel. Surtout pas d'overflow: hidden sur ces textes,
+   il couperait les jambages du p et du q une fois la boîte rognée. */
+@supports not (text-box: trim-both cap alphabetic) { .ce-souper-bar strong { position: relative; top: -1px; } }
+.ce-souper-bar-date { color: #C9C6BC; font-size: .875rem; }
+.ce-souper-bar a {
+  color: #F2B79F; font-weight: 600; font-size: .875rem;
+  text-decoration: underline; text-decoration-color: rgba(242, 183, 159, .6); text-underline-offset: 3px;
+}
+.ce-souper-bar a:hover { color: #fff; text-decoration-color: #fff; }
+.ce-souper-bar-close {
+  position: absolute; z-index: 2; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; background: var(--ink, #141413); color: #fff;
+  box-shadow: 0 4px 14px -6px rgba(20, 20, 19, .6);
+}
+.ce-souper-bar-close:hover { background: #2A2926; }
+.ce-souper-bar-close svg { width: 16px; height: 16px; }
+
+@media (max-width: 767px) {
+  /* Deux bandes de même hauteur, 26 px chacune : les drapeaux, puis l'annonce. */
+  .ce-souper-bar {
+    --ce-drapeaux-h: 20px;
+    --ce-bande: 26px;
+    display: block; min-height: 0; padding: var(--ce-bande) 0 0; border-bottom: 0;
+    background: linear-gradient(var(--bg, #FAF9F5) 0 var(--ce-bande), var(--ink, #141413) var(--ce-bande));
+  }
+  .ce-souper-bar::before { top: 3px; margin-top: 0; }
+  .ce-souper-bar-inner {
+    height: var(--ce-bande); padding: 0 48px 0 12px; gap: 10px;
+    border-radius: 0; box-shadow: none; line-height: 1;
+  }
+  .ce-souper-bar strong { font-size: .9375rem; }
+  .ce-souper-bar a { font-size: .8125rem; }
+  /* Le x reste dessiné dans la bande noire, mais sa zone de toucher monte
+     derrière les drapeaux : 44 x 52 px, au lieu des 26 px de la bande seule. */
+  .ce-souper-bar-close {
+    top: 0; bottom: 0; right: 0; transform: none; width: 44px; height: auto;
+    border-radius: 0; box-shadow: none; background: transparent;
+    align-items: end; padding-bottom: 5px;
+  }
+  .ce-souper-bar-close:hover { background: transparent; }
+  .ce-souper-bar-close svg { width: 15px; height: 15px; }
+}
+/* Une seule ligne, quelle que soit la largeur : la date s'efface d'abord, puis
+   « mes places » (le lien garde son nom complet pour les lecteurs d'écran). */
+@media (max-width: 599px) { .ce-souper-bar .ce-souper-bar-date { display: none; } }
+@media (max-width: 399px) { .ce-souper-bar-plus { display: none; } }

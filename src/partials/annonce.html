@@ -1,0 +1,15 @@
+  <!-- L'annonce du Souper Saveurs d'Afrique, en haut de chaque page. Elle fait
+       partie de la page dès le premier affichage (rien ne saute au chargement);
+       le petit script du <head> la masque d'emblée pour qui l'a fermée, et pour
+       tout le monde à partir du 15 novembre 2026. À RETIRER après le souper :
+       ce fichier, son inclusion dans layout.html, souper.css, souper.js, et les
+       lignes « souper » du script du <head> (puis son empreinte dans
+       deploy/security.inc). -->
+  <div class="ce-souper-bar" role="region" aria-label="Annonce : Souper Saveurs d’Afrique">
+    <div class="ce-souper-bar-inner">
+      <strong>Souper Saveurs d’Afrique</strong>
+      <span class="ce-souper-bar-date">Samedi 14 novembre · 17H à 22H</span>
+      <a href="https://www.zeffy.com/fr-CA/ticketing/souper-saveurs-dafrique" target="_blank" rel="noopener" aria-label="Réserver mes places">Réserver<span class="ce-souper-bar-plus"> mes places</span></a>
+    </div>
+    <button class="ce-souper-bar-close" type="button" aria-label="Fermer l’annonce" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>

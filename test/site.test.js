@@ -134,3 +134,14 @@ test('every project is complete, adds up, and has an up-to-date PDF fiche', asyn
   // Amounts are written the way David chose: $1,115.26.
   assert.match(text(html['projets.html']), /\$10,000\.00/);
 });
+
+test('the souper announcement is on every page, from the first paint', () => {
+  for (const [f, h] of Object.entries(html)) {
+    assert.match(h, /class="ce-souper-bar"/, `${f}: no announcement`);
+    assert.match(h, /\/assets\/css\/souper\.[0-9a-f]{10}\.css/, `${f}: souper.css missing or not hashed`);
+    assert.match(h, /\/assets\/js\/souper\.[0-9a-f]{10}\.js/, `${f}: souper.js missing or not hashed`);
+    assert.match(h, /href="https:\/\/www\.zeffy\.com\/fr-CA\/ticketing\/souper-saveurs-dafrique"/, `${f}: ticket link`);
+  }
+  const css = fs.readFileSync(path.join(OUT, html['index.html'].match(/\/assets\/css\/souper\.[0-9a-f]{10}\.css/)[0]), 'utf8');
+  for (const m of css.matchAll(/url\("(\/[^"]+)"\)/g)) assert.ok(fs.existsSync(path.join(OUT, m[1])), `souper.css: ${m[1]} does not exist`);
+});
