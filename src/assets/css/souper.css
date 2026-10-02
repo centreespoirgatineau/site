@@ -90,3 +90,22 @@
    « mes places » (le lien garde son nom complet pour les lecteurs d'écran). */
 @media (max-width: 599px) { .ce-souper-bar .ce-souper-bar-date { display: none; } }
 @media (max-width: 399px) { .ce-souper-bar-plus { display: none; } }
+
+/* ---- L'annonce suit la barre de navigation ------------------------------------- */
+/* À la demande de David (2026-10-02) : l'annonce reste collée en haut, la barre de
+   navigation juste en dessous. Elle fait 52 px partout (32 px de drapeaux et de
+   marge sur ordinateur, deux bandes de 26 px sur téléphone). Tout ce qui se
+   règle sur la hauteur de l'en-tête descend d'autant : les ancres, les panneaux
+   collants et le menu du téléphone. Une fois l'annonce fermée (.sans-souper),
+   rien de tout cela ne s'applique.
+   Sur un écran très bas (un téléphone à l'horizontale), les deux barres
+   prendraient plus du tiers de l'écran : l'annonce y défile avec la page. */
+@media (min-height: 500px) {
+  html:not(.sans-souper) { --annonce-h: 52px; scroll-padding-top: calc(var(--header-h) + var(--annonce-h) + 16px); }
+  html:not(.sans-souper) .ce-souper-bar { position: sticky; top: 0; }
+  html:not(.sans-souper) .site-header { top: var(--annonce-h); }
+  html:not(.sans-souper) .sticky { top: calc(var(--header-h) + var(--annonce-h) + 24px); }
+}
+@media (min-height: 500px) and (max-width: 1023px) {
+  html:not(.sans-souper) .site-nav { top: calc(var(--header-h) + var(--annonce-h)); }
+}
