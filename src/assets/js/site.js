@@ -89,5 +89,15 @@
     }
     adults.addEventListener('change', show);
     children.addEventListener('change', show);
+    // The current limits, as the platform's Réglages hold them; the copy in the page stays
+    // whenever the platform cannot be reached or answers something unexpected.
+    var src = box.getAttribute('data-calc-src');
+    if (src && window.fetch) fetch(src).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !d.limits || !d.limits[1] || typeof d.limits[1][0] !== 'number') return;
+      matrix = d.limits;
+      show();
+      var pct = document.querySelector('[data-calc-pct]');
+      if (pct && d.model === 'mpc' && typeof d.pct === 'number') pct.textContent = d.pct;
+    }).catch(function () {});
   });
 })();

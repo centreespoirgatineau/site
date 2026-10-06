@@ -106,6 +106,16 @@ test('the site-wide content security policy allows the inline bootstrap script b
   assert.ok(!/script-src[^;]*unsafe-inline/.test(csp));
 });
 
+test('the income calculator reads the platform\'s current limits, with a copy to fall back on', () => {
+  const page = html['aide-alimentaire.html'];
+  assert.ok(page.includes('data-calc-src="https://aide.centreespoir.ca/seuils.json"'));
+  const copy = JSON.parse(page.match(/data-calc='([^']+)'/)[1]);
+  assert.equal(typeof copy[1][0], 'number', 'the fallback copy is there');
+  assert.ok(page.includes('<span data-calc-pct>'));
+  const csp = fs.readFileSync(path.join(ROOT, 'deploy/security.inc'), 'utf8');
+  assert.match(csp, /connect-src[^;]*https:\/\/aide\.centreespoir\.ca/, 'the policy lets the page read the platform');
+});
+
 test('every project is complete, adds up, and has an up-to-date PDF fiche', async () => {
   const { chargerProjets, ficheHTML, empreinte, STATUTS, ETATS } = await import('../build/projets.mjs');
   const lock = JSON.parse(fs.readFileSync(path.join(ROOT, 'build/fiches.lock.json'), 'utf8'));
