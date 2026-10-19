@@ -1,38 +1,31 @@
-/* L'annonce du Souper Saveurs d'Afrique, en haut de chaque page (src/partials/annonce.html).
+/* L'annonce du Souper spaghetti, en haut de chaque page (src/partials/annonce.html).
    À retirer après le 14 novembre 2026 avec le reste (voir le commentaire de annonce.html).
    Le script du <head> pose .sans-souper sur <html> pour qui l'a fermée, et pour tous
    à partir du 15 novembre : l'annonce n'apparaît alors pas du tout, sans clignoter. */
 .sans-souper .ce-souper-bar { display: none; }
 
-/* Fait des 54 drapeaux d'Afrique, qui défilent lentement vers la gauche, à la
-   demande de David (2026-10-02). L'annonce tient sur une ligne, dans une
-   pastille encre au milieu. Sur un téléphone, la pastille cacherait presque tous
-   les drapeaux : ils passent alors sur leur propre bande, l'annonce en dessous.
+/* Sur une nappe à carreaux rouges, celle de l'assiette de spaghetti de l'affiche
+   (2026-10-18; c'étaient les drapeaux d'Afrique qui défilaient). La nappe ne bouge
+   pas : un vichy se lit mieux immobile. L'annonce tient sur une ligne, dans une
+   pastille encre au milieu. Sur un téléphone, la nappe passe sur sa propre bande,
+   l'annonce en dessous.
 
-   Le défilement : une couche deux fois plus large que nécessaire glisse de la
-   largeur exacte du ruban (9 251 x 104 px à l'origine), puis recommence; comme
-   le ruban se répète, le raccord ne se voit pas. On déplace la couche avec
-   transform, que le navigateur confie à la carte graphique, plutôt que de
-   redessiner l'image à chaque image : c'est fluide et léger pour la batterie. */
+   Les carreaux : souper-vichy.svg est un motif de 2 x 2 (rouge #C8453C où deux
+   bandes se croisent, rose #E2A39C pour une seule, crème #FAF9F5), tracé net
+   (crispEdges) et posé à 26 px, donc des carreaux de 13 px : quatre rangées sur
+   les 52 px de l'ordinateur, deux sur la bande de 26 px du téléphone. */
 .ce-souper-bar {
-  --ce-drapeaux-h: 32px;
-  --ce-ruban: calc(var(--ce-drapeaux-h) * 9251 / 104);
   position: relative; z-index: 41; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
   min-height: 52px; padding: 6px 56px;
   background: var(--bg, #FAF9F5);
-  border-bottom: 1px solid var(--line, #E8E6DF);
   font: 500 .9375rem/1.3 var(--sans); color: #fff;
 }
 .ce-souper-bar::before {
-  content: ""; position: absolute; left: 0; top: 50%;
-  width: calc(100% + var(--ce-ruban)); height: var(--ce-drapeaux-h); margin-top: calc(var(--ce-drapeaux-h) / -2);
-  background: url("/assets/img/souper-drapeaux.webp") 0 0 / auto 100% repeat-x;
-  animation: ce-souper-drapeaux 110s linear infinite;
-  will-change: transform; pointer-events: none;
+  content: ""; position: absolute; inset: 0;
+  background: url("/assets/img/souper-vichy.svg") 0 0 / 26px 26px repeat;
+  pointer-events: none;
 }
-@keyframes ce-souper-drapeaux { to { transform: translateX(calc(var(--ce-ruban) * -1)); } }
-@media (prefers-reduced-motion: reduce) { .ce-souper-bar::before { animation: none; } }
 
 .ce-souper-bar-inner {
   position: relative; z-index: 1;
@@ -62,14 +55,13 @@
 .ce-souper-bar-close svg { width: 16px; height: 16px; }
 
 @media (max-width: 767px) {
-  /* Deux bandes de même hauteur, 26 px chacune : les drapeaux, puis l'annonce. */
+  /* Deux bandes de même hauteur, 26 px chacune : la nappe, puis l'annonce. */
   .ce-souper-bar {
-    --ce-drapeaux-h: 20px;
     --ce-bande: 26px;
-    display: block; min-height: 0; padding: var(--ce-bande) 0 0; border-bottom: 0;
-    background: linear-gradient(var(--bg, #FAF9F5) 0 var(--ce-bande), var(--ink, #141413) var(--ce-bande));
+    display: block; min-height: 0; padding: var(--ce-bande) 0 0;
+    background: var(--ink, #141413);
   }
-  .ce-souper-bar::before { top: 3px; margin-top: 0; }
+  .ce-souper-bar::before { bottom: auto; height: var(--ce-bande); }
   .ce-souper-bar-inner {
     height: var(--ce-bande); padding: 0 48px 0 12px; gap: 10px;
     border-radius: 0; box-shadow: none; line-height: 1;
@@ -77,7 +69,7 @@
   .ce-souper-bar strong { font-size: .9375rem; }
   .ce-souper-bar a { font-size: .8125rem; }
   /* Le x reste dessiné dans la bande noire, mais sa zone de toucher monte
-     derrière les drapeaux : 44 x 52 px, au lieu des 26 px de la bande seule. */
+     derrière la nappe : 44 x 52 px, au lieu des 26 px de la bande seule. */
   .ce-souper-bar-close {
     top: 0; bottom: 0; right: 0; transform: none; width: 44px; height: auto;
     border-radius: 0; box-shadow: none; background: transparent;
@@ -93,8 +85,8 @@
 
 /* ---- L'annonce suit la barre de navigation ------------------------------------- */
 /* À la demande de David (2026-10-02) : l'annonce reste collée en haut, la barre de
-   navigation juste en dessous. Elle fait 52 px partout (32 px de drapeaux et de
-   marge sur ordinateur, deux bandes de 26 px sur téléphone). Tout ce qui se
+   navigation juste en dessous. Elle fait 52 px partout (quatre rangées de carreaux
+   sur ordinateur, deux bandes de 26 px sur téléphone). Tout ce qui se
    règle sur la hauteur de l'en-tête descend d'autant : les ancres, les panneaux
    collants et le menu du téléphone. Une fois l'annonce fermée (.sans-souper),
    rien de tout cela ne s'applique.

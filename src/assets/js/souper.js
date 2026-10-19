@@ -1,5 +1,8 @@
-/* Le bouton qui ferme l'annonce du Souper Saveurs d'Afrique (src/partials/annonce.html).
+/* Le bouton qui ferme l'annonce du Souper spaghetti (src/partials/annonce.html).
    Le souvenir de la fermeture reste dans le navigateur du visiteur; rien n'est envoyé.
+   La clé a changé avec le nom du souper (elle était ce-souper-2026) : qui avait fermé
+   l'annonce des Saveurs d'Afrique voit une fois celle du Souper spaghetti. Elle doit
+   rester la même que dans le script du <head> de layout.html.
    Sans JavaScript, le bouton reste caché et l'annonce s'affiche simplement. */
 (function () {
   'use strict';
@@ -8,7 +11,7 @@
   if (!close) return;
   close.hidden = false;
   close.addEventListener('click', function () {
-    try { localStorage.setItem('ce-souper-2026', 'done'); } catch (e) {}
+    try { localStorage.setItem('ce-souper-spaghetti-2026', 'done'); } catch (e) {}
     document.documentElement.classList.add('sans-souper');
   });
 })();

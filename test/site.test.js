@@ -150,8 +150,14 @@ test('the souper announcement is on every page, from the first paint', () => {
     assert.match(h, /class="ce-souper-bar"/, `${f}: no announcement`);
     assert.match(h, /\/assets\/css\/souper\.[0-9a-f]{10}\.css/, `${f}: souper.css missing or not hashed`);
     assert.match(h, /\/assets\/js\/souper\.[0-9a-f]{10}\.js/, `${f}: souper.js missing or not hashed`);
+    // Same Zeffy page as before the supper was renamed (2026-10-18): the printed QR codes point to it.
     assert.match(h, /href="https:\/\/www\.zeffy\.com\/fr-CA\/ticketing\/souper-saveurs-dafrique"/, `${f}: ticket link`);
+    assert.match(h, /<strong>Souper spaghetti<\/strong>/, `${f}: supper name`);
+    assert.doesNotMatch(h, /Saveurs d.Afrique/, `${f}: the supper's former name`);
   }
+  // A comment closed one line early once left souper.js a syntax error: the close button never showed.
+  const js = fs.readFileSync(path.join(OUT, html['index.html'].match(/\/assets\/js\/souper\.[0-9a-f]{10}\.js/)[0]), 'utf8');
+  assert.doesNotThrow(() => new Function(js), 'souper.js must parse');
   const css = fs.readFileSync(path.join(OUT, html['index.html'].match(/\/assets\/css\/souper\.[0-9a-f]{10}\.css/)[0]), 'utf8');
   for (const m of css.matchAll(/url\("(\/[^"]+)"\)/g)) assert.ok(fs.existsSync(path.join(OUT, m[1])), `souper.css: ${m[1]} does not exist`);
 });
