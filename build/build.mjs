@@ -155,6 +155,8 @@ for (const file of walk(path.join(SRC, 'pages'))) {
   const vars = {
     title: meta.title,
     description: meta.description,
+    // `robots: noindex` in the front matter keeps a utility page out of search engines.
+    robots: meta.robots ? `\n  <meta name="robots" content="${meta.robots}">` : '',
     canonical: SITE_URL + (url === '/' ? '' : url),
     page: slug,
     body_class: meta.body_class ?? '',
